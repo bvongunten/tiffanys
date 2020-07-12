@@ -1,0 +1,70 @@
+package ch.nostromo.tiffanys.dragonborn.engine;
+
+public interface DragonbornEngineConstants {
+
+     int NORTH = 0;
+     int SOUTH = 1;
+     int WEST = 2;
+     int EAST = 3;
+     int NORTHWEST = 4;
+     int NORTHEAST = 5;
+     int SOUTHWEST = 6;
+     int SOUTHEAST = 7;
+
+     int PAWN_SCORE = 100;
+     int KNIGHT_SCORE = 300;
+     int BISHOP_SCORE = 300;
+     int ROOK_SCORE = 500;
+     int QUEEN_SCORE = 800;
+
+     int HIT_PAWN_SCORE = 1100;
+     int HIT_KNIGHT_SCORE = 1300;
+     int HIT_BISHOP_SCORE = 1300;
+     int HIT_ROOK_SCORE = 1500;
+     int HIT_QUEEN_SCORE = 1800;
+
+     int PIECE_KING = 4;
+
+     int PIECE_QUEEN = 8;
+
+     int PIECE_BISHOP = 16;
+
+     int PIECE_KNIGHT = 32;
+
+     int PIECE_ROOK = 64;
+
+     int PIECE_PAWN = 128;
+
+     int WHITE_KING = PIECE_KING;
+     int WHITE_QUEEN = PIECE_QUEEN;
+     int WHITE_ROOK = PIECE_ROOK;
+     int WHITE_KNIGHT = PIECE_KNIGHT;
+     int WHITE_BISHOP = PIECE_BISHOP;
+     int WHITE_PAWN = PIECE_PAWN;
+
+     int BLACK_KING = -PIECE_KING;
+     int BLACK_QUEEN = -PIECE_QUEEN;
+     int BLACK_ROOK = -PIECE_ROOK;
+     int BLACK_KNIGHT = -PIECE_KNIGHT;
+     int BLACK_BISHOP = -PIECE_BISHOP;
+     int BLACK_PAWN = -PIECE_PAWN;
+
+     int POS_WHITE_KING_CASTLING_START = 4;
+     int POS_WHITE_KING_SHORT_CASTLING_END = 6;
+     int POS_WHITE_ROOK_SHORT_CASTLING_START = 7;
+     int POS_WHITE_ROOK_SHORT_CASTLING_END = 5;
+
+     int POS_WHITE_KING_LONG_CASTLING_END = 2;
+     int POS_WHITE_ROOK_LONG_CASTLING_START = 0;
+     int POS_WHITE_ROOK_LONG_CASTLING_END = 3;
+
+     int POS_BLACK_KING_CASTLING_START = 60;
+     int POS_BLACK_KING_SHORT_CASTLING_END = 62;
+     int POS_BLACK_ROOK_SHORT_CASTLING_START = 63;
+     int POS_BLACK_ROOK_SHORT_CASTLING_END = 61;
+
+     int POS_BLACK_KING_LONG_CASTLING_END = 58;
+     int POS_BLACK_ROOK_LONG_CASTLING_START = 56;
+     int POS_BLACK_ROOK_LONG_CASTLING_END = 59;
+
+}
