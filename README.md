@@ -12,8 +12,9 @@ Java Chess Libraries
 
 
 ## Multiplatform UI
+Beware: Tiffanys is in early stage of development. ChessLink and Lichess support works quite well, but you might not want to play rated games from the start ;)
 
-Download Tiffany's UI for Mac & Windows [here](https://github.com/bvongunten/tiffanys/releases/tag/v0.6.0-alpha)
+Download Tiffany's UI 0.6.0-alpha for Mac & Windows [here](https://github.com/bvongunten/tiffanys/releases/tag/v0.6.0-alpha)
 
 Tiffany's UI supports two playing modes of which both support the usage of a ChessLink board: 
 
