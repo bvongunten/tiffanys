@@ -6,7 +6,7 @@
 
     <groupId>ch.nostromo</groupId>
     <artifactId>tiffanys</artifactId>
-    <version>0.6.0-SNAPSHOT</version>
+    <version>0.6.0</version>
     <packaging>pom</packaging>
 
     <name>Tiffanys</name>

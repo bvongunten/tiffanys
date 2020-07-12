@@ -26,7 +26,7 @@ public class TiffanysFxGui extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws IOException {
-        LogUtils.initializeLogging(Level.INFO, Level.OFF, null, null);
+        LogUtils.initializeLogging(Level.INFO, Level.OFF, HOME_DIRECTORY, "tiffanys.log");
 
         TiffanysFxGuiCentral.createInstance(primaryStage);
     	TiffanysFxGuiCentral.getInstance().showMainMenuForm();
