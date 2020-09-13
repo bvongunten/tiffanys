@@ -47,11 +47,11 @@ public class LichessBoardGameStateHelper implements BoardGameStateListener {
     public void onBoardGameStateFull(BoardGameFull gameFull) {
         initialized = true;
 
-        oneBoardGameState(gameFull.getState());
+        onBoardGameState(gameFull.getState());
     }
 
     @Override
-    public void oneBoardGameState(GameState gameState) {
+    public void onBoardGameState(GameState gameState) {
         LOG.info("Received game state from lichess:  " + gameState);
 
         lastReadGameState = gameState;

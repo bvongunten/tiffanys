@@ -7,12 +7,12 @@
 	<parent>
 		<groupId>ch.nostromo</groupId>
 		<artifactId>tiffanys</artifactId>
-		<version>0.6.0</version>
+		<version>0.7.0</version>
 	</parent>
 	
 	<groupId>ch.nostromo.tiffanys</groupId>
 	<artifactId>tiffanys-ui</artifactId>
-	<version>0.6.0</version>
+	<version>0.7.0</version>
 	<packaging>jar</packaging>
 	
 	<name>Tiffanys Chess UI</name>
@@ -21,17 +21,17 @@
 		<dependency>
 			<groupId>ch.nostromo.tiffanys</groupId>
 			<artifactId>tiffanys-commons</artifactId>
-			<version>0.6.0</version>
+			<version>0.7.0</version>
 		</dependency>
 		<dependency>
 			<groupId>ch.nostromo.tiffanys</groupId>
 			<artifactId>tiffanys-dragonborn</artifactId>
-			<version>0.6.0</version>
+			<version>0.7.0</version>
 		</dependency>
 		<dependency>
 			<groupId>ch.nostromo.tiffanys</groupId>
 			<artifactId>tiffanys-chesslink</artifactId>
-			<version>0.6.0</version>
+			<version>0.7.0</version>
 		</dependency>
 		<dependency>
             <groupId>org.openjfx</groupId>
@@ -46,13 +46,13 @@
         <dependency>
             <groupId>ch.nostromo.tiffanys</groupId>
             <artifactId>tiffanys-lichess</artifactId>
-            <version>0.6.0</version>
+            <version>0.7.0</version>
             <scope>compile</scope>
         </dependency>
 		<dependency>
 			<groupId>ch.nostromo.tiffanys</groupId>
 			<artifactId>tiffanys-lichess</artifactId>
-			<version>0.6.0</version>
+			<version>0.7.0</version>
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>

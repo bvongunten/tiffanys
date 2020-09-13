@@ -7,5 +7,5 @@ public interface BoardGameStateListener {
 
    void onBoardGameStateFull(BoardGameFull gameFull);
 
-   void oneBoardGameState(GameState gameState);
+   void onBoardGameState(GameState gameState);
 }

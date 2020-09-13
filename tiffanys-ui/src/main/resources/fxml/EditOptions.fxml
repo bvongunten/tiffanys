@@ -6,14 +6,16 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="206.0" prefWidth="507.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.nostromo.tiffanys.ui.controllers.EditOptions">
+<AnchorPane prefHeight="268.0" prefWidth="507.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.nostromo.tiffanys.ui.controllers.EditOptions">
    <children>
       <Label layoutX="29.0" layoutY="30.0" prefHeight="17.0" prefWidth="180.0" text="Language / Sprache" />
       <ChoiceBox fx:id="choiceLanguage" layoutX="254.0" layoutY="26.0" prefHeight="25.0" prefWidth="232.0" />
-      <Button layoutX="29.0" layoutY="163.0" mnemonicParsing="false" onAction="#actionOk" text="Ok" />
+      <Button layoutX="29.0" layoutY="215.0" mnemonicParsing="false" onAction="#actionOk" text="Ok" />
       <Label layoutX="29.0" layoutY="74.0" prefHeight="17.0" prefWidth="124.0" text="Lichess User" />
       <TextField fx:id="txtLichessUser" layoutX="254.0" layoutY="70.0" prefHeight="25.0" prefWidth="232.0" />
       <Label layoutX="29.0" layoutY="110.0" prefHeight="17.0" prefWidth="124.0" text="Lichess API Key" />
       <TextField fx:id="txtLichessApiKey" layoutX="254.0" layoutY="106.0" prefHeight="25.0" prefWidth="232.0" />
+      <Label layoutX="29.0" layoutY="164.0" prefHeight="17.0" prefWidth="124.0" text="Log File" />
+      <ChoiceBox fx:id="choiceLogLevel" layoutX="254.0" layoutY="160.0" prefHeight="25.0" prefWidth="232.0" />
    </children>
 </AnchorPane>

@@ -11,6 +11,7 @@ public class TiffanysConfig {
 	public static final String KEY_LANGUAGE = "Language";
 	public static final String KEY_LICHESS_USER = "Lichess.User";
 	public static final String KEY_LICHESS_APIKEY = "Lichess.ApiKey";
+	public static final String KEY_LOG_FILE_LEVEL = "LogFileLevel";
 
 	public static void setStringValue(String key, String value) {
 		Preferences prefs = Preferences.userNodeForPackage(TiffanysFxGui.class);

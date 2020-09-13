@@ -26,6 +26,11 @@ public class Welcome {
 	}
 
 	@FXML
+	void onCreateLichessGame(ActionEvent event) throws IOException {
+		TiffanysFxGuiCentral.getInstance().createLichessGame();
+	}
+
+	@FXML
 	void onActionNewGame(ActionEvent event) throws IOException {
 		TiffanysFxGuiCentral.getInstance().createNewGame();
 	}

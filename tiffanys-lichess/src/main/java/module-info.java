@@ -6,7 +6,8 @@ module ch.nostromo.tiffanys.lichess {
     exports ch.nostromo.tiffanys.lichess.dtos.commons;
     exports ch.nostromo.tiffanys.lichess.dtos.account;
     exports ch.nostromo.tiffanys.lichess.dtos.games;
-
+    exports ch.nostromo.tiffanys.lichess.dtos.events;
+    exports ch.nostromo.tiffanys.lichess.dtos.playing;
 
     opens ch.nostromo.tiffanys.lichess.dtos;
     opens ch.nostromo.tiffanys.lichess.dtos.board;
@@ -14,10 +15,10 @@ module ch.nostromo.tiffanys.lichess {
     opens ch.nostromo.tiffanys.lichess.dtos.account;
     opens ch.nostromo.tiffanys.lichess.dtos.games;
     opens ch.nostromo.tiffanys.lichess.dtos.playing;
+    opens ch.nostromo.tiffanys.lichess.dtos.events;
 
     exports ch.nostromo.tiffanys.lichess.streams;
     exports ch.nostromo.tiffanys.lichess.tools;
-    exports ch.nostromo.tiffanys.lichess.dtos.playing;
 
     requires java.logging;
 

@@ -5,6 +5,7 @@ import ch.nostromo.tiffanys.commons.ChessGame;
 import ch.nostromo.tiffanys.commons.board.Board;
 import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.fen.FenFormat;
+import ch.nostromo.tiffanys.commons.logging.LogUtils;
 import ch.nostromo.tiffanys.commons.move.Move;
 import ch.nostromo.tiffanys.dragonborn.commons.EngineSettings;
 import ch.nostromo.tiffanys.lichess.LichessController;
@@ -26,12 +27,27 @@ import javafx.stage.WindowEvent;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TiffanysFxGuiCentral {
+
+    public static final String VERSION = "0.7.0";
+
+    public static final String APPLICATION = "Tiffanys UI";
+
+    public static final String TITLE = APPLICATION +  " " + VERSION;
+
+    public static final String AUTHOR = "Bernhard von Gunten";
+
+    public static final String HOME_DIRECTORY = System.getProperty("user.home") + "/." + APPLICATION + "-" + VERSION;
 
     public static final String MESSAGE_BUNDLE = "Messages";
 
     private static TiffanysFxGuiCentral instance;
+
+    protected Logger LOG = Logger.getLogger(getClass().getName());
+
 
     private Stage primaryStage;
     private Stage chessWindowStage;
@@ -40,8 +56,9 @@ public class TiffanysFxGuiCentral {
         this.primaryStage = primaryStage;
     }
 
-    public static void createInstance(Stage primaryStage) {
+    public static void createInstance(Stage primaryStage) throws IOException {
         instance = new TiffanysFxGuiCentral(primaryStage);
+        instance.fireUpLogging();
     }
 
     public static TiffanysFxGuiCentral getInstance() {
@@ -56,10 +73,41 @@ public class TiffanysFxGuiCentral {
         return ResourceBundle.getBundle(MESSAGE_BUNDLE, locale);
     }
 
+    public void fireUpLogging() throws IOException {
+
+
+        String logLevel = TiffanysConfig.getStringValue(TiffanysConfig.KEY_LOG_FILE_LEVEL, "OFF");
+
+        Level level = Level.OFF;
+        switch (logLevel) {
+            case "ALL": {
+                level = Level.ALL;
+                break;
+            }
+            case "INFO": {
+                level = Level.INFO;
+                break;
+            }
+            case "WARNING":  {
+                level = Level.WARNING;
+                break;
+            }
+            case "SEVERE": {
+                level = Level.SEVERE;
+                break;
+            }
+        }
+        LogUtils.initializeLogging(Level.ALL, level, HOME_DIRECTORY, "tiffanys.log");
+
+        LOG.fine("Logging started.");
+
+
+    }
+
     public void showMainMenuForm() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/Welcome.fxml"), getResourceBundle());
 
-        primaryStage.setTitle(TiffanysFxGui.TITLE);
+        primaryStage.setTitle(TITLE);
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
@@ -82,6 +130,7 @@ public class TiffanysFxGuiCentral {
     public void disconnectFromChessLinkBoard() {
         if (chessLinkBoard != null && chessLinkBoard.isConnected()) {
             try {
+                chessLinkBoard.getChessLinkBoardEventListeners().clear();
                 chessLinkBoard.disconnect();
             } catch (Exception ignored) {
                 // Ignore;
@@ -89,7 +138,7 @@ public class TiffanysFxGuiCentral {
         }
     }
 
-    public ChessLinkBoard getChessLinkBoard(Boolean cableRight) {
+    public ChessLinkBoard getOrCreateChesslinkBoard(Boolean cableRight) {
         if (chessLinkBoard == null || !chessLinkBoard.isConnected()) {
             connectToChessLinkBoard(cableRight);
         }
@@ -166,6 +215,27 @@ public class TiffanysFxGuiCentral {
         Parent root = (Parent) fxmlLoader.load();
 
         EditLichessGameSettings controller = fxmlLoader.<EditLichessGameSettings>getController();
+        controller.setAppGameSettings(appGameSettings);
+
+        Scene scene = new Scene(root);
+        String css = TiffanysFxGuiCentral.class.getResource("/css/StandardBoard.css").toExternalForm();
+        scene.getStylesheets().add(css);
+
+        Stage stage = new Stage();
+        stage.setTitle(getResourceBundle().getString("window.editBoard"));
+        stage.setScene(scene);
+        stage.showAndWait();
+
+        return controller.getAppGameSettings();
+
+    }
+
+    public AppGameSettings showCreateLichessGameForm(AppGameSettings appGameSettings) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(TiffanysFxGuiCentral.class.getResource("/fxml/CreateLichessGame.fxml"),
+                getResourceBundle());
+        Parent root = (Parent) fxmlLoader.load();
+
+        CreateLichessGame controller = fxmlLoader.<CreateLichessGame>getController();
         controller.setAppGameSettings(appGameSettings);
 
         Scene scene = new Scene(root);
@@ -388,6 +458,23 @@ public class TiffanysFxGuiCentral {
         }
 
         AppGameSettings appGameSettings = showLichessSettingsForm(new AppGameSettings());
+        if (appGameSettings != null) {
+            ChessGame chessGame = new ChessGame();
+            showChessWindow(chessGame, appGameSettings);
+        }
+    }
+
+    public void createLichessGame() throws IOException {
+
+        if (TiffanysConfig.getStringValue(TiffanysConfig.KEY_LICHESS_APIKEY, "").isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Lichess");
+            alert.setHeaderText("Please configure an API key!");
+            alert.showAndWait();
+            return;
+        }
+
+        AppGameSettings appGameSettings = showCreateLichessGameForm(new AppGameSettings());
         if (appGameSettings != null) {
             ChessGame chessGame = new ChessGame();
             showChessWindow(chessGame, appGameSettings);

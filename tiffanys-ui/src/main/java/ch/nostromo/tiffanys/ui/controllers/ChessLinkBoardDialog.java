@@ -6,12 +6,10 @@ import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.move.Move;
 import ch.nostromo.tiffanys.ui.TiffanysFxGuiCentral;
 import ch.nostromo.tiffanys.ui.fx.DialogFinishedState;
-import ch.nostromo.tiffanys.ui.fx.board.BoardPane;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
@@ -62,8 +60,8 @@ public class ChessLinkBoardDialog implements ChessLinkBoardEventListener {
     private void startFlow() {
         Platform.runLater(() -> {
             this.lblCommand.setText(TiffanysFxGuiCentral.getInstance().getResourceBundle().getString("label.chesslink.applyPositionToChessLinkBoard"));
-            TiffanysFxGuiCentral.getInstance().getChessLinkBoard(cableRight).getChessLinkBoardEventListeners().add(this);
-            TiffanysFxGuiCentral.getInstance().getChessLinkBoard(cableRight).executePositionToBoard(board);
+            TiffanysFxGuiCentral.getInstance().getOrCreateChesslinkBoard(cableRight).getChessLinkBoardEventListeners().add(this);
+            TiffanysFxGuiCentral.getInstance().getOrCreateChesslinkBoard(cableRight).executePositionToBoard(board);
         });
     }
 
@@ -85,7 +83,7 @@ public class ChessLinkBoardDialog implements ChessLinkBoardEventListener {
 
     private void closeFrame() {
         Platform.runLater(() -> {
-            TiffanysFxGuiCentral.getInstance().getChessLinkBoard(cableRight).getChessLinkBoardEventListeners().clear();
+            TiffanysFxGuiCentral.getInstance().disconnectFromChessLinkBoard();
             Stage stage = (Stage) lblCommand.getScene().getWindow();
             stage.close();
         });
@@ -98,7 +96,7 @@ public class ChessLinkBoardDialog implements ChessLinkBoardEventListener {
             if (mode == Mode.WAIT_FOR_CLEAN_BOARD) {
                 closeFrame();
             } else {
-                TiffanysFxGuiCentral.getInstance().getChessLinkBoard(cableRight).setBoardToAwaitMove(board, colorToMove);
+                TiffanysFxGuiCentral.getInstance().getOrCreateChesslinkBoard(cableRight).setBoardToAwaitMove(board, colorToMove);
                 this.lblCommand.setText(TiffanysFxGuiCentral.getInstance().getResourceBundle().getString("label.chesslink.enterMove"));
             }
         });

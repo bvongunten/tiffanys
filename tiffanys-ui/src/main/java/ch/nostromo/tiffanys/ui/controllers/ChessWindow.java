@@ -155,7 +155,12 @@ public class ChessWindow implements Initializable, BoardPaneEvents, EngineEventL
     private void orderChessLinkBoardToUpdate() {
         Bounds bounds = engineState.localToScreen(engineState.getBoundsInLocal());
 
-        TiffanysFxGuiCentral.getInstance().showChessLinkPositionToMake(this.game.getCurrentBoard(), appGameSettings.isOneHumanPlayerAndBlack(), appGameSettings.isChessLinkCableRight(), bounds);
+        boolean success = TiffanysFxGuiCentral.getInstance().showChessLinkPositionToMake(this.game.getCurrentBoard(), appGameSettings.isOneHumanPlayerAndBlack(), appGameSettings.isChessLinkCableRight(), bounds);
+
+        if (!success) {
+            LOG.info("Set chesslink mode to off, as the board has not been set up accordingly.");
+            appGameSettings.setUseChessLinkBoard(false);
+        }
     }
 
     private boolean isNextPlayerLichess() {

@@ -4,6 +4,7 @@ import lombok.experimental.UtilityClass;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.logging.*;
 
 @UtilityClass
@@ -14,7 +15,7 @@ public class LogUtils {
 
         LogManager.getLogManager().reset();
         Logger root = Logger.getLogger("ch.nostromo.tiffanys");
-        root.setLevel(Level.ALL);
+        root.setLevel(Level.FINEST);
         LogManager.getLogManager().addLogger(root);
 
         ConsoleHandler consoleHandler = new ConsoleHandler();
@@ -28,6 +29,7 @@ public class LogUtils {
             fileHandler.setLevel(logfileLevel);
             LogManager.getLogManager().getLogger("").addHandler(fileHandler);
         }
+
     }
 
     public static File getLogDirectory(String logDirectory) {

@@ -1,11 +1,13 @@
 package ch.nostromo.tiffanys.lichess;
 
 
+import ch.nostromo.tiffanys.lichess.dtos.commons.Challenge;
 import ch.nostromo.tiffanys.lichess.dtos.commons.MoveResponse;
 import ch.nostromo.tiffanys.lichess.dtos.games.Game;
 import ch.nostromo.tiffanys.lichess.dtos.playing.OngoingGames;
 import ch.nostromo.tiffanys.lichess.exception.LichessException;
 import ch.nostromo.tiffanys.lichess.streams.BoardGameStateStream;
+import ch.nostromo.tiffanys.lichess.streams.EventStream;
 import ch.nostromo.tiffanys.lichess.streams.GamesByUserStream;
 import com.google.gson.Gson;
 import lombok.Getter;
@@ -13,11 +15,14 @@ import lombok.Setter;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 @Getter
@@ -45,6 +50,35 @@ public class LichessController {
                 .build();
 
         return request;
+    }
+
+    private HttpRequest createPostRequestForm(String url, Map<String, String> data) {
+        URI uri = URI.create(url);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(uri)
+                .POST(ofFormData(data))
+                .timeout(Duration.ofMinutes(1))
+                .setHeader("User-Agent", "Tiffanys Lichess Client") // add request header
+                .setHeader("Authorization", "Bearer " + apiKey)
+                .setHeader("Content-Type", "application/x-www-form-urlencoded")
+                .setHeader("Accept", "application/x-ndjson")
+                .build();
+
+        return request;
+    }
+
+    public static HttpRequest.BodyPublisher ofFormData(Map<String, String> data) {
+        var builder = new StringBuilder();
+        for (Map.Entry<String, String> entry : data.entrySet()) {
+            if (builder.length() > 0) {
+                builder.append("&");
+            }
+            builder.append(URLEncoder.encode(entry.getKey().toString(), StandardCharsets.UTF_8));
+            builder.append("=");
+            builder.append(URLEncoder.encode(entry.getValue().toString(), StandardCharsets.UTF_8));
+        }
+        return HttpRequest.BodyPublishers.ofString(builder.toString());
     }
 
     private HttpRequest createGetRequest(String url) {
@@ -77,7 +111,7 @@ public class LichessController {
             HttpResponse<String> response = getHttpClient().send(request,
                     HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() != 200) {
-                throw new LichessException("POST command returned HTTP Code != 200. Response body: " + response.body());
+                throw new LichessException("POST command returned HTTP Code != 200. (" + response.statusCode() + ") Response body: " + response.body());
             }
 
             return response;
@@ -99,6 +133,42 @@ public class LichessController {
         if (!lichessResponse.getOk()) {
             throw new LichessException("Move not accepted by lichess! GameId=" + gameId + ", Move=" + uciMove);
         }
+    }
+
+    public Challenge challengePlayer(String player, String rated, String clockLimit, String increment, String color) {
+        LOG.fine("Challenging player " + player);
+
+        HashMap<String, String> parameters = new HashMap<>();
+        parameters.put("rated", rated);
+        parameters.put("clock.limit", clockLimit);
+        parameters.put("clock.increment", increment);
+        parameters.put("color", color);
+
+
+        HttpRequest request = createPostRequestForm("https://lichess.org/api/challenge/" + player, parameters);
+        HttpResponse<String> response = runPostRequest(request);
+
+        LOG.fine(response.body());
+
+        return new Gson().fromJson(response.body(), Challenge.class);
+    }
+
+    public Challenge createSeek(String rated, String clockLimit, String increment, String color) {
+        LOG.fine("Create seek");
+
+        HashMap<String, String> parameters = new HashMap<>();
+        parameters.put("rated", rated);
+        parameters.put("time", clockLimit);
+        parameters.put("increment", increment);
+        parameters.put("color", color);
+
+
+        HttpRequest request = createPostRequestForm("https://lichess.org/api/board/seek", parameters);
+        HttpResponse<String> response = runPostRequest(request);
+
+        LOG.fine(response.body());
+
+        return new Gson().fromJson(response.body(), Challenge.class);
     }
 
     public Game getGameByGameId(String gameId) {
@@ -129,6 +199,14 @@ public class LichessController {
         HttpRequest request = createGetRequest("https://lichess.org/api/board/game/stream/" + gameId);
         return new BoardGameStateStream(getHttpClient(), request);
     }
+
+    public EventStream getEventStream() {
+        LOG.info("Createing event stream");
+
+        HttpRequest request = createGetRequest("https://lichess.org/api/stream/event");
+        return new EventStream(getHttpClient(), request);
+    }
+
 
     public GamesByUserStream getGamesByUserStream(String userId) {
         LOG.info("Createing game list stream for user " + userId);

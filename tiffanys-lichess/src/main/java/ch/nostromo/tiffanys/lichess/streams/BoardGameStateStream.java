@@ -73,7 +73,7 @@ public class BoardGameStateStream {
                 if (element instanceof BoardGameFull) {
                     listeners.forEach(e -> e.onBoardGameStateFull((BoardGameFull) element));
                 } else if (element instanceof GameState) {
-                    listeners.forEach(e -> e.oneBoardGameState((GameState) element));
+                    listeners.forEach(e -> e.onBoardGameState((GameState) element));
                 }
             }
         };

@@ -3,6 +3,7 @@ package ch.nostromo.tiffanys.ui.controllers;
 import ch.nostromo.tiffanys.lichess.LichessController;
 import ch.nostromo.tiffanys.lichess.dtos.playing.OngoingGame;
 import ch.nostromo.tiffanys.lichess.dtos.playing.OngoingGames;
+import ch.nostromo.tiffanys.lichess.streams.EventStream;
 import ch.nostromo.tiffanys.ui.TiffanysFxGuiCentral;
 import ch.nostromo.tiffanys.ui.preferences.TiffanysConfig;
 import ch.nostromo.tiffanys.ui.utils.game.AppGameSettings;
@@ -128,4 +129,7 @@ public class EditLichessGameSettings  implements Initializable  {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         onActionFetch(null);
     }
+
+
+    
 }
