@@ -1,25 +1,17 @@
 # Tiffany's
 
-Java Chess UI & Libraries
+- [Download Tiffany's UI 0.7.0-alpha for OSX](https://github.com/bvongunten/tiffanys/releases/download/v0.7.0-alpha/Tiffanys-0.7.0.dmg)
+- [Download Tiffany's UI 0.7.0-alpha for Windows](https://github.com/bvongunten/tiffanys/releases/download/v0.7.0-alpha/TiffanysFxGui-0.7.msi)
+
+![Mainscreen](https://github.com/bvongunten/tiffanys/blob/master/web/Mainscreen.png?raw=true)
 
 Beware: Tiffanys is in early stage of development. ChessLink and Lichess support works quite well, but you might not want to play rated games from the start ;)
-
-Download Tiffany's UI 0.7.0-alpha for OSX [here](https://github.com/bvongunten/tiffanys/releases/download/v0.7.0-alpha/Tiffanys-0.7.0.dmg)
-Download Tiffany's UI 0.7.0-alpha for Windows [here](https://github.com/bvongunten/tiffanys/releases/download/v0.7.0-alpha/TiffanysFxGui-0.7.msi)
 
 ## Release Notes 0.7.0-alpha
 
 - Improved logging (option)
 - Imporved exception handling (visualization)
 - Lichess creation of seeks & player challenge
-
-## Artifacts
-
-- tiffanys-commons (Bassic chess components like rules, game, board, PGN and FEN)
-- tiffanys-chesslink (ChessLink / Chess Genius Exclusive protocol implementation)
-- tiffanys-lichess (Lichess API implementation)
-- tiffanys-dragonborn (Chess engine, including UCI support)
-- tiffanys-ui (Multiplatform UI including ChessLink, Lichess & Dragonborn support)
 
 ## Multiplatform UI
 
@@ -43,3 +35,11 @@ Tiffany's supports currently playing via ChessLink on USB.
 - Select any of your open games in the Lichess mode of Tiffany's UI and play your game ;)
 
 Following video shows the usage of the Chess Genius Exclusive Board vs. an Opponent from Lichess. [Youtube Video](https://www.youtube.com/watch?v=ZexqLLzHAd4)
+
+## Artifacts
+
+- tiffanys-commons (Bassic chess components like rules, game, board, PGN and FEN)
+- tiffanys-chesslink (ChessLink / Chess Genius Exclusive protocol implementation)
+- tiffanys-lichess (Lichess API implementation)
+- tiffanys-dragonborn (Chess engine, including UCI support)
+- tiffanys-ui (Multiplatform UI including ChessLink, Lichess & Dragonborn support)
