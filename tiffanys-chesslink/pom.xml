@@ -7,12 +7,12 @@
 	<parent>
 		<groupId>ch.nostromo</groupId>
 		<artifactId>tiffanys</artifactId>
-		<version>0.7.0</version>
+		<version>0.8.0-SNAPSHOT</version>
 	</parent>
 	
 	<groupId>ch.nostromo.tiffanys</groupId>
 	<artifactId>tiffanys-chesslink</artifactId>
-	<version>0.7.0</version>
+	<version>0.8.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>Tiffanys Chess Chesslink Interface</name>
@@ -21,7 +21,7 @@
 		<dependency>
 			<groupId>ch.nostromo.tiffanys</groupId>
 			<artifactId>tiffanys-commons</artifactId>
-			<version>0.7.0</version>
+			<version>0.8.0-SNAPSHOT</version>
 		</dependency>
 
 		<!-- Self upgraded (modularized) library, get & build from https://github.com/bvongunten/lib-usb3-ftdi -->
