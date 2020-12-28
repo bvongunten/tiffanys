@@ -7,10 +7,13 @@ import org.junit.Test;
 import ch.nostromo.tiffanys.commons.TestHelper;
 import ch.nostromo.tiffanys.commons.pgn.PgnFormat;
 
+import java.util.LinkedHashMap;
+
 public class PgnFormatTest extends TestHelper {
 
     // @formatter:off    
-    String expected = "[Site \"Site\"]\n" +
+    String expected = "[Event \"Event\"]\n" +
+                      "[Site \"Site\"]\n" +
                       "[Date \"Date\"]\n" +
                       "[Round \"Rount\"]\n" +
                       "[White \"WhitePlayer\"]\n" +
@@ -22,7 +25,7 @@ public class PgnFormatTest extends TestHelper {
 
     @Test
     public void testPgnFormatConstructor1() {
-        PgnFormat pgn = new PgnFormat("Site", "Date", "Rount", "WhitePlayer", "BlackPlayer", "Result", "PgnMoves");
+        PgnFormat pgn = new PgnFormat("Event", "Site", "Date", "Rount", "WhitePlayer", "BlackPlayer", "Result", "PgnMoves", new LinkedHashMap<>());
         assertEquals(expected, pgn.generatePgn());
     }
 

@@ -15,7 +15,7 @@ import lombok.experimental.UtilityClass;
 public class PgnUtil {
 
     public static ChessGame pgn2Game(PgnFormat pgn) {
-        ChessGameInfo gi = new ChessGameInfo(pgn.getWhitePlayer(), pgn.getBlackPlayer(), pgn.getSite(), pgn.getDate(), pgn.getRound());
+        ChessGameInfo gi = new ChessGameInfo(pgn.getWhitePlayer(), pgn.getBlackPlayer(), pgn.getEvent(), pgn.getSite(), pgn.getDate(), pgn.getRound(), pgn.getOptionalTags());
 
         ChessGame result = new ChessGame(gi);
 
@@ -99,7 +99,7 @@ public class PgnUtil {
         pgnMoves.append(gameState.getValue());
 
         ChessGameInfo gameInfo = game.getGameInfo();
-        PgnFormat pgn = new PgnFormat(gameInfo.getSite(), gameInfo.getDate(), gameInfo.getRound(), gameInfo.getWhitePlayer(), gameInfo.getBlackPlayer(), gameState.getValue(), pgnMoves.toString());
+        PgnFormat pgn = new PgnFormat(gameInfo.getEvent(), gameInfo.getSite(), gameInfo.getDate(), gameInfo.getRound(), gameInfo.getWhitePlayer(), gameInfo.getBlackPlayer(), gameState.getValue(), pgnMoves.toString(), gameInfo.getOptionalTags());
 
         return pgn;
     }

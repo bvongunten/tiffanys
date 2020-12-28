@@ -7,13 +7,11 @@ import org.junit.Test;
 
 import ch.nostromo.tiffanys.commons.ChessGame;
 import ch.nostromo.tiffanys.commons.TestHelper;
-import ch.nostromo.tiffanys.commons.pgn.PgnFormat;
-import ch.nostromo.tiffanys.commons.pgn.PgnUtil;
 
 public class PgnUtilTest extends TestHelper {
 
     @Test
-    public void testPgn() throws Exception {
+    public void testPgn() {
         String pgnInput = "";
         pgnInput += "[Site \"?\"]\n";
         pgnInput += "[Date \"2007.08.14\"]\n";
@@ -41,7 +39,36 @@ public class PgnUtilTest extends TestHelper {
     }
 
     @Test
-    public void testPgnRemis() throws Exception {
+    public void testLichessPgn()  {
+        String pgnInput = "[Event \"Rated Blitz game\"]\n" +
+                "[Site \"https://lichess.org/mxVSED7u\"]\n" +
+                "[Date \"2020.07.13\"]\n" +
+                "[White \"bvongunten\"]\n" +
+                "[Black \"Ashavakhi\"]\n" +
+                "[Result \"0-1\"]\n" +
+                "[UTCDate \"2020.07.13\"]\n" +
+                "[UTCTime \"22:10:07\"]\n" +
+                "[WhiteElo \"1285\"]\n" +
+                "[BlackElo \"1324\"]\n" +
+                "[WhiteRatingDiff \"-22\"]\n" +
+                "[BlackRatingDiff \"+6\"]\n" +
+                "[Variant \"Standard\"]\n" +
+                "[TimeControl \"300+0\"]\n" +
+                "[ECO \"C44\"]\n" +
+                "[Termination \"Normal\"]\n" +
+                "\n" +
+                "1.e4 e5 0-1\n";
+
+        PgnFormat pgnFormatIn = new PgnFormat(pgnInput);
+        ChessGame game = PgnUtil.pgn2Game(pgnFormatIn);
+        PgnFormat pgnFormatOut = PgnUtil.game2pgn(game);
+
+        comparePgnFormat(pgnFormatIn, pgnFormatOut);
+
+    }
+
+    @Test
+    public void testPgnRemis() {
         String pgnInput = "";
         pgnInput += "[Site \"?\"]\n";
         pgnInput += "[Date \"2007.08.14\"]\n";
@@ -60,7 +87,7 @@ public class PgnUtilTest extends TestHelper {
     }
 
     @Test
-    public void testPgnWinWhite() throws Exception {
+    public void testPgnWinWhite()  {
         String pgnInput = "";
         pgnInput += "[Site \"?\"]\n";
         pgnInput += "[Date \"2007.08.14\"]\n";
@@ -79,7 +106,7 @@ public class PgnUtilTest extends TestHelper {
     }
 
     @Test
-    public void testPgnWinBlack() throws Exception {
+    public void testPgnWinBlack() {
         String pgnInput = "";
         pgnInput += "[Site \"?\"]\n";
         pgnInput += "[Date \"2007.08.14\"]\n";
