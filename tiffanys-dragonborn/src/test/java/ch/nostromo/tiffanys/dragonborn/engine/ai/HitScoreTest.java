@@ -1,9 +1,5 @@
 package ch.nostromo.tiffanys.dragonborn.engine.ai;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-
 import ch.nostromo.tiffanys.commons.board.Board;
 import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.fen.FenFormat;
@@ -12,6 +8,9 @@ import ch.nostromo.tiffanys.dragonborn.commons.EngineSettings;
 import ch.nostromo.tiffanys.dragonborn.engine.TestHelper;
 import ch.nostromo.tiffanys.dragonborn.engine.board.RobustBoard;
 import ch.nostromo.tiffanys.dragonborn.engine.move.EngineMove;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class HitScoreTest extends TestHelper {
 

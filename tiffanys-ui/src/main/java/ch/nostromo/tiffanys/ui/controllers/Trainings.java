@@ -1,20 +1,20 @@
 package ch.nostromo.tiffanys.ui.controllers;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
-import ch.nostromo.tiffanys.ui.TiffanysFxGuiCentral;
-import ch.nostromo.tiffanys.ui.preferences.TiffanysConfigTranslation;
 import ch.nostromo.tiffanys.commons.ChessGame;
 import ch.nostromo.tiffanys.commons.ChessGameInfo;
 import ch.nostromo.tiffanys.commons.fen.FenFormat;
+import ch.nostromo.tiffanys.ui.TiffanysFxGuiCentral;
+import ch.nostromo.tiffanys.ui.preferences.TiffanysConfigTranslation;
 import ch.nostromo.tiffanys.ui.utils.game.AppGameSettings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class Trainings implements Initializable {
 

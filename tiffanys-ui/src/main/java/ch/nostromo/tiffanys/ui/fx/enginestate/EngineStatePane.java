@@ -1,14 +1,13 @@
 package ch.nostromo.tiffanys.ui.fx.enginestate;
 
-import java.util.List;
-
-import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.move.Move;
 import ch.nostromo.tiffanys.dragonborn.commons.events.EngineEvent;
 import ch.nostromo.tiffanys.ui.utils.frontends.Frontends;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
+
+import java.util.List;
 
 public class EngineStatePane extends BorderPane {
 

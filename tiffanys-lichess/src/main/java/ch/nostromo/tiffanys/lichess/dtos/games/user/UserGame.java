@@ -1,8 +1,8 @@
 package ch.nostromo.tiffanys.lichess.dtos.games.user;
 
+import ch.nostromo.tiffanys.lichess.dtos.commons.Clock;
 import ch.nostromo.tiffanys.lichess.dtos.commons.GameState;
 import ch.nostromo.tiffanys.lichess.dtos.commons.Opening;
-import ch.nostromo.tiffanys.lichess.dtos.commons.Clock;
 import lombok.Data;
 
 @Data

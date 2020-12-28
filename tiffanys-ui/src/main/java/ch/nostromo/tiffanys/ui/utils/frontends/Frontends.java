@@ -1,9 +1,7 @@
 package ch.nostromo.tiffanys.ui.utils.frontends;
 
 import ch.nostromo.tiffanys.commons.board.Board;
-import ch.nostromo.tiffanys.commons.board.BoardUtil;
 import ch.nostromo.tiffanys.commons.enums.Castling;
-import ch.nostromo.tiffanys.commons.enums.Piece;
 import ch.nostromo.tiffanys.commons.move.Move;
 
 public class Frontends {

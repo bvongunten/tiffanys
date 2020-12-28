@@ -1,7 +1,7 @@
 package ch.nostromo.tiffanys.lichess.dtos.account;
 
-import ch.nostromo.tiffanys.lichess.dtos.commons.Perfs;
 import ch.nostromo.tiffanys.lichess.dtos.commons.Count;
+import ch.nostromo.tiffanys.lichess.dtos.commons.Perfs;
 import lombok.Data;
 
 @Data

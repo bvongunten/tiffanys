@@ -1,12 +1,10 @@
 package ch.nostromo.tiffanys.commons.enums;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-
+import ch.nostromo.tiffanys.commons.TestHelper;
 import org.junit.Test;
 
-import ch.nostromo.tiffanys.commons.TestHelper;
-import ch.nostromo.tiffanys.commons.enums.GameColor;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class ColorTest extends TestHelper {
 

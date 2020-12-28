@@ -1,7 +1,5 @@
 package ch.nostromo.tiffanys.commons.pgn;
 
-import java.util.List;
-
 import ch.nostromo.tiffanys.commons.board.Board;
 import ch.nostromo.tiffanys.commons.enums.Castling;
 import ch.nostromo.tiffanys.commons.enums.GameColor;
@@ -9,6 +7,8 @@ import ch.nostromo.tiffanys.commons.enums.Piece;
 import ch.nostromo.tiffanys.commons.move.Move;
 import ch.nostromo.tiffanys.commons.rules.RulesUtil;
 import lombok.experimental.UtilityClass;
+
+import java.util.List;
 
 @UtilityClass
 public class SanUtil {

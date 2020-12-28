@@ -1,11 +1,5 @@
 package ch.nostromo.tiffanys.ui.controllers;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-
 import ch.nostromo.tiffanys.ui.TiffanysFxGuiCentral;
 import ch.nostromo.tiffanys.ui.preferences.TiffanysConfig;
 import ch.nostromo.tiffanys.ui.preferences.TiffanysConfigTranslation;
@@ -15,6 +9,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class EditOptions implements Initializable {
 

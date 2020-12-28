@@ -1,10 +1,10 @@
 package ch.nostromo.tiffanys.ui.preferences;
 
+import ch.nostromo.tiffanys.ui.TiffanysFxGui;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.prefs.Preferences;
-
-import ch.nostromo.tiffanys.ui.TiffanysFxGui;
 
 public class TiffanysConfig {
 

@@ -1,14 +1,10 @@
 package ch.nostromo.tiffanys.commons.move;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
-
 import ch.nostromo.tiffanys.commons.enums.Castling;
 import ch.nostromo.tiffanys.commons.enums.Piece;
-import ch.nostromo.tiffanys.commons.move.Move;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 public class MoveTest {
 

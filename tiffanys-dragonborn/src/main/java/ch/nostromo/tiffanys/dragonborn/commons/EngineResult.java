@@ -1,10 +1,10 @@
 package ch.nostromo.tiffanys.dragonborn.commons;
 
-import java.util.List;
-
 import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.move.Move;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class EngineResult {

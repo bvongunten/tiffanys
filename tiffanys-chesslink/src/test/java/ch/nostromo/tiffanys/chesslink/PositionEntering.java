@@ -1,7 +1,6 @@
 package ch.nostromo.tiffanys.chesslink;
 
 import ch.nostromo.tiffanys.commons.board.Board;
-import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.fen.FenFormat;
 import ch.nostromo.tiffanys.commons.logging.LogUtils;
 import ch.nostromo.tiffanys.commons.move.Move;

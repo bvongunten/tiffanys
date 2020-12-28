@@ -1,16 +1,15 @@
 package ch.nostromo.tiffanys.commons.pieces;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.Test;
-
 import ch.nostromo.tiffanys.commons.TestHelper;
 import ch.nostromo.tiffanys.commons.board.Board;
 import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.enums.Piece;
 import ch.nostromo.tiffanys.commons.fen.FenFormat;
 import ch.nostromo.tiffanys.commons.move.Move;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RookTest extends TestHelper {
 

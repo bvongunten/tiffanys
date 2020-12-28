@@ -1,17 +1,17 @@
 package ch.nostromo.tiffanys.commons.board;
 
-import java.util.StringTokenizer;
-import java.util.logging.Logger;
-
 import ch.nostromo.tiffanys.commons.enums.Castling;
-import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.enums.FieldType;
+import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.enums.Piece;
 import ch.nostromo.tiffanys.commons.fen.FenFormat;
 import ch.nostromo.tiffanys.commons.fields.Field;
 import ch.nostromo.tiffanys.commons.move.Move;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.StringTokenizer;
+import java.util.logging.Logger;
 
 @Getter
 @Setter

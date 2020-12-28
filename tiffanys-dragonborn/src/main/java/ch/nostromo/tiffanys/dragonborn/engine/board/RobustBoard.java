@@ -6,11 +6,11 @@ import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.enums.Piece;
 import ch.nostromo.tiffanys.commons.fields.Field;
 import ch.nostromo.tiffanys.dragonborn.engine.DragonbornEngineConstants;
-import ch.nostromo.tiffanys.dragonborn.engine.move.impl.MoveGeneratorImpl;
 import ch.nostromo.tiffanys.dragonborn.engine.board.api.BoardInteraction;
 import ch.nostromo.tiffanys.dragonborn.engine.board.impl.BoardInteractionImpl;
 import ch.nostromo.tiffanys.dragonborn.engine.move.EngineMove;
 import ch.nostromo.tiffanys.dragonborn.engine.move.api.MoveGenerator;
+import ch.nostromo.tiffanys.dragonborn.engine.move.impl.MoveGeneratorImpl;
 
 import java.util.ArrayList;
 

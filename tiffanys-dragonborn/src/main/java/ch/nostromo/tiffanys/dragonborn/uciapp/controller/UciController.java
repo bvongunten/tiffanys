@@ -1,19 +1,11 @@
 package ch.nostromo.tiffanys.dragonborn.uciapp.controller;
 
-import java.util.StringTokenizer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import ch.nostromo.tiffanys.commons.uci.UciMoveTranslator;
-import ch.nostromo.tiffanys.dragonborn.uciapp.UciApp;
-import ch.nostromo.tiffanys.dragonborn.uciapp.utils.logging.LogUtils;
-import ch.nostromo.tiffanys.dragonborn.uciapp.utils.system.ConsoleScanner;
-import ch.nostromo.tiffanys.dragonborn.uciapp.utils.system.ConsoleScannerListener;
 import ch.nostromo.tiffanys.commons.ChessGame;
 import ch.nostromo.tiffanys.commons.ChessGameInfo;
 import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.fen.FenFormat;
 import ch.nostromo.tiffanys.commons.move.Move;
+import ch.nostromo.tiffanys.commons.uci.UciMoveTranslator;
 import ch.nostromo.tiffanys.dragonborn.commons.AbstractEngine;
 import ch.nostromo.tiffanys.dragonborn.commons.EngineException;
 import ch.nostromo.tiffanys.dragonborn.commons.EngineSettings;
@@ -21,6 +13,14 @@ import ch.nostromo.tiffanys.dragonborn.commons.events.EngineEvent;
 import ch.nostromo.tiffanys.dragonborn.commons.events.EngineEventListener;
 import ch.nostromo.tiffanys.dragonborn.commons.opening.OpeningBook;
 import ch.nostromo.tiffanys.dragonborn.engine.DragonbornEngine;
+import ch.nostromo.tiffanys.dragonborn.uciapp.UciApp;
+import ch.nostromo.tiffanys.dragonborn.uciapp.utils.logging.LogUtils;
+import ch.nostromo.tiffanys.dragonborn.uciapp.utils.system.ConsoleScanner;
+import ch.nostromo.tiffanys.dragonborn.uciapp.utils.system.ConsoleScannerListener;
+
+import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UciController implements ConsoleScannerListener, EngineEventListener {
 

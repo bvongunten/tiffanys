@@ -1,8 +1,5 @@
 package ch.nostromo.tiffanys.ui.fx.board;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ch.nostromo.tiffanys.commons.board.Board;
 import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.fields.Field;
@@ -12,15 +9,12 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DataFormat;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
+import javafx.scene.input.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BoardPane extends BorderPane {
 	public static final DataFormat DRAG_DATA_FORMAT = new DataFormat("board.coordinates");

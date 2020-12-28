@@ -1,7 +1,7 @@
 package ch.nostromo.tiffanys.commons.fields;
 
-import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.enums.FieldType;
+import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.enums.Piece;
 import lombok.Getter;
 import lombok.Setter;

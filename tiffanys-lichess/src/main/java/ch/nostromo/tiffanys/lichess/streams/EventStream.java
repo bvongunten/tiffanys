@@ -1,9 +1,6 @@
 package ch.nostromo.tiffanys.lichess.streams;
 
 import ch.nostromo.tiffanys.lichess.dtos.TypeHelper;
-import ch.nostromo.tiffanys.lichess.dtos.board.BoardGameFull;
-import ch.nostromo.tiffanys.lichess.dtos.commons.ChatLine;
-import ch.nostromo.tiffanys.lichess.dtos.commons.GameState;
 import ch.nostromo.tiffanys.lichess.dtos.events.GameStartEvent;
 import ch.nostromo.tiffanys.lichess.exception.LichessException;
 import com.google.gson.Gson;

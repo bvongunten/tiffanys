@@ -1,13 +1,10 @@
 package ch.nostromo.tiffanys.commons;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-
-import ch.nostromo.tiffanys.commons.ChessGame;
-import ch.nostromo.tiffanys.commons.ChessGameInfo;
 import ch.nostromo.tiffanys.commons.enums.GameState;
 import ch.nostromo.tiffanys.commons.fen.FenFormat;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class GameTest extends TestHelper {
 

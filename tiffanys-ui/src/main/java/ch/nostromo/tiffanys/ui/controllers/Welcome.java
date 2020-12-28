@@ -1,11 +1,11 @@
 package ch.nostromo.tiffanys.ui.controllers;
 
-import java.io.IOException;
-
 import ch.nostromo.tiffanys.ui.TiffanysFxGuiCentral;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+
+import java.io.IOException;
 
 public class Welcome {
 

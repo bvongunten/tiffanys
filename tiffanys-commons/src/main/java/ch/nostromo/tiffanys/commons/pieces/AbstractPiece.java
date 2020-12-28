@@ -1,12 +1,12 @@
 package ch.nostromo.tiffanys.commons.pieces;
 
-import java.util.List;
-
 import ch.nostromo.tiffanys.commons.board.Board;
-import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.enums.Direction;
+import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.enums.Piece;
 import ch.nostromo.tiffanys.commons.move.Move;
+
+import java.util.List;
 
 public abstract class AbstractPiece {
 

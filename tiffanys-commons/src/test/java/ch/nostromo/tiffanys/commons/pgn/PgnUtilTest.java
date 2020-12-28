@@ -1,12 +1,11 @@
 package ch.nostromo.tiffanys.commons.pgn;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-import org.junit.Test;
-
 import ch.nostromo.tiffanys.commons.ChessGame;
 import ch.nostromo.tiffanys.commons.TestHelper;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class PgnUtilTest extends TestHelper {
 

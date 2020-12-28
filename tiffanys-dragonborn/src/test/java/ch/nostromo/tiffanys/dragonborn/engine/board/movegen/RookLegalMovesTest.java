@@ -1,9 +1,8 @@
 package ch.nostromo.tiffanys.dragonborn.engine.board.movegen;
 
-import org.junit.Test;
-
 import ch.nostromo.tiffanys.commons.fen.FenFormat;
 import ch.nostromo.tiffanys.dragonborn.engine.TestHelper;
+import org.junit.Test;
 
 public class RookLegalMovesTest extends TestHelper {
 

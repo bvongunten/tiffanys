@@ -1,9 +1,9 @@
 package ch.nostromo.tiffanys.dragonborn.engine.ai.callable;
 
 import ch.nostromo.tiffanys.dragonborn.commons.EngineSettings;
-import ch.nostromo.tiffanys.dragonborn.engine.ai.eval.TiffanysEvaluation;
 import ch.nostromo.tiffanys.dragonborn.engine.DragonbornEngineConstants;
 import ch.nostromo.tiffanys.dragonborn.engine.ai.PrincipalVariation;
+import ch.nostromo.tiffanys.dragonborn.engine.ai.eval.TiffanysEvaluation;
 import ch.nostromo.tiffanys.dragonborn.engine.board.RobustBoard;
 import ch.nostromo.tiffanys.dragonborn.engine.move.EngineMove;
 

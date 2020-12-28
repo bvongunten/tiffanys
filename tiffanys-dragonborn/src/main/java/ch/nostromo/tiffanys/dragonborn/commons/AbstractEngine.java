@@ -1,17 +1,17 @@
 package ch.nostromo.tiffanys.dragonborn.commons;
 
+import ch.nostromo.tiffanys.commons.ChessGame;
+import ch.nostromo.tiffanys.commons.move.Move;
+import ch.nostromo.tiffanys.dragonborn.commons.events.EngineEvent;
+import ch.nostromo.tiffanys.dragonborn.commons.events.EngineEventListener;
+import ch.nostromo.tiffanys.dragonborn.commons.opening.OpeningBook;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import ch.nostromo.tiffanys.commons.ChessGame;
-import ch.nostromo.tiffanys.commons.move.Move;
-import ch.nostromo.tiffanys.dragonborn.commons.events.EngineEvent;
-import ch.nostromo.tiffanys.dragonborn.commons.events.EngineEventListener;
-import ch.nostromo.tiffanys.dragonborn.commons.opening.OpeningBook;
 
 public abstract class AbstractEngine {
 	protected static Logger LOGGER = Logger.getLogger(AbstractEngine.class.getName());

@@ -1,16 +1,16 @@
 package ch.nostromo.tiffanys.dragonborn.engine.move;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ch.nostromo.tiffanys.commons.enums.Castling;
 import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.enums.Piece;
 import ch.nostromo.tiffanys.commons.move.Move;
 import ch.nostromo.tiffanys.commons.move.MoveAttributes;
 import ch.nostromo.tiffanys.dragonborn.engine.DragonbornEngineConstants;
-import ch.nostromo.tiffanys.dragonborn.engine.board.RobustBoard;
 import ch.nostromo.tiffanys.dragonborn.engine.ai.PrincipalVariation;
+import ch.nostromo.tiffanys.dragonborn.engine.board.RobustBoard;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EngineMove implements Comparable<EngineMove>, DragonbornEngineConstants, Cloneable {
 

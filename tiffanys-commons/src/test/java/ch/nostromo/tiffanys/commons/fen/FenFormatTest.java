@@ -1,11 +1,9 @@
 package ch.nostromo.tiffanys.commons.fen;
 
-import static org.junit.Assert.assertEquals;
-
+import ch.nostromo.tiffanys.commons.TestHelper;
 import org.junit.Test;
 
-import ch.nostromo.tiffanys.commons.TestHelper;
-import ch.nostromo.tiffanys.commons.fen.FenFormat;
+import static org.junit.Assert.assertEquals;
 
 public class FenFormatTest extends TestHelper {
 

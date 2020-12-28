@@ -1,16 +1,10 @@
 package ch.nostromo.tiffanys.commons.enums;
 
-import java.util.List;
-
 import ch.nostromo.tiffanys.commons.board.Board;
 import ch.nostromo.tiffanys.commons.move.Move;
-import ch.nostromo.tiffanys.commons.pieces.AbstractPiece;
-import ch.nostromo.tiffanys.commons.pieces.Bishop;
-import ch.nostromo.tiffanys.commons.pieces.King;
-import ch.nostromo.tiffanys.commons.pieces.Knight;
-import ch.nostromo.tiffanys.commons.pieces.Pawn;
-import ch.nostromo.tiffanys.commons.pieces.Queen;
-import ch.nostromo.tiffanys.commons.pieces.Rook;
+import ch.nostromo.tiffanys.commons.pieces.*;
+
+import java.util.List;
 
 public enum Piece {
 

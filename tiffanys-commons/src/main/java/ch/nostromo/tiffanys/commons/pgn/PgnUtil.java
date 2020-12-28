@@ -1,8 +1,5 @@
 package ch.nostromo.tiffanys.commons.pgn;
 
-import java.util.List;
-import java.util.StringTokenizer;
-
 import ch.nostromo.tiffanys.commons.ChessGame;
 import ch.nostromo.tiffanys.commons.ChessGameInfo;
 import ch.nostromo.tiffanys.commons.board.Board;
@@ -10,6 +7,9 @@ import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.enums.GameState;
 import ch.nostromo.tiffanys.commons.move.Move;
 import lombok.experimental.UtilityClass;
+
+import java.util.List;
+import java.util.StringTokenizer;
 
 @UtilityClass
 public class PgnUtil {

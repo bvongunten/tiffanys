@@ -1,11 +1,5 @@
 package ch.nostromo.tiffanys.ui.controllers;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-import ch.nostromo.tiffanys.ui.fx.board.BoardPane;
-import ch.nostromo.tiffanys.ui.fx.board.BoardPaneEvents;
-import ch.nostromo.tiffanys.ui.fx.board.BoardPiecesSet;
 import ch.nostromo.tiffanys.commons.ChessGame;
 import ch.nostromo.tiffanys.commons.ChessGameInfo;
 import ch.nostromo.tiffanys.commons.enums.Castling;
@@ -13,6 +7,9 @@ import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.enums.Piece;
 import ch.nostromo.tiffanys.commons.fen.FenFormat;
 import ch.nostromo.tiffanys.commons.fields.Field;
+import ch.nostromo.tiffanys.ui.fx.board.BoardPane;
+import ch.nostromo.tiffanys.ui.fx.board.BoardPaneEvents;
+import ch.nostromo.tiffanys.ui.fx.board.BoardPiecesSet;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -26,6 +23,9 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class EditBoard implements Initializable, BoardPaneEvents {
 

@@ -1,15 +1,12 @@
 package ch.nostromo.tiffanys.commons.move;
 
-import static org.junit.Assert.assertEquals;
+import ch.nostromo.tiffanys.commons.enums.GameColor;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.nostromo.tiffanys.commons.enums.GameColor;
-import org.junit.Test;
-
-import ch.nostromo.tiffanys.commons.move.Move;
-import ch.nostromo.tiffanys.commons.move.MoveAttributes;
+import static org.junit.Assert.assertEquals;
 
 public class MoveAttributesTest {
 

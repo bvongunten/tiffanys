@@ -1,20 +1,15 @@
 package ch.nostromo.tiffanys.commons;
 
-import static org.junit.Assert.fail;
+import ch.nostromo.tiffanys.commons.move.Move;
+import org.junit.Before;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.Level;
-import java.util.logging.LogManager;
-import java.util.logging.LogRecord;
-import java.util.logging.Logger;
+import java.util.logging.*;
 
-import org.junit.Before;
-
-import ch.nostromo.tiffanys.commons.move.Move;
+import static org.junit.Assert.fail;
 
 public class TestHelper {
 

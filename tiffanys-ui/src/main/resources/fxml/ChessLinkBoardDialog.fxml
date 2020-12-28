@@ -5,7 +5,6 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="110.0" minWidth="425.0" prefHeight="110.0" prefWidth="425.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.nostromo.tiffanys.ui.controllers.ChessLinkBoardDialog">
    <center>
       <Pane prefHeight="328.0" prefWidth="425.0" BorderPane.alignment="CENTER">

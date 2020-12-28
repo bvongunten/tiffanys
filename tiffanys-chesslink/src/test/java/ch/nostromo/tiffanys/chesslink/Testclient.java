@@ -9,7 +9,6 @@ import ch.nostromo.tiffanys.commons.move.Move;
 import javax.usb3.exception.UsbException;
 import java.io.IOException;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Testclient implements ChessLinkBoardEventListener {
 

@@ -1,8 +1,5 @@
 package ch.nostromo.tiffanys.commons.rules;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ch.nostromo.tiffanys.commons.board.Board;
 import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.enums.Piece;
@@ -11,6 +8,9 @@ import ch.nostromo.tiffanys.commons.fields.Field;
 import ch.nostromo.tiffanys.commons.move.Move;
 import ch.nostromo.tiffanys.commons.pieces.King;
 import lombok.experimental.UtilityClass;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @UtilityClass
 public class RulesUtil {

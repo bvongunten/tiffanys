@@ -1,7 +1,5 @@
 package ch.nostromo.tiffanys.ui.controllers;
 
-import java.io.IOException;
-
 import ch.nostromo.tiffanys.ui.TiffanysFxGuiCentral;
 import ch.nostromo.tiffanys.ui.utils.game.AppGameSettings;
 import javafx.event.ActionEvent;
@@ -9,8 +7,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class EditGameSettings  {
 

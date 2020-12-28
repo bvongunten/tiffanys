@@ -1,13 +1,11 @@
 package ch.nostromo.tiffanys.commons.pgn;
 
-import static org.junit.Assert.assertEquals;
-
+import ch.nostromo.tiffanys.commons.TestHelper;
 import org.junit.Test;
 
-import ch.nostromo.tiffanys.commons.TestHelper;
-import ch.nostromo.tiffanys.commons.pgn.PgnFormat;
-
 import java.util.LinkedHashMap;
+
+import static org.junit.Assert.assertEquals;
 
 public class PgnFormatTest extends TestHelper {
 

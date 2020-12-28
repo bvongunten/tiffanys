@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
+<?import javafx.scene.layout.AnchorPane?>
 <AnchorPane prefHeight="224.0" prefWidth="368.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.nostromo.tiffanys.ui.controllers.EditGameSettings">
    <children>
       <Label layoutX="23.0" layoutY="28.0" prefHeight="17.0" prefWidth="70.0" text="Player Black" />

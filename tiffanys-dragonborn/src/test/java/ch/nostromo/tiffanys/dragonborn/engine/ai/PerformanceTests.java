@@ -1,7 +1,5 @@
 package ch.nostromo.tiffanys.dragonborn.engine.ai;
 
-import org.junit.Test;
-
 import ch.nostromo.tiffanys.commons.ChessGame;
 import ch.nostromo.tiffanys.commons.ChessGameInfo;
 import ch.nostromo.tiffanys.commons.fen.FenFormat;
@@ -10,6 +8,7 @@ import ch.nostromo.tiffanys.dragonborn.commons.EngineResult;
 import ch.nostromo.tiffanys.dragonborn.commons.EngineSettings;
 import ch.nostromo.tiffanys.dragonborn.engine.DragonbornEngine;
 import ch.nostromo.tiffanys.dragonborn.engine.TestHelper;
+import org.junit.Test;
 
 public class PerformanceTests extends TestHelper {
 

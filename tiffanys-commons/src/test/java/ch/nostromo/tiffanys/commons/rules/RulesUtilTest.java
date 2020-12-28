@@ -1,17 +1,15 @@
 package ch.nostromo.tiffanys.commons.rules;
 
-import static org.junit.Assert.assertTrue;
-
-import java.util.List;
-
-import org.junit.Test;
-
 import ch.nostromo.tiffanys.commons.TestHelper;
 import ch.nostromo.tiffanys.commons.board.Board;
 import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.fen.FenFormat;
 import ch.nostromo.tiffanys.commons.move.Move;
-import ch.nostromo.tiffanys.commons.rules.RulesUtil;
+import org.junit.Test;
+
+import java.util.List;
+
+import static org.junit.Assert.assertTrue;
 
 public class RulesUtilTest extends TestHelper {
 
