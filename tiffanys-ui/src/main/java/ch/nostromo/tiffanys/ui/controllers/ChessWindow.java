@@ -438,7 +438,7 @@ public class ChessWindow implements Initializable, BoardPaneEvents, EngineEventL
 
             currentEngine = null;
 
-            Move selectedMove = event.getEngineResult().getSelectdMove();
+            Move selectedMove = event.getEngineResult().getSelectedMove();
 
             handleFinishedMove(selectedMove);
 

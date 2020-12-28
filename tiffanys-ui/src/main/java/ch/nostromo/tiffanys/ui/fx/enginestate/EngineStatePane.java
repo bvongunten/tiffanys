@@ -2,6 +2,7 @@ package ch.nostromo.tiffanys.ui.fx.enginestate;
 
 import java.util.List;
 
+import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.move.Move;
 import ch.nostromo.tiffanys.dragonborn.commons.events.EngineEvent;
 import ch.nostromo.tiffanys.ui.utils.frontends.Frontends;
@@ -30,7 +31,7 @@ public class EngineStatePane extends BorderPane {
 		if (moves != null) {
 			textArea.clear();
 			for (Move move : moves) {
-				textArea.appendText(move.getMoveAttributes().getScore() + " " +  Frontends.moveToString(move) + " [ " + move.getMoveAttributes().getMaxDepth() + " pv ");
+				textArea.appendText(move.getMoveAttributes().getPawnScoreForWhite() + " " +  Frontends.moveToString(move) + " [ " + move.getMoveAttributes().getMaxDepth() + " pv ");
 
 				for (Move pvMove : move.getMoveAttributes().getPrincipalVariations()) {
 					textArea.appendText(Frontends.moveToString(pvMove) + " ");

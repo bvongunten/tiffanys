@@ -1,5 +1,6 @@
 package ch.nostromo.tiffanys.commons.move;
 
+import ch.nostromo.tiffanys.commons.enums.GameColor;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +14,7 @@ public class MoveAttributes {
 
 
 
+    private GameColor colorToMove;
     private double score;
     private int nodes;
     private int cutOffs;
@@ -36,6 +38,16 @@ public class MoveAttributes {
         result += "]";
 
         return result;
+    }
+
+    public double getPawnScoreForWhite() {
+        double result = score / 100;
+
+        if (colorToMove == GameColor.BLACK) {
+            result = result * -1;
+        }
+
+        return  Math.round(result * 100.0) / 100.0;
     }
 
 }

@@ -48,7 +48,7 @@ public class PerformanceTests extends TestHelper {
         logger.info("Positions evaluated: " + result.getPositionsEvaluated());
         logger.info("Time spent: " + result.getTotalTimeInMs());
 
-        logger.info("Best move score: " + result.getSelectdMove().getMoveAttributes().getScore());
+        logger.info("Best move score: " + result.getSelectedMove().getMoveAttributes().getScore());
 
         // assertTrue(9999.0 == result.getSelectdMove().getMoveAttributes().getScore());
 

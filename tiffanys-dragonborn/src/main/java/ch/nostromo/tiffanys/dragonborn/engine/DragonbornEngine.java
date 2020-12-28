@@ -47,6 +47,7 @@ public class DragonbornEngine extends AbstractEngine implements DragonbornEngine
     private EngineResult createEngineResult(ChessGame game, CalculationResult calculationResult, long timeMs) {
 
         EngineResult result = new EngineResult();
+        result.setColorToMove(game.getCurrentColorToMove());
 
         EngineMove[] tiffMoves = calculationResult.moves;
         Arrays.sort(tiffMoves);

@@ -292,21 +292,21 @@ public class UciController implements ConsoleScannerListener, EngineEventListene
 
     @Override
     public void engineUpdateEventOccured(EngineEvent event) {
-        logger.fine("Update received from engine. Best move: " + event.getEngineResult().getSelectdMove());
+        logger.fine("Update received from engine. Best move: " + event.getEngineResult().getSelectedMove());
         sendInfoLine(event);
     }
 
     @Override
     public void engineFinishedEventOccured(EngineEvent event) {
-        logger.fine("Finished received from engine: Best move: " + event.getEngineResult().getSelectdMove());
-        game.applyMove(event.getEngineResult().getSelectdMove());
+        logger.fine("Finished received from engine: Best move: " + event.getEngineResult().getSelectedMove());
+        game.applyMove(event.getEngineResult().getSelectedMove());
 
         sendInfoLine(event);
-        doOutput("bestmove " + UciMoveTranslator.moveToUciString(event.getEngineResult().getSelectdMove()));
+        doOutput("bestmove " + UciMoveTranslator.moveToUciString(event.getEngineResult().getSelectedMove()));
     }
 
     private void sendInfoLine(EngineEvent event) {
-        Move moveTomake = event.getEngineResult().getSelectdMove();
+        Move moveTomake = event.getEngineResult().getSelectedMove();
 
         if (moveTomake.getMoveAttributes() != null) {
 

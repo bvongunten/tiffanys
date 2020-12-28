@@ -306,7 +306,7 @@ public class EngineMove implements Comparable<EngineMove>, DragonbornEngineConst
             }
         }
 
-        MoveAttributes attributes = new MoveAttributes(score, nodes, cutOffs, plannedDepth, maxDepth, timeMs, pv);
+        MoveAttributes attributes = new MoveAttributes(colorToMove, score, nodes, cutOffs, plannedDepth, maxDepth, timeMs, pv);
         result.setMoveAttributes(attributes);
 
         return result;

@@ -37,9 +37,9 @@ public class MateTest extends TestHelper {
         logger.info("Positions evaluated: " + result.getPositionsEvaluated());
         logger.info("Time spent: " + result.getTotalTimeInMs());
 
-        logger.info("Best move score: " + result.getSelectdMove().getMoveAttributes().getScore());
+        logger.info("Best move score: " + result.getSelectedMove().getMoveAttributes().getScore());
 
-        assertTrue(9999.0 == result.getSelectdMove().getMoveAttributes().getScore());
+        assertTrue(9999.0 == result.getSelectedMove().getMoveAttributes().getScore());
 
     }
 
@@ -61,7 +61,7 @@ public class MateTest extends TestHelper {
 
         logger.info("Best move score: " + result.getLegalMoves().get(0).getMoveAttributes().getScore());
 
-        assertTrue(9997.0 == result.getSelectdMove().getMoveAttributes().getScore());
+        assertTrue(9997.0 == result.getSelectedMove().getMoveAttributes().getScore());
 
     }
 
@@ -82,7 +82,7 @@ public class MateTest extends TestHelper {
         logger.info("Time spent: " + result.getTotalTimeInMs());
         logger.info("Best move score: " + result.getLegalMoves().get(0).getMoveAttributes().getScore());
 
-        assertTrue(9997.0 == result.getSelectdMove().getMoveAttributes().getScore());
+        assertTrue(9997.0 == result.getSelectedMove().getMoveAttributes().getScore());
 
     }
 
@@ -102,7 +102,7 @@ public class MateTest extends TestHelper {
         logger.info("Positions evaluated: " + result.getPositionsEvaluated());
         logger.info("Time spent: " + result.getTotalTimeInMs());
 
-        assertTrue(9995.0 == result.getSelectdMove().getMoveAttributes().getScore());
+        assertTrue(9995.0 == result.getSelectedMove().getMoveAttributes().getScore());
 
     }
 
@@ -127,7 +127,7 @@ public class MateTest extends TestHelper {
         logger.info("Time spent: " + result.getTotalTimeInMs());
 
 
-        Move moveTomake = result.getSelectdMove();
+        Move moveTomake = result.getSelectedMove();
 
         String pvs = "";
         for (Move pv : moveTomake.getMoveAttributes().getPrincipalVariations()) {
@@ -135,7 +135,7 @@ public class MateTest extends TestHelper {
         }
         System.out.println("PV: " + pvs);
 
-        assertTrue(9993.0 == result.getSelectdMove().getMoveAttributes().getScore());
+        assertTrue(9993.0 == result.getSelectedMove().getMoveAttributes().getScore());
 
     }
 
@@ -158,7 +158,7 @@ public class MateTest extends TestHelper {
         logger.info("Time spent: " + result.getTotalTimeInMs());
 
 
-        Move moveTomake = result.getSelectdMove();
+        Move moveTomake = result.getSelectedMove();
 
         String pvs = "";
         for (Move pv : moveTomake.getMoveAttributes().getPrincipalVariations()) {
@@ -166,7 +166,7 @@ public class MateTest extends TestHelper {
         }
         System.out.println("PV: " + pvs);
 
-        assertTrue(9991.0 == result.getSelectdMove().getMoveAttributes().getScore());
+        assertTrue(9991.0 == result.getSelectedMove().getMoveAttributes().getScore());
 
     }
 
@@ -193,7 +193,7 @@ public class MateTest extends TestHelper {
         logger.info("Time spent: " + result.getTotalTimeInMs());
 
 
-        Move moveTomake = result.getSelectdMove();
+        Move moveTomake = result.getSelectedMove();
 
         assertTrue(moveTomake.getFrom() != 36);
 
@@ -219,7 +219,7 @@ public class MateTest extends TestHelper {
         logger.info("Time spent: " + result.getTotalTimeInMs());
 
 
-        Move moveTomake = result.getSelectdMove();
+        Move moveTomake = result.getSelectedMove();
 
         assertEquals(43, moveTomake.getFrom());
 
