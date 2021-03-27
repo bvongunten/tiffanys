@@ -37,7 +37,7 @@
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem disable="true" mnemonicParsing="false" onAction="#onActionGameSettings" text="Game Settings" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-      						<MenuItem disable="true" mnemonicParsing="false" onAction="#onActionGamePosition" text="Edit Position" />
+      						<MenuItem  mnemonicParsing="false" onAction="#onActionGamePosition" text="Edit Position" />
       					</items>
       				</Menu>
       				<Menu mnemonicParsing="false" text="Help">

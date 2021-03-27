@@ -25,9 +25,11 @@ public class ChessGame {
     List<Board> historyBoards = null;
     List<Move> historyMoves = null;
 
+    Double historyInitialBoardScore = null;
+
     int offsetHalfMoveClock;
     int offsetMoveCount;
-    
+
     GameColor colorToMove;
     GameColor startingColor;
 
@@ -37,10 +39,12 @@ public class ChessGame {
 
     FenFormat initialFen;
 
+    boolean eligibleForOB = false;
+
     public ChessGame() {
         this(new ChessGameInfo(), new FenFormat(FenFormat.INITIAL_BOARD));
     }
-    
+
     public ChessGame(ChessGameInfo gameInfo) {
         this(gameInfo, new FenFormat(FenFormat.INITIAL_BOARD));
     }
@@ -60,6 +64,10 @@ public class ChessGame {
     }
 
     private void setGameByFen(FenFormat fenFormat) {
+        if (fenFormat.generateFen().equalsIgnoreCase(FenFormat.INITIAL_BOARD)) {
+            this.eligibleForOB = true;
+        }
+
         historyBoards.add(new Board(fenFormat));
 
         // color to move
@@ -114,7 +122,7 @@ public class ChessGame {
     public GameColor getCurrentColorToMove() {
         return colorToMove;
     }
-    
+
     public void overWriteColorToMove(GameColor colorToMove) {
     	this.colorToMove = colorToMove;
     }
@@ -159,7 +167,7 @@ public class ChessGame {
     }
 
 	public void applyMove(Move moveInput) {
-		
+
         Board boardClone;
 
         boardClone = historyBoards.get(historyBoards.size() - 1).clone();
@@ -191,5 +199,8 @@ public class ChessGame {
     }
 
 
+    public ChessGame duplicateChessGameByStart() {
+        return new ChessGame(this.gameInfo, this.initialFen);
+    }
 
 }

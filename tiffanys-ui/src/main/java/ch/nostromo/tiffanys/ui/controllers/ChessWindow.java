@@ -226,7 +226,7 @@ public class ChessWindow implements Initializable, BoardPaneEvents, EngineEventL
 
     private void updatePosition(Move lastMove) {
 
-        boardPane.setBoard(game.getCurrentBoard(), appGameSettings.isOneHumanPlayerAndBlack());
+        boardPane.setBoard(game.getCurrentBoard(), false);
 
         if (lastMove != null) {
             if (lastMove.isCastling()) {

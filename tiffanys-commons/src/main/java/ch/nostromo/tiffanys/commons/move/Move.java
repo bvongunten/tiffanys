@@ -17,6 +17,7 @@ public class Move {
     private Castling castling = null;
 
     MoveAttributes moveAttributes = null;
+    MoveAnalysis moveAnalysis = null;
 
     public Move(int from, int to) {
         this.from = from;
@@ -75,6 +76,22 @@ public class Move {
 
         return result;
     }
+
+    public String toShortString() {
+        String result;
+
+        if (this.castling != null) {
+            result = this.getClass().getSimpleName() + " [" + castling + "]";
+        } else if (this.promotion != null) {
+            result = this.getClass().getSimpleName() + " [" + BoardUtil.fieldToCoord(from) + "-" + BoardUtil.fieldToCoord(to) + " (" + from + "-" + to + ") + Promotion=" + promotion + "]";
+        } else {
+            result = this.getClass().getSimpleName() + " [" + BoardUtil.fieldToCoord(from) + "-" + BoardUtil.fieldToCoord(to) + " (" + from + "-" + to + ")]";
+        }
+
+        return result;
+    }
+
+
 
     @Override
     public int hashCode() {

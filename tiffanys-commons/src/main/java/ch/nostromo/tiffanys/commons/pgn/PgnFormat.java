@@ -106,6 +106,10 @@ public class PgnFormat {
 
     }
 
+    public String getStripedPgnMoves() {
+        return pgnMoves.replaceAll("\\{.*?\\}", "");
+    }
+
     @Override
     public String toString() {
         return generatePgn();

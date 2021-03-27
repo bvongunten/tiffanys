@@ -19,7 +19,10 @@ public class PgnUtil {
 
         ChessGame result = new ChessGame(gi);
 
-        StringTokenizer pgnLineTokenizer = new StringTokenizer(pgn.getPgnMoves(), "\n");
+        String pgnMoves = pgn.getStripedPgnMoves();
+
+
+        StringTokenizer pgnLineTokenizer = new StringTokenizer(pgnMoves, "\n");
 
         while (pgnLineTokenizer.hasMoreTokens()) {
             String line = pgnLineTokenizer.nextToken();
