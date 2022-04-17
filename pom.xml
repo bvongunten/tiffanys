@@ -16,6 +16,7 @@
 		<module>tiffanys-chesslink</module>
 		<module>tiffanys-lichess</module>
         <module>tiffanys-dragonborn</module>
+        <module>tiffanys-uci</module>
         <module>tiffanys-ui</module>
     </modules>
 

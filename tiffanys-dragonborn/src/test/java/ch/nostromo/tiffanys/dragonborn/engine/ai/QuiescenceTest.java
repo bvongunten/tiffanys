@@ -4,9 +4,7 @@ import ch.nostromo.tiffanys.commons.ChessGame;
 import ch.nostromo.tiffanys.commons.ChessGameInfo;
 import ch.nostromo.tiffanys.commons.fen.FenFormat;
 import ch.nostromo.tiffanys.commons.move.Move;
-import ch.nostromo.tiffanys.dragonborn.commons.EngineException;
-import ch.nostromo.tiffanys.dragonborn.commons.EngineResult;
-import ch.nostromo.tiffanys.dragonborn.commons.EngineSettings;
+import ch.nostromo.tiffanys.dragonborn.commons.*;
 import ch.nostromo.tiffanys.dragonborn.engine.DragonbornEngine;
 import ch.nostromo.tiffanys.dragonborn.engine.TestHelper;
 import org.junit.Test;
@@ -24,7 +22,7 @@ public class QuiescenceTest extends TestHelper {
         engineSettings.setThreads(1);
         engineSettings.setDepth(1);
 
-        DragonbornEngine engine = new DragonbornEngine(engineSettings);
+        Engine engine = EngineFactory.createDefaultEngine(engineSettings);
         EngineResult result = engine.syncScoreMoves(game);
 
         printMoves(result.getLegalMoves());

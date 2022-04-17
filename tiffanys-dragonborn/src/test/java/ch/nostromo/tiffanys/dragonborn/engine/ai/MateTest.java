@@ -4,10 +4,7 @@ import ch.nostromo.tiffanys.commons.ChessGame;
 import ch.nostromo.tiffanys.commons.ChessGameInfo;
 import ch.nostromo.tiffanys.commons.fen.FenFormat;
 import ch.nostromo.tiffanys.commons.move.Move;
-import ch.nostromo.tiffanys.dragonborn.commons.EngineException;
-import ch.nostromo.tiffanys.dragonborn.commons.EngineResult;
-import ch.nostromo.tiffanys.dragonborn.commons.EngineSettings;
-import ch.nostromo.tiffanys.dragonborn.engine.DragonbornEngine;
+import ch.nostromo.tiffanys.dragonborn.commons.*;
 import ch.nostromo.tiffanys.dragonborn.engine.TestHelper;
 import org.junit.Test;
 
@@ -26,7 +23,7 @@ public class MateTest extends TestHelper {
         EngineSettings engineSettings = new EngineSettings();
         engineSettings.setDepth(1);
 
-        DragonbornEngine engine = new DragonbornEngine(engineSettings);
+        Engine engine = EngineFactory.createDefaultEngine(engineSettings);
         EngineResult result = engine.syncScoreMoves(game);
 
         printMoves(result.getLegalMoves());
@@ -48,7 +45,7 @@ public class MateTest extends TestHelper {
         EngineSettings engineSettings = new EngineSettings();
         engineSettings.setDepth(3);
 
-        DragonbornEngine engine = new DragonbornEngine(engineSettings);
+        Engine engine = EngineFactory.createDefaultEngine(engineSettings);
         EngineResult result = engine.syncScoreMoves(game);
 
         printMoves(result.getLegalMoves());
@@ -70,7 +67,7 @@ public class MateTest extends TestHelper {
         EngineSettings engineSettings = new EngineSettings();
         engineSettings.setDepth(3);
 
-        DragonbornEngine engine = new DragonbornEngine(engineSettings);
+        Engine engine = EngineFactory.createDefaultEngine(engineSettings);
         EngineResult result = engine.syncScoreMoves(game);
 
         printMoves(result.getLegalMoves());
@@ -91,7 +88,7 @@ public class MateTest extends TestHelper {
         EngineSettings engineSettings = new EngineSettings();
         engineSettings.setDepth(5);
 
-        DragonbornEngine engine = new DragonbornEngine(engineSettings);
+        Engine engine = EngineFactory.createDefaultEngine(engineSettings);
         EngineResult result = engine.syncScoreMoves(game);
 
         printMoves(result.getLegalMoves());
@@ -113,7 +110,7 @@ public class MateTest extends TestHelper {
         engineSettings.setTime(50000);
         engineSettings.setDepth(7);
 
-        DragonbornEngine engine = new DragonbornEngine(engineSettings);
+        Engine engine = EngineFactory.createDefaultEngine(engineSettings);
         EngineResult result = engine.syncScoreMoves(game);
 
 
@@ -146,7 +143,7 @@ public class MateTest extends TestHelper {
         engineSettings.setTime(50000);
         engineSettings.setDepth(19);
 
-        DragonbornEngine engine = new DragonbornEngine(engineSettings);
+        Engine engine = EngineFactory.createDefaultEngine(engineSettings);
         EngineResult result = engine.syncScoreMoves(game);
 
         printMoves(result.getLegalMoves());
@@ -181,7 +178,7 @@ public class MateTest extends TestHelper {
         engineSettings.setTime(1090000);
         engineSettings.setDepth(10);
 
-        DragonbornEngine engine = new DragonbornEngine(engineSettings);
+        Engine engine = EngineFactory.createDefaultEngine(engineSettings);
         EngineResult result = engine.syncScoreMoves(game);
 
         printMoves(result.getLegalMoves());
@@ -207,7 +204,7 @@ public class MateTest extends TestHelper {
         engineSettings.setTime(7000);
         engineSettings.setDepth(19);
 
-        DragonbornEngine engine = new DragonbornEngine(engineSettings);
+        Engine engine = EngineFactory.createDefaultEngine(engineSettings);
         EngineResult result = engine.syncScoreMoves(game);
 
         printMoves(result.getLegalMoves());

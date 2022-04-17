@@ -1,6 +1,6 @@
-package ch.nostromo.tiffanys.dragonborn.uciapp;
+package ch.nostromo.tiffanys.uci;
 
-import ch.nostromo.tiffanys.dragonborn.uciapp.controller.UciController;
+import ch.nostromo.tiffanys.uci.controller.UciController;
 
 public class UciApp {
 

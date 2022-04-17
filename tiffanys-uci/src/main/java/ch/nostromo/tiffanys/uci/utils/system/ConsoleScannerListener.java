@@ -1,4 +1,4 @@
-package ch.nostromo.tiffanys.dragonborn.uciapp.utils.system;
+package ch.nostromo.tiffanys.uci.utils.system;
 
 public interface ConsoleScannerListener {
 

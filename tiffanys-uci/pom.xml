@@ -11,16 +11,16 @@
 	</parent>
 	
 	<groupId>ch.nostromo.tiffanys</groupId>
-	<artifactId>tiffanys-dragonborn</artifactId>
+	<artifactId>tiffanys-uci</artifactId>
 	<version>0.8.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	
-	<name>Tiffanys Chess Dragonborn</name>
+	<name>Tiffanys Chess UCI</name>
 
 	<dependencies>
 		<dependency>
 			<groupId>ch.nostromo.tiffanys</groupId>
-			<artifactId>tiffanys-commons</artifactId>
+			<artifactId>tiffanys-dragonborn</artifactId>
 			<version>0.8.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>

@@ -11,12 +11,12 @@ import ch.nostromo.tiffanys.commons.pgn.PgnFormat;
 import ch.nostromo.tiffanys.commons.pgn.PgnUtil;
 import ch.nostromo.tiffanys.commons.rules.RulesUtil;
 import ch.nostromo.tiffanys.commons.uci.UciMoveTranslator;
-import ch.nostromo.tiffanys.dragonborn.commons.AbstractEngine;
+import ch.nostromo.tiffanys.dragonborn.commons.Engine;
+import ch.nostromo.tiffanys.dragonborn.commons.EngineFactory;
 import ch.nostromo.tiffanys.dragonborn.commons.EngineSettings;
 import ch.nostromo.tiffanys.dragonborn.commons.events.EngineEvent;
 import ch.nostromo.tiffanys.dragonborn.commons.events.EngineEventListener;
 import ch.nostromo.tiffanys.dragonborn.commons.opening.OpeningBook;
-import ch.nostromo.tiffanys.dragonborn.engine.DragonbornEngine;
 import ch.nostromo.tiffanys.lichess.streams.BoardGameStateStream;
 import ch.nostromo.tiffanys.lichess.tools.LichessBoardGameStateHelper;
 import ch.nostromo.tiffanys.ui.TiffanysFxGuiCentral;
@@ -61,10 +61,10 @@ public class ChessWindow implements Initializable, BoardPaneEvents, EngineEventL
     ChessGame game;
 
     BoardPane boardPane;
-    AbstractEngine engineWhite;
-    AbstractEngine engineBlack;
-    AbstractEngine engineHint;
-    AbstractEngine currentEngine;
+    Engine engineWhite;
+    Engine engineBlack;
+    Engine engineHint;
+    Engine currentEngine;
 
     AppGameSettings appGameSettings;
 
@@ -104,20 +104,20 @@ public class ChessWindow implements Initializable, BoardPaneEvents, EngineEventL
 
         // Initialize engines if needed
         if (appGameSettings.getPlayerTypeWhite() == AppGameSettings.PlayerType.CPU) {
-            this.engineWhite = new DragonbornEngine(appGameSettings.getEngineSettingsWhite(), new OpeningBook("/opening.txt"));
+            this.engineWhite = EngineFactory.createDefaultEngine(appGameSettings.getEngineSettingsWhite(), new OpeningBook("/opening.txt"));
             engineWhite.addEventListener(this);
         } else {
             engineWhite = null;
         }
 
         if (appGameSettings.getPlayerTypeBlack() == AppGameSettings.PlayerType.CPU) {
-            this.engineBlack = new DragonbornEngine(appGameSettings.getEngineSettingsBlack(), new OpeningBook("/opening.txt"));
+            this.engineBlack =  EngineFactory.createDefaultEngine(appGameSettings.getEngineSettingsBlack(), new OpeningBook("/opening.txt"));
             engineBlack.addEventListener(this);
         } else {
             engineBlack = null;
         }
 
-        this.engineHint = new DragonbornEngine(new EngineSettings(), new OpeningBook("/opening.txt"));
+        this.engineHint =  EngineFactory.createDefaultEngine(new EngineSettings(), new OpeningBook("/opening.txt"));
         this.engineHint.addEventListener(this);
 
         if (appGameSettings.isLichessGame()) {
@@ -452,7 +452,7 @@ public class ChessWindow implements Initializable, BoardPaneEvents, EngineEventL
                 || (game.getCurrentColorToMove() == GameColor.BLACK && engineBlack != null));
     }
 
-    private AbstractEngine getEngineForColor(GameColor color) {
+    private Engine getEngineForColor(GameColor color) {
         if (color == GameColor.WHITE && engineWhite != null) {
             return engineWhite;
         } else if (color == GameColor.BLACK && engineBlack != null) {

@@ -1,4 +1,4 @@
-package ch.nostromo.tiffanys.dragonborn.uciapp.controller;
+package ch.nostromo.tiffanys.uci.controller;
 
 import org.junit.Test;
 

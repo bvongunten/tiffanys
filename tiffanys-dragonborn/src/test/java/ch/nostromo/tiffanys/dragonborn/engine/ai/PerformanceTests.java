@@ -3,9 +3,7 @@ package ch.nostromo.tiffanys.dragonborn.engine.ai;
 import ch.nostromo.tiffanys.commons.ChessGame;
 import ch.nostromo.tiffanys.commons.ChessGameInfo;
 import ch.nostromo.tiffanys.commons.fen.FenFormat;
-import ch.nostromo.tiffanys.dragonborn.commons.EngineException;
-import ch.nostromo.tiffanys.dragonborn.commons.EngineResult;
-import ch.nostromo.tiffanys.dragonborn.commons.EngineSettings;
+import ch.nostromo.tiffanys.dragonborn.commons.*;
 import ch.nostromo.tiffanys.dragonborn.engine.DragonbornEngine;
 import ch.nostromo.tiffanys.dragonborn.engine.TestHelper;
 import org.junit.Test;
@@ -20,8 +18,8 @@ public class PerformanceTests extends TestHelper {
 
         EngineSettings engineSettings = new EngineSettings();
         engineSettings.setDepth(6);
-        
-        DragonbornEngine engine = new DragonbornEngine(engineSettings);
+
+        Engine engine = EngineFactory.createDefaultEngine(engineSettings);
         EngineResult result = engine.syncScoreMoves(game);
 
         printMoves(result.getLegalMoves());
@@ -40,7 +38,7 @@ public class PerformanceTests extends TestHelper {
         EngineSettings engineSettings = new EngineSettings();
         engineSettings.setDepth(7);
 
-        DragonbornEngine engine = new DragonbornEngine(engineSettings);
+        Engine engine = EngineFactory.createDefaultEngine(engineSettings);
         EngineResult result = engine.syncScoreMoves(game);
 
         printMoves(result.getLegalMoves());

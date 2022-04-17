@@ -1,4 +1,4 @@
-package ch.nostromo.tiffanys.dragonborn.uciapp.utils.logging;
+package ch.nostromo.tiffanys.uci.utils.logging;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

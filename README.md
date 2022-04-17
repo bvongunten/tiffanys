@@ -41,5 +41,6 @@ Following video shows the usage of the Chess Genius Exclusive Board vs. an Oppon
 - tiffanys-commons (Bassic chess components like rules, game, board, PGN and FEN)
 - tiffanys-chesslink (ChessLink / Chess Genius Exclusive protocol implementation)
 - tiffanys-lichess (Lichess API implementation)
-- tiffanys-dragonborn (Chess engine, including UCI support)
+- tiffanys-dragonborn (Chess engine)
+- tiffanys-uci (Multiplatform UCI app)
 - tiffanys-ui (Multiplatform UI including ChessLink, Lichess & Dragonborn support)
