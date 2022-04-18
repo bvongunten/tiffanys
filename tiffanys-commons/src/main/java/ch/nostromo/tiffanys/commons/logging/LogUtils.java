@@ -9,26 +9,28 @@ import java.util.logging.*;
 @UtilityClass
 public class LogUtils {
 
-    public static void initializeLogging(Level consoleLevel, Level logfileLevel, String logDirectory, String logFile)
-            throws SecurityException, IOException {
+    public static void initializeLogging(Level consoleLevel, Level logfileLevel, String logDirectory, String logFile) {
 
-        LogManager.getLogManager().reset();
-        Logger root = Logger.getLogger("ch.nostromo.tiffanys");
-        root.setLevel(Level.FINEST);
-        LogManager.getLogManager().addLogger(root);
+        try {
+            LogManager.getLogManager().reset();
+            Logger root = Logger.getLogger("ch.nostromo.tiffanys");
+            root.setLevel(Level.FINEST);
+            LogManager.getLogManager().addLogger(root);
 
-        ConsoleHandler consoleHandler = new ConsoleHandler();
-        consoleHandler.setLevel(consoleLevel);
-        consoleHandler.setFormatter(new LogFormatter());
-        LogManager.getLogManager().getLogger("").addHandler(consoleHandler);
+            ConsoleHandler consoleHandler = new ConsoleHandler();
+            consoleHandler.setLevel(consoleLevel);
+            consoleHandler.setFormatter(new LogFormatter());
+            LogManager.getLogManager().getLogger("").addHandler(consoleHandler);
 
-        if (logFile != null) {
-            FileHandler fileHandler = new FileHandler(getLogFile(logDirectory, logFile).getAbsolutePath());
-            fileHandler.setFormatter(new LogFormatter());
-            fileHandler.setLevel(logfileLevel);
-            LogManager.getLogManager().getLogger("").addHandler(fileHandler);
+            if (logFile != null) {
+                FileHandler fileHandler = new FileHandler(getLogFile(logDirectory, logFile).getAbsolutePath());
+                fileHandler.setFormatter(new LogFormatter());
+                fileHandler.setLevel(logfileLevel);
+                LogManager.getLogManager().getLogger("").addHandler(fileHandler);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to configure logging, because of error " + e.getMessage(), e);
         }
-
     }
 
     public static File getLogDirectory(String logDirectory) {

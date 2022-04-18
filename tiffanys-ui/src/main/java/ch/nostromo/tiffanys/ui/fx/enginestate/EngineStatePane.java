@@ -30,7 +30,7 @@ public class EngineStatePane extends BorderPane {
 		if (moves != null) {
 			textArea.clear();
 			for (Move move : moves) {
-				textArea.appendText(move.getMoveAttributes().getPawnScoreForWhite() + " " +  Frontends.moveToString(move) + " [ " + move.getMoveAttributes().getMaxDepth() + " pv ");
+				textArea.appendText(move.getMoveAttributes().getScore() + " " +  Frontends.moveToString(move) + " [ " + move.getMoveAttributes().getMaxDepth() + " pv ");
 
 				for (Move pvMove : move.getMoveAttributes().getPrincipalVariations()) {
 					textArea.appendText(Frontends.moveToString(pvMove) + " ");

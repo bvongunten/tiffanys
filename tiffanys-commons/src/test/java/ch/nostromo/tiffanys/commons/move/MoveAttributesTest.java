@@ -16,8 +16,8 @@ public class MoveAttributesTest {
         pv.add(new Move("e2", "e4"));
         pv.add(new Move("e7", "e5"));
 
-        MoveAttributes moveAttributes = new MoveAttributes(GameColor.WHITE, 10.0, 9, 11, 12, 13, 14, pv);
-        assertEquals("MoveAttributes [Score=10.0, plannedDepth=12, maxDepth=13, timeSpent=14, nodes=9, cutOffs=11, pv=Move [e2-e4 (35-55)] Move [e7-e5 (85-65)] ]", moveAttributes.toString());
+        MoveAttributes moveAttributes = new MoveAttributes(GameColor.WHITE, 10.0, 3, 9, 11, 12, 13, 14, pv);
+        assertEquals("MoveAttributes [Score=10.0, mateIn=3, plannedDepth=12, maxDepth=13, timeSpent=14, nodes=9, cutOffs=11] , pv=e2-e4 e7-e5 ]", moveAttributes.toString());
 
         assertEquals(10.0, moveAttributes.getScore(), 0.0);
 

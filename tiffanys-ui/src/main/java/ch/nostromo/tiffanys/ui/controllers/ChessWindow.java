@@ -104,20 +104,20 @@ public class ChessWindow implements Initializable, BoardPaneEvents, EngineEventL
 
         // Initialize engines if needed
         if (appGameSettings.getPlayerTypeWhite() == AppGameSettings.PlayerType.CPU) {
-            this.engineWhite = EngineFactory.createDefaultEngine(appGameSettings.getEngineSettingsWhite(), new OpeningBook("/opening.txt"));
+            this.engineWhite = EngineFactory.createEngine(appGameSettings.getEngineSettingsWhite(), new OpeningBook("/opening.txt"));
             engineWhite.addEventListener(this);
         } else {
             engineWhite = null;
         }
 
         if (appGameSettings.getPlayerTypeBlack() == AppGameSettings.PlayerType.CPU) {
-            this.engineBlack =  EngineFactory.createDefaultEngine(appGameSettings.getEngineSettingsBlack(), new OpeningBook("/opening.txt"));
+            this.engineBlack =  EngineFactory.createEngine(appGameSettings.getEngineSettingsBlack(), new OpeningBook("/opening.txt"));
             engineBlack.addEventListener(this);
         } else {
             engineBlack = null;
         }
 
-        this.engineHint =  EngineFactory.createDefaultEngine(new EngineSettings(), new OpeningBook("/opening.txt"));
+        this.engineHint =  EngineFactory.createEngine(new EngineSettings(), new OpeningBook("/opening.txt"));
         this.engineHint.addEventListener(this);
 
         if (appGameSettings.isLichessGame()) {

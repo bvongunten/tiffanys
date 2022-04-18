@@ -13,9 +13,11 @@ import java.util.List;
 public class MoveAttributes {
 
 
-
     private GameColor colorToMove;
     private double score;
+
+    private int mateIn;
+
     private int nodes;
     private int cutOffs;
     private int plannedDepth;
@@ -26,13 +28,14 @@ public class MoveAttributes {
     @Override
     public String toString() {
 
-        String result = this.getClass().getSimpleName() + " [Score=" + score + ", plannedDepth=" + plannedDepth + ", maxDepth=" + maxDepth + ", timeSpent=" + timeMs + ", nodes=" + nodes + ", cutOffs=" + cutOffs;
+        String result = this.getClass().getSimpleName() + " [Score=" + score + ", mateIn=" + mateIn + ", plannedDepth=" + plannedDepth + ", maxDepth=" + maxDepth + ", timeSpent=" + timeMs + ", nodes=" + nodes + ", cutOffs=" + cutOffs + "] ";
         if (principalVariations != null && principalVariations.size() > 0) {
             result += ", pv=";
 
             for (Move pvMove : principalVariations) {
-               result += pvMove.toString() + " ";
+                result += MoveTranslator.moveToString(pvMove) + " ";
             }
+
         }
 
         result += "]";
@@ -40,14 +43,5 @@ public class MoveAttributes {
         return result;
     }
 
-    public double getPawnScoreForWhite() {
-        double result = score / 100;
-
-        if (colorToMove == GameColor.BLACK) {
-            result = result * -1;
-        }
-
-        return  Math.round(result * 100.0) / 100.0;
-    }
 
 }

@@ -5,14 +5,14 @@ import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.fen.FenFormat;
 import ch.nostromo.tiffanys.commons.move.Move;
 import ch.nostromo.tiffanys.dragonborn.commons.EngineSettings;
-import ch.nostromo.tiffanys.dragonborn.engine.TestHelper;
 import ch.nostromo.tiffanys.dragonborn.engine.board.RobustBoard;
 import ch.nostromo.tiffanys.dragonborn.engine.move.EngineMove;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
-public class HitScoreTest extends TestHelper {
+public class HitScoreTest {
 
     @Test
     public void testHitScoreQxP() {
@@ -47,5 +47,21 @@ public class HitScoreTest extends TestHelper {
         assertEquals(1700, qxp.hitScore);
 
     }
+
+
+    public EngineMove getMoveInList(EngineMove[] moves, Move move, GameColor colorToMove) {
+        for (EngineMove scoredMove : moves) {
+
+            Move possibleResult = scoredMove.convertToMove(colorToMove);
+
+            if (possibleResult.equals(move)) {
+                return scoredMove;
+            }
+        }
+        fail("Moves not found");
+        return null;
+
+    }
+
 
 }

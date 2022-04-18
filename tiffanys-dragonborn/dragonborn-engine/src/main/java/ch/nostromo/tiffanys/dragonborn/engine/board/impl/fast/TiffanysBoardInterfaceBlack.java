@@ -1,9 +1,9 @@
 package ch.nostromo.tiffanys.dragonborn.engine.board.impl.fast;
 
-import ch.nostromo.tiffanys.dragonborn.engine.DragonbornEngineConstants;
 import ch.nostromo.tiffanys.dragonborn.engine.board.RobustBoard;
 import ch.nostromo.tiffanys.dragonborn.engine.board.RobustBoardPiecePositions;
 import ch.nostromo.tiffanys.dragonborn.engine.move.EngineMove;
+import ch.nostromo.tiffanys.dragonborn.engine.DragonbornEngineConstants;
 import ch.nostromo.tiffanys.dragonborn.engine.move.impl.fast.FastMoveGenPatterns;
 
 public class TiffanysBoardInterfaceBlack implements DragonbornEngineConstants {

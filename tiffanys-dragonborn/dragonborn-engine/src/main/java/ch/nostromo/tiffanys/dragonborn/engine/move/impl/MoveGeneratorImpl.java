@@ -1,11 +1,11 @@
 package ch.nostromo.tiffanys.dragonborn.engine.move.impl;
 
 import ch.nostromo.tiffanys.commons.enums.GameColor;
-import ch.nostromo.tiffanys.dragonborn.engine.DragonbornEngineConstants;
 import ch.nostromo.tiffanys.dragonborn.engine.board.RobustBoard;
 import ch.nostromo.tiffanys.dragonborn.engine.move.EngineMove;
-import ch.nostromo.tiffanys.dragonborn.engine.move.api.MoveGenerator;
 import ch.nostromo.tiffanys.dragonborn.engine.move.impl.fast.FastMoveGen;
+import ch.nostromo.tiffanys.dragonborn.engine.DragonbornEngineConstants;
+import ch.nostromo.tiffanys.dragonborn.engine.move.api.MoveGenerator;
 
 public class MoveGeneratorImpl implements DragonbornEngineConstants, MoveGenerator {
 

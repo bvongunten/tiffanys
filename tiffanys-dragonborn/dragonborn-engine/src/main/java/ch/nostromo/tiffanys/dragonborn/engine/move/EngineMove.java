@@ -5,9 +5,9 @@ import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.enums.Piece;
 import ch.nostromo.tiffanys.commons.move.Move;
 import ch.nostromo.tiffanys.commons.move.MoveAttributes;
+import ch.nostromo.tiffanys.dragonborn.engine.board.RobustBoard;
 import ch.nostromo.tiffanys.dragonborn.engine.DragonbornEngineConstants;
 import ch.nostromo.tiffanys.dragonborn.engine.ai.PrincipalVariation;
-import ch.nostromo.tiffanys.dragonborn.engine.board.RobustBoard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -270,25 +270,25 @@ public class EngineMove implements Comparable<EngineMove>, DragonbornEngineConst
         } else if (moveType == HIT_MOVE_PROMOTION || moveType == MOVE_PROMOTION) {
 
             switch (promotionPiece) {
-            case DragonbornEngineConstants.PIECE_BISHOP: {
-                result = new Move(fromS, toS, Piece.BISHOP);
-                break;
-            }
-            case DragonbornEngineConstants.PIECE_KNIGHT: {
-                result = new Move(fromS, toS, Piece.KNIGHT);
-                break;
-            }
-            case DragonbornEngineConstants.PIECE_ROOK: {
-                result = new Move(fromS, toS, Piece.ROOK);
-                break;
-            }
-            case DragonbornEngineConstants.PIECE_QUEEN: {
-                result = new Move(fromS, toS, Piece.QUEEN);
-                break;
-            }
-            default: {
-                throw new IllegalArgumentException("Unknown promotion piece: " + promotionPiece);
-            }
+                case DragonbornEngineConstants.PIECE_BISHOP: {
+                    result = new Move(fromS, toS, Piece.BISHOP);
+                    break;
+                }
+                case DragonbornEngineConstants.PIECE_KNIGHT: {
+                    result = new Move(fromS, toS, Piece.KNIGHT);
+                    break;
+                }
+                case DragonbornEngineConstants.PIECE_ROOK: {
+                    result = new Move(fromS, toS, Piece.ROOK);
+                    break;
+                }
+                case DragonbornEngineConstants.PIECE_QUEEN: {
+                    result = new Move(fromS, toS, Piece.QUEEN);
+                    break;
+                }
+                default: {
+                    throw new IllegalArgumentException("Unknown promotion piece: " + promotionPiece);
+                }
             }
 
         } else {
@@ -306,7 +306,30 @@ public class EngineMove implements Comparable<EngineMove>, DragonbornEngineConst
             }
         }
 
-        MoveAttributes attributes = new MoveAttributes(colorToMove, score, nodes, cutOffs, plannedDepth, maxDepth, timeMs, pv);
+
+        // cpScoreWhite
+        double cpScoreWhite = ((double)score) / 100;
+        if (colorToMove == GameColor.BLACK) {
+            cpScoreWhite = cpScoreWhite * -1;
+        }
+
+        cpScoreWhite = Math.round(cpScoreWhite * 100.0) / 100.0;
+
+        // Potential mate in n
+        int mateIn = 0;
+        if (Math.abs(score) > 9000) {
+            int plys = 9999 - Math.abs(score);
+            mateIn = plys / 2;
+            mateIn ++;
+
+            if (cpScoreWhite < 0) {
+                mateIn = mateIn * -1;
+            }
+
+        }
+
+
+        MoveAttributes attributes = new MoveAttributes(colorToMove, cpScoreWhite, mateIn, nodes, cutOffs, plannedDepth, maxDepth, timeMs, pv);
         result.setMoveAttributes(attributes);
 
         return result;

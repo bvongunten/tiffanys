@@ -1,10 +1,10 @@
 package ch.nostromo.tiffanys.dragonborn.engine.move.impl.fast;
 
-import ch.nostromo.tiffanys.dragonborn.engine.DragonbornEngineConstants;
 import ch.nostromo.tiffanys.dragonborn.engine.board.RobustBoard;
 import ch.nostromo.tiffanys.dragonborn.engine.board.impl.fast.TiffanysBoardInterfaceBlack;
 import ch.nostromo.tiffanys.dragonborn.engine.board.impl.fast.TiffanysBoardInterfaceWhite;
 import ch.nostromo.tiffanys.dragonborn.engine.move.EngineMove;
+import ch.nostromo.tiffanys.dragonborn.engine.DragonbornEngineConstants;
 
 public class FastMoveGen implements DragonbornEngineConstants {
 

@@ -1,10 +1,9 @@
-package ch.nostromo.tiffanys.dragonborn.engine.board.movegen;
+package ch.nostromo.tiffanys.dragonborn.testing.movegen;
 
 import ch.nostromo.tiffanys.commons.fen.FenFormat;
-import ch.nostromo.tiffanys.dragonborn.engine.TestHelper;
 import org.junit.Test;
 
-public class KingLegalMovesTest extends TestHelper {
+public class KingLegalMovesTest extends BaseLegalMovesHelper {
     @Test
     public void testMoveGenEmptyBoardWhite() {
         FenFormat fen = new FenFormat("8/7k/8/8/3K4/8/8/8 w - - 0 1");

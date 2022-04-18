@@ -199,7 +199,7 @@ public class UciController implements ConsoleScannerListener, EngineEventListene
             logger.info("Fixed depth, Enginesettings: " + engineSettings.toString());
 
 
-            engine = EngineFactory.createDefaultEngine(engineSettings, openingBook);
+            engine = EngineFactory.createEngine(engineSettings, openingBook);
             engine.addEventListener(this);
             engine.asyncScoreMoves(game);
 
@@ -222,7 +222,7 @@ public class UciController implements ConsoleScannerListener, EngineEventListene
 
             logger.info("Time for remaining moves (" + movesToGo +"), Enginesettings: " + engineSettings.toString());
 
-            engine = EngineFactory.createDefaultEngine(engineSettings, openingBook);
+            engine = EngineFactory.createEngine(engineSettings, openingBook);
             engine.addEventListener(this);
 
             engine.asyncScoreMoves(game);
@@ -251,7 +251,7 @@ public class UciController implements ConsoleScannerListener, EngineEventListene
 
             logger.info("Fix Time, Enginesettings: " + engineSettings.toString());
 
-            engine = EngineFactory.createDefaultEngine(engineSettings, openingBook);
+            engine = EngineFactory.createEngine(engineSettings, openingBook);
             engine.addEventListener(this);
 
             engine.asyncScoreMoves(game);

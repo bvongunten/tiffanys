@@ -344,8 +344,7 @@ public class DragonbornEngine implements Engine, DragonbornEngineConstants {
     }
 
     @Override
-    public long testMoveGen(ChessGame game, int iterations) {
-
+    public long testGeneratePseudMoves(ChessGame game, int iterations) {
         long start = System.currentTimeMillis();
 
         RobustBoard tiffBoard = new RobustBoard(game.getCurrentBoard(), game.getCurrentColorToMove());
@@ -357,6 +356,33 @@ public class DragonbornEngine implements Engine, DragonbornEngineConstants {
         }
 
         return System.currentTimeMillis() - start;
+    }
+
+
+    @Override
+    public List<Move> generateLegalHitMovesList(ChessGame game) {
+        RobustBoard tiffBoard = new RobustBoard(game.getCurrentBoard(), game.getCurrentColorToMove());
+        EngineMove[] movesBuffer = tiffBoard.generateLegalHitMovesList();
+
+        List<Move> result = new ArrayList<Move>();
+        for (EngineMove move : movesBuffer) {
+            result.add(move.convertToMove(game.getCurrentColorToMove()));
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<Move> generateLegalMovesList(ChessGame game) {
+        RobustBoard tiffBoard = new RobustBoard(game.getCurrentBoard(), game.getCurrentColorToMove());
+        EngineMove[] movesBuffer = tiffBoard.generateLegalMovesList();
+
+        List<Move> result = new ArrayList<Move>();
+        for (EngineMove move : movesBuffer) {
+            result.add(move.convertToMove(game.getCurrentColorToMove()));
+        }
+
+        return result;
     }
 
 }

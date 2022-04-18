@@ -57,13 +57,13 @@ public class MoveTest {
     @Test
     public void testToStringCall() {
         Move move = new Move(21, 22);
-        assertEquals("Move [a1-b1 (21-22)]", move.toString());
+        assertEquals("Move [a1-b1]", move.toString());
 
         Move moveCastling = new Move(Castling.WHITE_LONG);
-        assertEquals("Move [WHITE_LONG]", moveCastling.toString());
+        assertEquals("Move [O-O-O]", moveCastling.toString());
 
         Move movePromo = new Move(21, 22, Piece.KING);
-        assertEquals("Move [a1-b1 (21-22) + Promotion=KING]", movePromo.toString());
+        assertEquals("Move [a1-b1K]", movePromo.toString());
 
     }
 

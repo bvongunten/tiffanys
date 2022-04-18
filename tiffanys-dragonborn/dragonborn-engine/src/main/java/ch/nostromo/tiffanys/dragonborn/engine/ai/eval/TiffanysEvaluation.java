@@ -1,11 +1,11 @@
 package ch.nostromo.tiffanys.dragonborn.engine.ai.eval;
 
 import ch.nostromo.tiffanys.commons.enums.GameColor;
-import ch.nostromo.tiffanys.dragonborn.engine.DragonbornEngine;
-import ch.nostromo.tiffanys.dragonborn.engine.DragonbornEngineConstants;
 import ch.nostromo.tiffanys.dragonborn.engine.ai.CalculationTimeoutException;
 import ch.nostromo.tiffanys.dragonborn.engine.board.RobustBoard;
 import ch.nostromo.tiffanys.dragonborn.engine.move.EngineMove;
+import ch.nostromo.tiffanys.dragonborn.engine.DragonbornEngine;
+import ch.nostromo.tiffanys.dragonborn.engine.DragonbornEngineConstants;
 
 public class TiffanysEvaluation implements DragonbornEngineConstants {
     public static int MAT_RANGE = 10000;

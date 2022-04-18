@@ -1,10 +1,9 @@
-package ch.nostromo.tiffanys.dragonborn.engine.board.movegen;
+package ch.nostromo.tiffanys.dragonborn.testing.movegen;
 
 import ch.nostromo.tiffanys.commons.fen.FenFormat;
-import ch.nostromo.tiffanys.dragonborn.engine.TestHelper;
 import org.junit.Test;
 
-public class PawnLegalMovesTest extends TestHelper {
+public class PawnLegalMovesTest extends BaseLegalMovesHelper {
 
     @Test
     public void testMoveGenStartLinesWhite() {
