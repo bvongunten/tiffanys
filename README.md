@@ -1,7 +1,7 @@
 # Tiffany's
 
 
-- [Download Tiffany's UI 0.8.0-alpha for Windows](https://github.com/bvongunten/tiffanys/releases/download/v0.7.0-alpha/TiffanysFxGui-0.7.msi)
+- [Download Tiffany's UI 0.8.0-alpha for Windows](https://github.com/bvongunten/tiffanys/releases/download/v0.8.0-alpha/TiffanysDragonbornUci-0.8.msi)
 - [Download Tiffany's UI 0.8.0-alpha UCI Engine for Windows](https://github.com/bvongunten/tiffanys/releases/download/v0.8.0-alpha/TiffanysFxGui-0.8.msi)
 
 ![Mainscreen](https://github.com/bvongunten/tiffanys/blob/master/web/Mainscreen.png?raw=true)
