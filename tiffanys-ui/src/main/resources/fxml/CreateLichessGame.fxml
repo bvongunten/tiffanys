@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane prefHeight="306.0" prefWidth="522.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.nostromo.tiffanys.ui.controllers.CreateLichessGame">
+   <children>
+      <Button layoutX="446.0" layoutY="267.0" mnemonicParsing="false" onAction="#onActionAbort" prefHeight="25.0" prefWidth="55.0" text="Abort" />
+      <ToggleButton id="btnUseChessLink" fx:id="btnUseChessLink" layoutX="14.0" layoutY="267.0" mnemonicParsing="false" text="Use Chesslink Board" />
+      <CheckBox id="cbChessLinkCableRight" fx:id="cbChessLinkCableRight" layoutX="157.0" layoutY="271.0" mnemonicParsing="false" selected="true" text="Cable Right" />
+      <Button fx:id="cmdPostGame" layoutX="184.0" layoutY="24.0" mnemonicParsing="false" onAction="#onPostGame" prefHeight="25.0" prefWidth="123.0" text="Challenge Player" />
+      <TextField fx:id="txtPlayer" layoutX="315.0" layoutY="24.0" prefHeight="25.0" prefWidth="186.0" />
+      <Button fx:id="cmdCreateSeek" layoutX="14.0" layoutY="24.0" mnemonicParsing="false" onAction="#onCreateSeek" prefHeight="25.0" prefWidth="123.0" text="Create Seek" />
+      <Label layoutX="14.0" layoutY="68.0" prefHeight="17.0" prefWidth="123.0" text="Play as:" />
+      <RadioButton fx:id="colorWhite" layoutX="149.0" layoutY="68.0" mnemonicParsing="false" selected="true" text="White">
+         <toggleGroup>
+            <ToggleGroup fx:id="color" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="colorBlack" layoutX="149.0" layoutY="95.0" mnemonicParsing="false" text="Black" toggleGroup="$color" />
+      <Label layoutX="149.0" layoutY="28.0" text="or" />
+      <RadioButton fx:id="colorRandom" layoutX="149.0" layoutY="123.0" mnemonicParsing="false" text="Random" toggleGroup="$color" />
+      <Label layoutX="14.0" layoutY="163.0" prefHeight="17.0" prefWidth="123.0" text="Game length (min):" />
+      <TextField fx:id="txtGameLength" layoutX="147.0" layoutY="159.0" prefHeight="25.0" prefWidth="53.0" text="10" />
+      <Label layoutX="14.0" layoutY="200.0" prefHeight="17.0" prefWidth="123.0" text="Increment (sek):" />
+      <TextField fx:id="txtBonusSec" layoutX="147.0" layoutY="196.0" prefHeight="25.0" prefWidth="53.0" text="0" />
+      <CheckBox fx:id="cbRtated" disable="true" layoutX="315.0" layoutY="68.0" mnemonicParsing="false" text="Rated game" />
+   </children>
+</AnchorPane>

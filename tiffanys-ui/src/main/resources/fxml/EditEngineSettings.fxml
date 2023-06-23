@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane prefHeight="431.0" prefWidth="425.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.nostromo.tiffanys.ui.controllers.EditEngineSettings">
+   <children>
+      <Button layoutX="28.0" layoutY="371.0" mnemonicParsing="false" onAction="#onActionOk" prefHeight="25.0" prefWidth="84.0" text="Ok" />
+      <Label layoutX="28.0" layoutY="22.0" text="Mode" />
+      <Label layoutX="28.0" layoutY="169.0" prefHeight="17.0" prefWidth="85.0" text="Time (sec):" />
+      <Label layoutX="28.0" layoutY="131.0" prefHeight="17.0" prefWidth="85.0" text="Depth" />
+      <Label layoutX="28.0" layoutY="278.0" prefHeight="17.0" prefWidth="85.0" text="Threads" />
+      <Label layoutX="28.0" layoutY="311.0" prefHeight="17.0" prefWidth="85.0" text="Opening Book:" />
+      <RadioButton id="obYes" fx:id="radioOpeningBookYes" layoutX="131.0" layoutY="311.0" mnemonicParsing="false" selected="true" text="Yes">
+         <toggleGroup>
+            <ToggleGroup fx:id="openingbook" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton id="obNo" fx:id="radioOpeningBookNo" layoutX="179.0" layoutY="311.0" mnemonicParsing="false" text="No" toggleGroup="$openingbook" />
+      <RadioButton id="modeDepth" fx:id="radioFixedDepth" layoutX="130.0" layoutY="22.0" mnemonicParsing="false" selected="true" text="Fixed depth">
+         <toggleGroup>
+            <ToggleGroup fx:id="mode" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton id="modeTimePerMove" fx:id="radioFixedTime" layoutX="130.0" layoutY="49.0" mnemonicParsing="false" text="Fixed time per move" toggleGroup="$mode" />
+      <RadioButton id="modeTimeForGame" fx:id="radioTimeForGame" disable="true" layoutX="130.0" layoutY="76.0" mnemonicParsing="false" text="Fixed time for n moves" toggleGroup="$mode" />
+      <Label disable="true" layoutX="28.0" layoutY="208.0" prefHeight="17.0" prefWidth="85.0" text="Time (sec): " />
+      <Label disable="true" layoutX="201.0" layoutY="208.0" prefHeight="17.0" prefWidth="32.0" text="for " />
+      <Label disable="true" layoutX="324.0" layoutY="207.0" prefHeight="17.0" prefWidth="66.0" text="moves" />
+      <TextField id="txtDepth" fx:id="txtFixedDepth" layoutX="130.0" layoutY="127.0" prefHeight="25.0" prefWidth="56.0" text="4" />
+      <TextField id="textTimePerMove" fx:id="txtFixedTime" layoutX="130.0" layoutY="165.0" prefHeight="25.0" prefWidth="56.0" text="5" />
+      <TextField id="txtTimeForGame" fx:id="txtFixedTimeForGame" disable="true" layoutX="130.0" layoutY="204.0" prefHeight="25.0" prefWidth="56.0" text="300" />
+      <TextField id="txtMovesForGame" fx:id="txtFixedMovesForGame" disable="true" layoutX="244.0" layoutY="204.0" prefHeight="25.0" prefWidth="56.0" text="40" />
+      <TextField id="txtThreads" fx:id="txtThreads" layoutX="130.0" layoutY="274.0" prefHeight="25.0" prefWidth="56.0" text="4" />
+      <Button layoutX="129.0" layoutY="371.0" mnemonicParsing="false" onAction="#onActionAbort" prefHeight="25.0" prefWidth="84.0" text="Abort" />
+   </children>
+</AnchorPane>

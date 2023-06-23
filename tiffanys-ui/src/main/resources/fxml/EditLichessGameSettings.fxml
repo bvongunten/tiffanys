@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+<AnchorPane prefHeight="271.0" prefWidth="402.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.nostromo.tiffanys.ui.controllers.EditLichessGameSettings">
+   <children>
+      <Button fx:id="btnOk" layoutX="249.0" layoutY="224.0" mnemonicParsing="false" onAction="#onActionOk" prefHeight="25.0" prefWidth="55.0" text="Ok" />
+      <Button layoutX="314.0" layoutY="224.0" mnemonicParsing="false" onAction="#onActionAbort" prefHeight="25.0" prefWidth="55.0" text="Abort" />
+      <ToggleButton id="btnUseChessLink" fx:id="btnUseChessLink" layoutX="26.0" layoutY="192.0" mnemonicParsing="false" text="Use Chesslink Board" />
+      <CheckBox id="cbChessLinkCableRight" fx:id="cbChessLinkCableRight" layoutX="166.0" layoutY="196.0" mnemonicParsing="false" selected="true" text="Cable Right" />
+      <Text layoutX="25.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="My Games" wrappingWidth="112.208984375" />
+      <Button fx:id="onActionFetch" layoutX="314.0" layoutY="22.0" mnemonicParsing="false" onAction="#onActionFetch" prefHeight="25.0" prefWidth="55.0" text="Fetch" />
+      <Text layoutX="25.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player White" wrappingWidth="112.208984375" />
+      <TextField fx:id="txtPlayerWhiteName" disable="true" layoutX="155.0" layoutY="119.0" prefHeight="25.0" prefWidth="213.0" />
+      <Text layoutX="25.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player Black" wrappingWidth="112.208984375" />
+      <TextField fx:id="txtPlayerBlackName" disable="true" layoutX="155.0" layoutY="154.0" prefHeight="25.0" prefWidth="213.0" />
+      <ChoiceBox fx:id="choiceGames" layoutX="91.0" layoutY="22.0" prefHeight="25.0" prefWidth="219.0" />
+      <Text layoutX="25.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GameId" wrappingWidth="112.208984375" />
+      <TextField fx:id="txtGameId" disable="true" layoutX="155.0" layoutY="84.0" prefHeight="25.0" prefWidth="213.0" />
+   </children>
+</AnchorPane>
