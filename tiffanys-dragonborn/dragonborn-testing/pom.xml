@@ -7,12 +7,12 @@
 	<parent>
 		<groupId>ch.nostromo.tiffanys</groupId>
 		<artifactId>tiffanys-dragonborn</artifactId>
-		<version>0.8.0-SNAPSHOT</version>
+		<version>0.9.0-SNAPSHOT</version>
 	</parent>
 	
 	<groupId>ch.nostromo.tiffanys.tiffanys-dragonborn</groupId>
 	<artifactId>dragonborn-testing</artifactId>
-	<version>0.8.0-SNAPSHOT</version>
+	<version>0.9.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	
 	<name>Tiffanys Chess Dragonborn Testing</name>
@@ -21,7 +21,7 @@
 		<dependency>
 			<groupId>ch.nostromo.tiffanys.tiffanys-dragonborn</groupId>
 			<artifactId>dragonborn-engine</artifactId>
-			<version>0.8.0-SNAPSHOT</version>
+			<version>0.9.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 

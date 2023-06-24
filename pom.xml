@@ -6,18 +6,15 @@
 
     <groupId>ch.nostromo</groupId>
     <artifactId>tiffanys</artifactId>
-    <version>0.8.0-SNAPSHOT</version>
+    <version>0.9.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Tiffanys</name>
 
     <modules>
         <module>tiffanys-commons</module>
-		<module>tiffanys-chesslink</module>
-		<module>tiffanys-lichess</module>
         <module>tiffanys-dragonborn</module>
         <module>tiffanys-uci</module>
-        <module>tiffanys-ui</module>
     </modules>
 
     <properties>

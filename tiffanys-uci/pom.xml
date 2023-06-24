@@ -7,12 +7,12 @@
 	<parent>
 		<groupId>ch.nostromo</groupId>
 		<artifactId>tiffanys</artifactId>
-		<version>0.8.0-SNAPSHOT</version>
+		<version>0.9.0-SNAPSHOT</version>
 	</parent>
 	
 	<groupId>ch.nostromo.tiffanys</groupId>
 	<artifactId>tiffanys-uci</artifactId>
-	<version>0.8.0-SNAPSHOT</version>
+	<version>0.9.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	
 	<name>Tiffanys Chess UCI</name>
@@ -21,12 +21,12 @@
 		<dependency>
 			<groupId>ch.nostromo.tiffanys</groupId>
 			<artifactId>tiffanys-commons</artifactId>
-			<version>0.8.0-SNAPSHOT</version>
+			<version>0.9.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>ch.nostromo.tiffanys.tiffanys-dragonborn</groupId>
 			<artifactId>dragonborn-engine</artifactId>
-			<version>0.8.0-SNAPSHOT</version>
+			<version>0.9.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
