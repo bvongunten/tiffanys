@@ -79,10 +79,12 @@ public class RulesUtil {
 
     public static boolean isRemisByThree(List<Board> boardHistory) {
         if (boardHistory.size() >= 6) {
-            FenFormat currentFen = boardHistory.get(boardHistory.size() - 1).getFenFormat();
+
+            String currentFenPosition = boardHistory.get(boardHistory.size() - 1).getFenPosition();
+
             int count = 0;
             for (Board board : boardHistory) {
-                if (board.getFenFormat().equalsPosition(currentFen)) {
+                if (board.getFenPosition().equals(currentFenPosition)) {
                     count++;
                 }
             }

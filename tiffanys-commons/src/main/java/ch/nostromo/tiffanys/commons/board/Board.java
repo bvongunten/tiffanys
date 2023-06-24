@@ -116,8 +116,8 @@ public class Board implements Cloneable {
 		logger.fine("Board created: \n" + this.toString());
 	}
 
-	public FenFormat getFenFormat() {
 
+	public  String getFenPosition() {
 		String position = "";
 		for (int n = 9; n >= 2; n--) {
 			String line = "";
@@ -146,6 +146,10 @@ public class Board implements Cloneable {
 			}
 		}
 
+		return position;
+	}
+
+	public String getFenCastling() {
 		String castling = "";
 		if (!castlingWhiteLongAllowed && !castlingWhiteShortAllowed && !castlingBlackLongAllowed
 				&& !castlingBlackShortAllowed) {
@@ -165,6 +169,10 @@ public class Board implements Cloneable {
 			}
 		}
 
+		return castling;
+	}
+
+	public String getFenEnpassant() {
 		String enPassant = "";
 		if (enPassantField != Integer.MIN_VALUE) {
 			enPassant = BoardUtil.fieldToCoord(enPassantField);
@@ -172,8 +180,9 @@ public class Board implements Cloneable {
 			enPassant = "-";
 		}
 
-		return new FenFormat(position, castling, enPassant);
+		return enPassant;
 	}
+
 
 	public int getPieceCount() {
 		int pieceCount = 0;

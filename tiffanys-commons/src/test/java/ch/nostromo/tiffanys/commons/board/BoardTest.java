@@ -8,7 +8,9 @@ import ch.nostromo.tiffanys.commons.fen.FenFormat;
 import ch.nostromo.tiffanys.commons.move.Move;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class BoardTest extends TestHelper {
 
@@ -81,11 +83,10 @@ public class BoardTest extends TestHelper {
     private void checkFen(FenFormat originalFen) {
         Board board = new Board(originalFen);
 
-        FenFormat fenByBoard = board.getFenFormat();
 
-        assertEquals("FenPos", originalFen.getPosition(), fenByBoard.getPosition());
-        assertEquals("FenCastling", originalFen.getCastling(), fenByBoard.getCastling());
-        assertEquals("FenEnPassant", originalFen.getEnPassant(), fenByBoard.getEnPassant());
+        assertEquals("FenPos", originalFen.getPosition(), board.getFenPosition());
+        assertEquals("FenCastling", originalFen.getCastling(), board.getFenCastling());
+        assertEquals("FenEnPassant", originalFen.getEnPassant(), board.getFenEnpassant());
     }
 
     @Test

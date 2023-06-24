@@ -11,7 +11,6 @@ public class FenFormat {
 
     public static final String INITIAL_BOARD = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
-	
     protected String colorToMove;
     protected Integer halfMoveClock;
     protected Integer moveNr;
@@ -19,15 +18,11 @@ public class FenFormat {
     protected String castling;
     protected String enPassant;
 
-    public FenFormat(String position, String castling, String enPassant) {
+    public FenFormat(String position, String colorToMove, String castling, String enPassant, Integer halfMoveClock,
+                     Integer moveNr) {
         this.position = position;
         this.castling = castling;
         this.enPassant = enPassant;
-    }
-
-    public FenFormat(String position, String colorToMove, String castling, String enPassant, Integer halfMoveClock,
-            Integer moveNr) {
-        this(position, castling, enPassant);
         this.colorToMove = colorToMove;
         this.halfMoveClock = halfMoveClock;
         this.moveNr = moveNr;

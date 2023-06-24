@@ -90,24 +90,27 @@ public class ChessGame {
 
     public FenFormat getCurrentFenFormat() {
 
-        FenFormat fenFormat = getCurrentBoard().getFenFormat();
+        String fenPosition = getCurrentBoard().getFenPosition();
+        String fenCastling = getCurrentBoard().getFenCastling();
+        String fenEnpassant = getCurrentBoard().getFenEnpassant();
 
+        String fenColorToMove;
         if (colorToMove == GameColor.WHITE) {
-            fenFormat.setColorToMove("w");
+            fenColorToMove = "w";
         } else {
-            fenFormat.setColorToMove("b");
+            fenColorToMove = "b";
         }
 
-        fenFormat.setHalfMoveClock(getCurrentHalfMoveClock());
+        Integer fenHalfMoveClock = getCurrentHalfMoveClock();
 
-        int moveCount = (getCurrentMoveCount() + 1) / 2;
+
+        int fenMoveCount = (getCurrentMoveCount() + 1) / 2;
         // FEN miracle :)
-        if (moveCount == 0) {
-            moveCount = 1;
+        if (fenMoveCount == 0) {
+            fenMoveCount = 1;
         }
-        fenFormat.setMoveNr(moveCount);
 
-        return fenFormat;
+        return new FenFormat(fenPosition, fenColorToMove, fenCastling, fenEnpassant, fenHalfMoveClock, fenMoveCount);
     }
 
     public int getCurrentMoveCount() {
@@ -124,7 +127,7 @@ public class ChessGame {
     }
 
     public void overWriteColorToMove(GameColor colorToMove) {
-    	this.colorToMove = colorToMove;
+        this.colorToMove = colorToMove;
     }
 
     public GameState getCurrentGameState() {
@@ -166,7 +169,7 @@ public class ChessGame {
         return getCurrentGameState() != GameState.GAME_OPEN;
     }
 
-	public void applyMove(Move moveInput) {
+    public void applyMove(Move moveInput) {
 
         Board boardClone;
 
