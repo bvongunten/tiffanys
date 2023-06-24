@@ -1,46 +1,53 @@
 package ch.nostromo.tiffanys.commons.move;
 
-import ch.nostromo.tiffanys.commons.enums.GameColor;
+import ch.nostromo.tiffanys.commons.Side;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Getter
-@Setter
+/**
+ * Move Attributes given by an engine
+ */
+@Data
+@NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 public class MoveAttributes {
 
 
-    private GameColor colorToMove;
+    private Side side;
+
     private double score;
 
     private int mateIn;
 
-    private int nodes;
-    private int cutOffs;
-    private int plannedDepth;
-    private int maxDepth;
+    private long nodes;
+
+    private int depth;
+
     private long timeMs;
+
     private List<Move> principalVariations;
 
     @Override
     public String toString() {
 
-        String result = this.getClass().getSimpleName() + " [Score=" + score + ", mateIn=" + mateIn + ", plannedDepth=" + plannedDepth + ", maxDepth=" + maxDepth + ", timeSpent=" + timeMs + ", nodes=" + nodes + ", cutOffs=" + cutOffs + "] ";
-        if (principalVariations != null && principalVariations.size() > 0) {
-            result += ", pv=";
+        StringBuilder result = new StringBuilder(this.getClass().getSimpleName() + " [Score=" + score + ", mateIn=" + mateIn + ", depth=" + depth + ", timeSpent=" + timeMs + ", nodes=" + nodes + "] ");
+        if (principalVariations != null && !principalVariations.isEmpty()) {
+            result.append(", pv=");
 
             for (Move pvMove : principalVariations) {
-                result += MoveTranslator.moveToString(pvMove) + " ";
+                result.append(pvMove.generateMoveDetailString()).append(" ");
             }
 
         }
 
-        result += "]";
+        result.append("]");
 
-        return result;
+        return result.toString();
     }
 
 

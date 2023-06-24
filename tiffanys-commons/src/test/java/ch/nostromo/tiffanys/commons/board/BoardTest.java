@@ -1,302 +1,401 @@
 package ch.nostromo.tiffanys.commons.board;
 
-import ch.nostromo.tiffanys.commons.TestHelper;
-import ch.nostromo.tiffanys.commons.enums.Castling;
-import ch.nostromo.tiffanys.commons.enums.GameColor;
-import ch.nostromo.tiffanys.commons.enums.Piece;
-import ch.nostromo.tiffanys.commons.fen.FenFormat;
+import ch.nostromo.tiffanys.commons.BaseTest;
+import ch.nostromo.tiffanys.commons.Side;
+import ch.nostromo.tiffanys.commons.format.FenFormat;
+import ch.nostromo.tiffanys.commons.move.Castling;
 import ch.nostromo.tiffanys.commons.move.Move;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class BoardTest extends TestHelper {
+import static ch.nostromo.tiffanys.commons.board.Square.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-    private static final FenFormat INITIAL_FEN = new FenFormat("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+class BoardTest extends BaseTest {
 
-    @Test
-    public void testFenInitial() {
-        checkFen(INITIAL_FEN);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testFenIllegal() {
-        checkFen(new FenFormat("abcdefgh/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1"));
-    }
 
     @Test
-    public void testFenEnPassant() {
+    void checkLegalMovesOppening() {
+        FenFormat fen = new FenFormat("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+        Board board = new Board(fen);
+        List<Move> generatedMoves = board.getLegalMoves(Side.WHITE);
+
+        List<Move> expectedMoves = new ArrayList<>();
+        expectedMoves.add(new Move(A2, A3));
+        expectedMoves.add(new Move(A2, A4));
+        expectedMoves.add(new Move(B2, B3));
+        expectedMoves.add(new Move(B2, B4));
+        expectedMoves.add(new Move(C2, C3));
+        expectedMoves.add(new Move(C2, C4));
+        expectedMoves.add(new Move(D2, D3));
+        expectedMoves.add(new Move(D2, D4));
+        expectedMoves.add(new Move(E2, E3));
+        expectedMoves.add(new Move(E2, E4));
+        expectedMoves.add(new Move(F2, F3));
+        expectedMoves.add(new Move(F2, F4));
+        expectedMoves.add(new Move(G2, G3));
+        expectedMoves.add(new Move(G2, G4));
+        expectedMoves.add(new Move(H2, H3));
+        expectedMoves.add(new Move(H2, H4));
+
+        expectedMoves.add(new Move(B1, A3));
+        expectedMoves.add(new Move(B1, C3));
+        expectedMoves.add(new Move(G1, H3));
+        expectedMoves.add(new Move(G1, F3));
+
+        assertGeneratedMoves(generatedMoves, expectedMoves);
+    }
+
+    @Test
+    void checkLegalMovesInCheck() {
+        FenFormat fen = new FenFormat("5b2/1p1b1p2/5kp1/P1n1p3/3pP2p/P1pP1P2/4q1r1/B3RK2 w - - 0 39");
+        Board board = new Board(fen);
+        List<Move> generatedMoves = board.getLegalMoves(Side.WHITE);
+
+        List<Move> expectedMoves = new ArrayList<>();
+        expectedMoves.add(new Move(E1, E2));
+
+        assertGeneratedMoves(generatedMoves, expectedMoves);
+    }
+
+    @Test
+    void testIsCheck() {
+        FenFormat fen = new FenFormat("5b2/1p1b1p2/5kp1/P1n1p3/3pP2p/P1pP1P2/4q1r1/B3RK2 w - - 0 39");
+        Board board = new Board(fen);
+        assertTrue(board.isInCheck(Side.WHITE));
+
+    }
+
+    @Test
+    void testIsMate() {
+        FenFormat fen = new FenFormat("5b2/1p1b1p2/5kp1/P1n1p3/3pP2p/P1pP1P2/5qr1/B3RK2 w - - 0 39");
+        Board board = new Board(fen);
+        assertTrue(board.isMate(Side.WHITE));
+
+    }
+
+    @Test
+    void testIsMateBecauseOfKing() {
+        FenFormat fen = new FenFormat("2K5/1pq5/p2k4/P7/8/8/8/8 w - - 0 66");
+        Board board = new Board(fen);
+        assertTrue(board.isMate(Side.WHITE));
+
+    }
+
+    @Test
+    void testLeadsToCheck() {
+        FenFormat fen = new FenFormat("5b2/1p1b1p2/5kp1/P1n1p3/3pP2p/P1pP1P2/3q2r1/B3RK2 b - - 0 38");
+        Board board = new Board(fen);
+
+        Move move = new Move(D2, E2);
+
+        assertTrue(board.leadsToCheck(move, Side.BLACK));
+    }
+
+    @Test
+    void testLeadsToMate()  {
+        FenFormat fen = new FenFormat("5b2/1p1b1p2/5kp1/P1n1p3/3pP2p/P1pP1P2/3q2r1/B3RK2 b - - 0 38");
+        Board board = new Board(fen);
+
+        Move move = new Move(D2, F2);
+
+        assertTrue(board.leadsToMate(move, Side.BLACK));
+    }
+
+    @Test
+    void testIsCheckIssue() {
+        FenFormat fen = new FenFormat("8/3R4/6rp/1p1kn3/3b1P2/6P1/7K/3q4 b - - 0 1");
+        Board board = new Board(fen);
+
+        assertTrue(board.isInCheck(Side.BLACK));
+
+    }
+
+    @Test
+    void testIsCheckIssue2()  {
+        FenFormat fen = new FenFormat("8/6pp/p1k5/1p1pb3/4r3/1P3nPb/PPN2PK1/3R4 w - - 0 33");
+        Board board = new Board(fen);
+
+        assertTrue(board.isInCheck(Side.WHITE));
+
+    }
+
+    @Test
+    void testFenInitial() {
+        checkFen(FenFormat.INITIAL_FEN);
+    }
+
+    @Test
+    void testFenIllegal() {
+        FenFormat fen = new FenFormat("abcdefgh/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1");
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+            checkFen(fen);
+        });
+
+        assertEquals("Unknown piece char code: a", thrown.getMessage());
+    }
+
+    @Test
+    void testFenEnPassant() {
         checkFen(new FenFormat("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1"));
     }
 
     @Test
-    public void testFenCastling() {
+    void testFenCastling() {
         checkFen(new FenFormat("4k3/8/8/8/8/8/4P3/4K3 w - - 5 39"));
     }
 
-    @Test
-    public void testCastlingLongInitialBoadWhite() {
-        Board board = new Board(INITIAL_FEN);
-        assertTrue(board.isCastlingAllowed(Castling.WHITE_LONG));
-    }
-
-    @Test
-    public void testCastlingShortInitialBoadWhite() {
-        Board board = new Board(INITIAL_FEN);
-        assertTrue(board.isCastlingAllowed(Castling.WHITE_SHORT));
-    }
-
-    @Test
-    public void testCastlingLongInitialBoardBlack() {
-        Board board = new Board(INITIAL_FEN);
-        assertTrue(board.isCastlingAllowed(Castling.BLACK_LONG));
-    }
-
-    @Test
-    public void testCastlingShortInitialBoadBlack() {
-        Board board = new Board(INITIAL_FEN);
-        assertTrue(board.isCastlingAllowed(Castling.BLACK_SHORT));
-    }
-
-    @Test
-    public void testClone() throws Exception {
-        Board board = new Board(INITIAL_FEN);
-        board.clone();
-    }
-
-    @Test
-    public void testIsPieceOfColor() {
-        Board board = new Board(INITIAL_FEN);
-
-        assertEquals(board.getPieceColor(21), GameColor.WHITE);
-        assertEquals(board.getPieceColor(98), GameColor.BLACK);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testIsPieceOfColorFail() {
-        Board board = new Board(INITIAL_FEN);
-        board.getPieceColor(54);
-    }
 
     private void checkFen(FenFormat originalFen) {
         Board board = new Board(originalFen);
 
-        FenFormat fenByBoard = board.getFenFormat();
+        assertEquals(originalFen.getPosition(), board.getFenPosition());
+        assertEquals(originalFen.getCastling(), board.getFenCastling());
+        assertEquals(originalFen.getEnPassant(), board.getFenEnPassant());
+    }
 
-        assertEquals("FenPos", originalFen.getPosition(), fenByBoard.getPosition());
-        assertEquals("FenCastling", originalFen.getCastling(), fenByBoard.getCastling());
-        assertEquals("FenEnPassant", originalFen.getEnPassant(), fenByBoard.getEnPassant());
+
+    @Test
+    void testCastlingLongInitialBoadWhite() {
+        Board board = new Board();
+        assertTrue(board.isCastlingAllowed(Castling.WHITE_LONG));
     }
 
     @Test
-    public void testApplyNormalMove() {
+    void testCastlingShortInitialBoadWhite() {
+        Board board = new Board();
+        assertTrue(board.isCastlingAllowed(Castling.WHITE_SHORT));
+    }
+
+    @Test
+    void testCastlingLongInitialBoardBlack() {
+        Board board = new Board();
+        assertTrue(board.isCastlingAllowed(Castling.BLACK_LONG));
+    }
+
+    @Test
+    void testCastlingShortInitialBoadBlack() {
+        Board board = new Board();
+        assertTrue(board.isCastlingAllowed(Castling.BLACK_SHORT));
+    }
+
+    @Test
+    void testClone() {
+        Board board = new Board();
+        Board copy = board.copy();
+
+        assertEquals(board, copy);
+    }
+
+    @Test
+    void testIsPieceOfColor() {
+        Board board = new Board(FenFormat.INITIAL_FEN);
+
+        assertEquals(Side.WHITE, board.getPieceSide(Square.A1));
+        assertEquals(Side.BLACK, board.getPieceSide(Square.H8));
+    }
+
+    @Test
+    void testIsPieceOfColorFail() {
+        Board board = new Board();
+        assertThrows(IllegalArgumentException.class, () -> {
+            board.getPieceSide(Square.D4);
+        });
+    }
+
+    @Test
+    void testApplyNormalMove() {
         FenFormat fen = new FenFormat("8/7k/8/8/3Q4/8/K7/8 w KQkq b6 0 1");
         Board board = new Board(fen);
 
         // move queen 1 field
-        board.applyMove(new Move("D4", "D3"), GameColor.WHITE);
+        board.applyMove(new Move(D4, D3), Side.WHITE);
 
-        assertEquals(board.getFields()[54].getPiece(), null);
-        assertEquals(board.getFields()[54].getPieceColor(), null);
+        assertNull(board.getBoardSquares()[54].getPiece());
 
-        assertEquals(board.getFields()[44].getPiece(), Piece.QUEEN);
-        assertEquals(board.getFields()[44].getPieceColor(), GameColor.WHITE);
+        assertEquals(Piece.WHITE_QUEEN, board.getBoardSquares()[44].getPiece());
+        assertEquals(Side.WHITE, board.getBoardSquares()[44].getPiece().getSide());
 
         assertTrue(board.castlingBlackLongAllowed);
         assertTrue(board.castlingBlackShortAllowed);
         assertTrue(board.castlingWhiteLongAllowed);
         assertTrue(board.castlingWhiteShortAllowed);
-        assertEquals(board.enPassantField, Integer.MIN_VALUE);
+        assertNull(board.enPassantField);
     }
 
     @Test
-    public void testApplyPawnOpening() {
-        Board board = new Board(INITIAL_FEN);
+    void testApplyPawnOpening() {
+        Board board = new Board();
 
         // move queen 1 field
-        board.applyMove(new Move("E2", "E4"), GameColor.WHITE);
+        board.applyMove(new Move(E2, E4), Side.WHITE);
 
-        assertEquals(board.getFields()[35].getPiece(), null);
-        assertEquals(board.getFields()[35].getPieceColor(), null);
+        assertNull(board.getBoardSquares()[35].getPiece());
 
-        assertEquals(board.getFields()[55].getPiece(), Piece.PAWN);
-        assertEquals(board.getFields()[55].getPieceColor(), GameColor.WHITE);
+        assertEquals(Piece.WHITE_PAWN, board.getBoardSquares()[55].getPiece());
+        assertEquals(Side.WHITE, board.getBoardSquares()[55].getPiece().getSide());
 
         assertTrue(board.castlingBlackLongAllowed);
         assertTrue(board.castlingBlackShortAllowed);
         assertTrue(board.castlingWhiteLongAllowed);
         assertTrue(board.castlingWhiteShortAllowed);
-        assertEquals(board.enPassantField, 45);
+        assertEquals(Square.E3, board.enPassantField);
     }
 
     @Test
-    public void testApplyEnPassantBlack() {
+    void testApplyEnPassantBlack() {
         FenFormat fen = new FenFormat("3k4/8/8/8/1pP5/8/8/3K4 b - c3 0 1");
         Board board = new Board(fen);
 
-        board.applyMove(new Move("B4", "C3"), GameColor.BLACK);
+        board.applyMove(new Move(B4, C3), Side.BLACK);
 
-        assertEquals(board.getFields()[52].getPiece(), null);
-        assertEquals(board.getFields()[52].getPieceColor(), null);
+        assertNull(board.getBoardSquares()[52].getPiece());
 
-        assertEquals(board.getFields()[43].getPiece(), Piece.PAWN);
-        assertEquals(board.getFields()[43].getPieceColor(), GameColor.BLACK);
+        assertEquals(Piece.BLACK_PAWN, board.getBoardSquares()[43].getPiece());
+        assertEquals(Side.BLACK, board.getBoardSquares()[43].getPiece().getSide());
 
-        assertEquals(board.getFields()[53].getPiece(), null);
-        assertEquals(board.getFields()[53].getPieceColor(), null);
+        assertNull(board.getBoardSquares()[53].getPiece());
 
         assertFalse(board.castlingBlackLongAllowed);
         assertFalse(board.castlingBlackShortAllowed);
         assertFalse(board.castlingWhiteLongAllowed);
         assertFalse(board.castlingWhiteShortAllowed);
 
-        assertEquals(board.enPassantField, Integer.MIN_VALUE);
+        assertNull(board.enPassantField);
     }
 
     @Test
-    public void testApplyEnPassantWhite() {
+    void testApplyEnPassantWhite() {
         FenFormat fen = new FenFormat("3k4/8/8/1pP5/8/8/8/3K4 w KQkq b6 0 1");
         Board board = new Board(fen);
 
-        board.applyMove(new Move("C5", "B6"), GameColor.WHITE);
+        board.applyMove(new Move(C5, B6), Side.WHITE);
 
-        assertEquals(board.getFields()[63].getPiece(), null);
-        assertEquals(board.getFields()[63].getPieceColor(), null);
+        assertNull(board.getBoardSquares()[63].getPiece());
 
-        assertEquals(board.getFields()[72].getPiece(), Piece.PAWN);
-        assertEquals(board.getFields()[72].getPieceColor(), GameColor.WHITE);
+        assertEquals(Piece.WHITE_PAWN, board.getBoardSquares()[72].getPiece());
+        assertEquals(Side.WHITE, board.getBoardSquares()[72].getPiece().getSide());
 
-        assertEquals(board.getFields()[62].getPiece(), null);
-        assertEquals(board.getFields()[62].getPieceColor(), null);
+        assertNull(board.getBoardSquares()[62].getPiece());
 
         assertTrue(board.castlingBlackLongAllowed);
         assertTrue(board.castlingBlackShortAllowed);
         assertTrue(board.castlingWhiteLongAllowed);
         assertTrue(board.castlingWhiteShortAllowed);
 
-        assertEquals(board.enPassantField, Integer.MIN_VALUE);
+        assertNull(board.enPassantField);
     }
 
     @Test
-    public void testApplyShortCastlingWhite() {
+    void testApplyShortCastlingWhite() {
         FenFormat fen = new FenFormat("r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1");
         Board board = new Board(fen);
 
-        board.applyMove(new Move(Castling.WHITE_SHORT), GameColor.WHITE);
+        board.applyMove(new Move(Castling.WHITE_SHORT), Side.WHITE);
 
-        assertEquals(board.getFields()[25].getPiece(), null);
-        assertEquals(board.getFields()[25].getPieceColor(), null);
-        assertEquals(board.getFields()[28].getPiece(), null);
-        assertEquals(board.getFields()[28].getPieceColor(), null);
+        assertNull(board.getBoardSquares()[25].getPiece());
+        assertNull(board.getBoardSquares()[28].getPiece());
 
-        assertEquals(board.getFields()[27].getPiece(), Piece.KING);
-        assertEquals(board.getFields()[27].getPieceColor(), GameColor.WHITE);
-        assertEquals(board.getFields()[26].getPiece(), Piece.ROOK);
-        assertEquals(board.getFields()[26].getPieceColor(), GameColor.WHITE);
+        assertEquals(Piece.WHITE_KING, board.getBoardSquares()[27].getPiece());
+        assertEquals(Side.WHITE, board.getBoardSquares()[27].getPiece().getSide());
+        assertEquals(Piece.WHITE_ROOK, board.getBoardSquares()[26].getPiece());
+        assertEquals(Side.WHITE, board.getBoardSquares()[26].getPiece().getSide());
 
         assertTrue(board.castlingBlackLongAllowed);
         assertTrue(board.castlingBlackShortAllowed);
         assertFalse(board.castlingWhiteLongAllowed);
         assertFalse(board.castlingWhiteShortAllowed);
 
-        assertEquals(board.enPassantField, Integer.MIN_VALUE);
+        assertNull(board.enPassantField);
     }
 
     @Test
-    public void testApplyShortCastlingBlack() {
+    void testApplyShortCastlingBlack() {
         FenFormat fen = new FenFormat("r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1");
         Board board = new Board(fen);
 
-        board.applyMove(new Move(Castling.BLACK_SHORT), GameColor.BLACK);
+        board.applyMove(new Move(Castling.BLACK_SHORT), Side.BLACK);
 
-        assertEquals(board.getFields()[95].getPiece(), null);
-        assertEquals(board.getFields()[95].getPieceColor(), null);
-        assertEquals(board.getFields()[98].getPiece(), null);
-        assertEquals(board.getFields()[98].getPieceColor(), null);
+        assertNull(board.getBoardSquares()[95].getPiece());
+        assertNull(board.getBoardSquares()[98].getPiece());
 
-        assertEquals(board.getFields()[97].getPiece(), Piece.KING);
-        assertEquals(board.getFields()[97].getPieceColor(), GameColor.BLACK);
-        assertEquals(board.getFields()[96].getPiece(), Piece.ROOK);
-        assertEquals(board.getFields()[96].getPieceColor(), GameColor.BLACK);
+        assertEquals(Piece.BLACK_KING, board.getBoardSquares()[97].getPiece());
+        assertEquals(Piece.BLACK_ROOK, board.getBoardSquares()[96].getPiece());
 
         assertFalse(board.castlingBlackLongAllowed);
         assertFalse(board.castlingBlackShortAllowed);
         assertTrue(board.castlingWhiteLongAllowed);
         assertTrue(board.castlingWhiteShortAllowed);
 
-        assertEquals(board.enPassantField, Integer.MIN_VALUE);
+        assertNull(board.enPassantField);
     }
 
     @Test
-    public void testApplyLongCastlingWhite() {
+    void testApplyLongCastlingWhite() {
         FenFormat fen = new FenFormat("r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1");
         Board board = new Board(fen);
 
-        board.applyMove(new Move(Castling.WHITE_LONG), GameColor.WHITE);
+        board.applyMove(new Move(Castling.WHITE_LONG), Side.WHITE);
 
-        assertEquals(board.getFields()[25].getPiece(), null);
-        assertEquals(board.getFields()[25].getPieceColor(), null);
-        assertEquals(board.getFields()[21].getPiece(), null);
-        assertEquals(board.getFields()[21].getPieceColor(), null);
+        assertNull(board.getBoardSquares()[25].getPiece());
+        assertNull(board.getBoardSquares()[21].getPiece());
 
-        assertEquals(board.getFields()[23].getPiece(), Piece.KING);
-        assertEquals(board.getFields()[23].getPieceColor(), GameColor.WHITE);
-        assertEquals(board.getFields()[24].getPiece(), Piece.ROOK);
-        assertEquals(board.getFields()[24].getPieceColor(), GameColor.WHITE);
+        assertEquals(Piece.WHITE_KING, board.getBoardSquares()[23].getPiece());
+        assertEquals(Side.WHITE, board.getBoardSquares()[23].getPiece().getSide());
+        assertEquals(Piece.WHITE_ROOK, board.getBoardSquares()[24].getPiece());
+        assertEquals(Side.WHITE, board.getBoardSquares()[24].getPiece().getSide());
 
         assertTrue(board.castlingBlackLongAllowed);
         assertTrue(board.castlingBlackShortAllowed);
         assertFalse(board.castlingWhiteLongAllowed);
         assertFalse(board.castlingWhiteShortAllowed);
 
-        assertEquals(board.enPassantField, Integer.MIN_VALUE);
+        assertNull(board.enPassantField);
     }
 
     @Test
-    public void testApplyLongCastlingBlack() {
+    void testApplyLongCastlingBlack() {
         FenFormat fen = new FenFormat("r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1");
         Board board = new Board(fen);
 
-        board.applyMove(new Move(Castling.BLACK_LONG), GameColor.BLACK);
+        board.applyMove(new Move(Castling.BLACK_LONG), Side.BLACK);
 
-        assertEquals(board.getFields()[95].getPiece(), null);
-        assertEquals(board.getFields()[95].getPieceColor(), null);
-        assertEquals(board.getFields()[91].getPiece(), null);
-        assertEquals(board.getFields()[91].getPieceColor(), null);
+        assertNull(board.getBoardSquares()[95].getPiece());
+        assertNull(board.getBoardSquares()[91].getPiece());
 
-        assertEquals(board.getFields()[93].getPiece(), Piece.KING);
-        assertEquals(board.getFields()[93].getPieceColor(), GameColor.BLACK);
-        assertEquals(board.getFields()[94].getPiece(), Piece.ROOK);
-        assertEquals(board.getFields()[94].getPieceColor(), GameColor.BLACK);
+        assertEquals(Piece.BLACK_KING, board.getBoardSquares()[93].getPiece());
+        assertEquals(Piece.BLACK_ROOK, board.getBoardSquares()[94].getPiece());
 
         assertFalse(board.castlingBlackLongAllowed);
         assertFalse(board.castlingBlackShortAllowed);
         assertTrue(board.castlingWhiteLongAllowed);
         assertTrue(board.castlingWhiteShortAllowed);
 
-        assertEquals(board.enPassantField, Integer.MIN_VALUE);
+        assertNull(board.enPassantField);
     }
 
     @Test
-    public void testApplyDestroyCastlingWhite() {
+    void testApplyDestroyCastlingWhite() {
         FenFormat fen = new FenFormat("r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1");
 
         Board board = new Board(fen);
-        board.applyMove(new Move("A1", "B1"), GameColor.WHITE);
+        board.applyMove(new Move(A1, B1), Side.WHITE);
         assertTrue(board.castlingBlackLongAllowed);
         assertTrue(board.castlingBlackShortAllowed);
         assertFalse(board.castlingWhiteLongAllowed);
         assertTrue(board.castlingWhiteShortAllowed);
 
         board = new Board(fen);
-        board.applyMove(new Move("H1", "G1"), GameColor.WHITE);
+        board.applyMove(new Move(H1, G1), Side.WHITE);
         assertTrue(board.castlingBlackLongAllowed);
         assertTrue(board.castlingBlackShortAllowed);
         assertTrue(board.castlingWhiteLongAllowed);
         assertFalse(board.castlingWhiteShortAllowed);
 
         board = new Board(fen);
-        board.applyMove(new Move("E1", "E2"), GameColor.WHITE);
+        board.applyMove(new Move(E1, E2), Side.WHITE);
         assertTrue(board.castlingBlackLongAllowed);
         assertTrue(board.castlingBlackShortAllowed);
         assertFalse(board.castlingWhiteLongAllowed);
@@ -305,25 +404,25 @@ public class BoardTest extends TestHelper {
     }
 
     @Test
-    public void testApplyDestroyCastlingBlack() {
+    void testApplyDestroyCastlingBlack() {
         FenFormat fen = new FenFormat("r3k2r/8/8/8/8/8/8/R3K2R b KQkq - 0 1");
 
         Board board = new Board(fen);
-        board.applyMove(new Move("A8", "B8"), GameColor.BLACK);
+        board.applyMove(new Move(A8, B8), Side.BLACK);
         assertFalse(board.castlingBlackLongAllowed);
         assertTrue(board.castlingBlackShortAllowed);
         assertTrue(board.castlingWhiteLongAllowed);
         assertTrue(board.castlingWhiteShortAllowed);
 
         board = new Board(fen);
-        board.applyMove(new Move("H8", "G8"), GameColor.BLACK);
+        board.applyMove(new Move(H8, G8), Side.BLACK);
         assertTrue(board.castlingBlackLongAllowed);
         assertFalse(board.castlingBlackShortAllowed);
         assertTrue(board.castlingWhiteLongAllowed);
         assertTrue(board.castlingWhiteShortAllowed);
 
         board = new Board(fen);
-        board.applyMove(new Move("E8", "E7"), GameColor.BLACK);
+        board.applyMove(new Move(E8, E7), Side.BLACK);
         assertFalse(board.castlingBlackLongAllowed);
         assertFalse(board.castlingBlackShortAllowed);
         assertTrue(board.castlingWhiteLongAllowed);
@@ -332,34 +431,72 @@ public class BoardTest extends TestHelper {
     }
 
     @Test
-    public void testApplyPromotion() {
+    void testApplyPromotion() {
         FenFormat fen = new FenFormat("3k1q2/6P1/8/8/8/8/6p1/3K1Q2 w - - 0 1");
         Board board = new Board(fen);
 
-        board.applyMove(new Move("G7", "G8", Piece.QUEEN), GameColor.WHITE);
-        assertEquals(board.getFields()[87].getPiece(), null);
-        assertEquals(board.getFields()[87].getPieceColor(), null);
-        assertEquals(board.getFields()[97].getPiece(), Piece.QUEEN);
-        assertEquals(board.getFields()[97].getPieceColor(), GameColor.WHITE);
+        board.applyMove(new Move(G7, G8, Piece.WHITE_QUEEN), Side.WHITE);
+        assertNull(board.getBoardSquares()[87].getPiece());
+        assertEquals(Piece.WHITE_QUEEN, board.getBoardSquares()[97].getPiece());
+        assertEquals(Side.WHITE, board.getBoardSquares()[97].getPiece().getSide());
 
     }
 
     @Test
-    public void testHelperFunctions() {
-        Board board = new Board(INITIAL_FEN);
+    void testHelperFunctions() {
+        Board board = new Board();
 
-        assertTrue(board.containsPiece(21));
-        assertTrue(board.isVoid(20));
-        assertTrue(board.isPieceAndColor(25, Piece.KING, GameColor.WHITE));
+        assertFalse(board.isEmptySquare(Square.A1));
+        assertTrue(board.isBorder(20));
+        assertTrue(board.containsPieceOfSide(25, PieceType.KING, Side.WHITE));
 
     }
 
     @Test
-    public void testEnPassantField() {
+    void testEnPassantField() {
         Board board = new Board(new FenFormat("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1"));
 
-        assertEquals(45, board.getEnPassantField());
-
+        assertEquals(Square.E3, board.getEnPassantField());
     }
 
+    @Test
+    void testGetSquareInformation() {
+        Board board = new Board();
+
+        assertEquals(Piece.WHITE_PAWN, board.getPiece(Square.A2));
+        assertEquals(Piece.BLACK_PAWN, board.getPiece(Square.A7));
+
+        assertEquals(Side.WHITE, board.getPieceSide(Square.A2));
+        assertEquals(Side.BLACK, board.getPieceSide(Square.A7));
+
+        assertEquals(PieceType.PAWN, board.getPieceType(Square.A2));
+        assertEquals(PieceType.PAWN, board.getPieceType(Square.A7));
+    }
+
+    @Test
+    void testGetInvalidSquareInformation() {
+        Board board = new Board();
+        assertThrows(IllegalArgumentException.class, () -> {
+            board.getPiece(Square.A5);
+        });
+    }
+
+    @Test
+    void testDump() {
+
+        // @formatter:off
+        String baseBoard = new StringBuilder().
+                append("8 BR BN BB BQ BK BB BN BR \n").
+                append("7 BP BP BP BP BP BP BP BP \n").
+                append("6 [] [] [] [] [] [] [] [] \n").
+                append("5 [] [] [] [] [] [] [] [] \n").
+                append("4 [] [] [] [] [] [] [] [] \n").
+                append("3 [] [] [] [] [] [] [] [] \n").
+                append("2 WP WP WP WP WP WP WP WP \n").
+                append("1 WR WN WB WQ WK WB WN WR \n").
+                append("  A  B  C  D  E  F  G  H  ").toString();
+        //@formatter:on
+
+        assertEquals(baseBoard, new Board().toString());
+    }
 }

@@ -1,92 +1,62 @@
 package ch.nostromo.tiffanys.commons.move;
 
-import ch.nostromo.tiffanys.commons.enums.Castling;
-import ch.nostromo.tiffanys.commons.enums.Piece;
-import org.junit.Test;
+import ch.nostromo.tiffanys.commons.board.Piece;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static ch.nostromo.tiffanys.commons.board.Square.A1;
+import static ch.nostromo.tiffanys.commons.board.Square.B1;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class MoveTest {
+
+class MoveTest {
 
     @Test
-    public void testSimpleMoveByCoord() {
-        Move move = new Move("a1", "b1");
+    void testSimpleMoveByCoord() {
+        Move move = new Move(A1, B1);
 
-        assertEquals(move.getFrom(), 21);
-        assertEquals(move.getTo(), 22);
+        assertEquals(21, move.getFrom().getBoardIdx());
+        assertEquals(22, move.getTo().getBoardIdx());
     }
 
     @Test
-    public void testSimpleMoveByField() {
-        Move move = new Move(21, 22);
+    void testSimplePromotionByCoord() {
+        Move move = new Move(A1, B1, Piece.WHITE_KING);
 
-        assertEquals(move.getFromCoord(), "a1");
-        assertEquals(move.getToCoord(), "b1");
-    }
-
-    @Test
-    public void testSimplePromotionByCoord() {
-        Move move = new Move("a1", "b1", Piece.KING);
-
-        assertEquals(move.getFrom(), 21);
-        assertEquals(move.getTo(), 22);
-        assertEquals(move.getPromotion(), Piece.KING);
+        assertEquals(21, move.getFrom().getBoardIdx());
+        assertEquals(22, move.getTo().getBoardIdx());
+        assertEquals(Piece.WHITE_KING, move.getPromotion());
         assertTrue(move.isPromotion());
 
     }
 
     @Test
-    public void testSimplePromotionByField() {
-        Move move = new Move(21, 22, Piece.KING);
-
-        assertEquals(move.getFromCoord(), "a1");
-        assertEquals(move.getToCoord(), "b1");
-        assertEquals(move.getPromotion(), Piece.KING);
-
-        assertTrue(move.isPromotion());
-    }
-
-    @Test
-    public void testSimpleCastling() {
+    void testSimpleCastling() {
         Move move = new Move(Castling.WHITE_LONG);
 
-        assertEquals(move.getCastling(), Castling.WHITE_LONG);
+        assertEquals(Castling.WHITE_LONG, move.getCastling());
         assertTrue(move.isCastling());
     }
 
     @Test
-    public void testToStringCall() {
-        Move move = new Move(21, 22);
+    void testToStringCall() {
+        Move move = new Move(A1, B1);
         assertEquals("Move [a1-b1]", move.toString());
 
         Move moveCastling = new Move(Castling.WHITE_LONG);
         assertEquals("Move [O-O-O]", moveCastling.toString());
 
-        Move movePromo = new Move(21, 22, Piece.KING);
+        Move movePromo = new Move(A1, B1, Piece.WHITE_KING);
         assertEquals("Move [a1-b1K]", movePromo.toString());
 
     }
 
     @Test
-    public void testEquals() {
+    void testCastlingEquals() {
         Move castling1 = new Move(Castling.BLACK_LONG);
         Move castling1b = new Move(Castling.BLACK_LONG);
         Move castling2 = new Move(Castling.WHITE_LONG);
         assertEquals(castling1, castling1b);
         assertNotEquals(castling1, castling2);
-
-        Move moveNormal1 = new Move("a1", "b1");
-        Move moveNormal2 = new Move(21, 22);
-        assertEquals(moveNormal1, moveNormal2);
-
-        Move moveEp1 = new Move("a1", "b1");
-        Move moveEp2 = new Move(21, 22);
-        assertEquals(moveEp1, moveEp2);
-
-        Move movePromotion1 = new Move("a1", "b1", Piece.KING);
-        Move movePromotion2 = new Move(21, 22, Piece.KING);
-        assertEquals(movePromotion1, movePromotion2);
-
     }
 
 }

@@ -1,374 +1,576 @@
 package ch.nostromo.tiffanys.commons.board;
 
-import ch.nostromo.tiffanys.commons.enums.Castling;
-import ch.nostromo.tiffanys.commons.enums.FieldType;
-import ch.nostromo.tiffanys.commons.enums.GameColor;
-import ch.nostromo.tiffanys.commons.enums.Piece;
-import ch.nostromo.tiffanys.commons.fen.FenFormat;
-import ch.nostromo.tiffanys.commons.fields.Field;
+import ch.nostromo.tiffanys.commons.Side;
+import ch.nostromo.tiffanys.commons.format.FenFormat;
+import ch.nostromo.tiffanys.commons.move.Castling;
 import ch.nostromo.tiffanys.commons.move.Move;
-import lombok.Getter;
-import lombok.Setter;
+import ch.nostromo.tiffanys.commons.move.movegenerator.KingMoveGenerator;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-import java.util.StringTokenizer;
-import java.util.logging.Logger;
+import java.util.*;
 
-@Getter
-@Setter
-public class Board implements Cloneable {
+/**
+ * Board can be constructed by a fen. It handles squares, enPassant field and castling rights but is independent of
+ * the current side to play. Provides helper methods.
+ */
+@Data
+@AllArgsConstructor
+public class Board {
 
-	Logger logger = Logger.getLogger(getClass().getName());
+    // Legal / remaining castle moves
+    boolean castlingWhiteShortAllowed;
+    boolean castlingBlackShortAllowed;
+    boolean castlingWhiteLongAllowed;
+    boolean castlingBlackLongAllowed;
 
-	Field[] fields = new Field[120];
+    // Current en passant field
+    Square enPassantField;
 
-	int enPassantField;
-	boolean castlingWhiteShortAllowed;
-	boolean castlingBlackShortAllowed;
-	boolean castlingWhiteLongAllowed;
-	boolean castlingBlackLongAllowed;
+    // Board Squares (null are border fields for move genration
+    BoardSquare[] boardSquares = new BoardSquare[120];
 
-	public Board(FenFormat fenFormat) {
+    /**
+     * Create a standard chess board
+     */
+    public Board() {
+        this(FenFormat.INITIAL_FEN);
+    }
 
-		logger.fine("Creating board for fen: " + fenFormat.toString());
-
-		// Legal Fields
-		for (int i = 0; i < 8; i++) {
-			for (int n = 1; n < 9; n++) {
-				int idx = n + 20 + (i * 10);
-				fields[idx] = new Field(FieldType.LEGAL);
-			}
-		}
-
-		// Void fields
-		for (int i = 0; i <= 19; i++) {
-			fields[i] = new Field(FieldType.VOID);
-			fields[i + 100] = new Field(FieldType.VOID);
-		}
-		for (int i = 20; i <= 90; i += 10) {
-			fields[i] = new Field(FieldType.VOID);
-			fields[i + 9] = new Field(FieldType.VOID);
-		}
-
-		// Set position
-		String position = fenFormat.getPosition();
-		StringTokenizer positionTokenizer = new StringTokenizer(position, "/");
-		int currLineIdx = 9;
-		while (positionTokenizer.hasMoreTokens()) {
-			String line = positionTokenizer.nextToken();
-			int fieldIdx = 1;
-			for (int i = 0; i < line.length(); i++) {
-				char c = line.charAt(i);
-				if (Character.isDigit(c)) {
-					fieldIdx += Integer.parseInt(line.substring(i, i + 1));
-				} else {
-
-					int toBePlacedId = currLineIdx * 10 + fieldIdx;
-					if (c == 'K') {
-						setPieceAndColor(toBePlacedId, Piece.KING, GameColor.WHITE);
-					} else if (c == 'Q') {
-						setPieceAndColor(toBePlacedId, Piece.QUEEN, GameColor.WHITE);
-					} else if (c == 'R') {
-						setPieceAndColor(toBePlacedId, Piece.ROOK, GameColor.WHITE);
-					} else if (c == 'B') {
-						setPieceAndColor(toBePlacedId, Piece.BISHOP, GameColor.WHITE);
-					} else if (c == 'N') {
-						setPieceAndColor(toBePlacedId, Piece.KNIGHT, GameColor.WHITE);
-					} else if (c == 'P') {
-						setPieceAndColor(toBePlacedId, Piece.PAWN, GameColor.WHITE);
-					} else if (c == 'k') {
-						setPieceAndColor(toBePlacedId, Piece.KING, GameColor.BLACK);
-					} else if (c == 'q') {
-						setPieceAndColor(toBePlacedId, Piece.QUEEN, GameColor.BLACK);
-					} else if (c == 'r') {
-						setPieceAndColor(toBePlacedId, Piece.ROOK, GameColor.BLACK);
-					} else if (c == 'b') {
-						setPieceAndColor(toBePlacedId, Piece.BISHOP, GameColor.BLACK);
-					} else if (c == 'n') {
-						setPieceAndColor(toBePlacedId, Piece.KNIGHT, GameColor.BLACK);
-					} else if (c == 'p') {
-						setPieceAndColor(toBePlacedId, Piece.PAWN, GameColor.BLACK);
-					} else {
-						throw new IllegalArgumentException(
-								"Unknown piece code: " + c + " on fen position: " + position);
-					}
-					fieldIdx++;
-				}
-			}
-			currLineIdx--;
-
-		}
-
-		// Castling
-		String castling = fenFormat.getCastling();
-		this.castlingWhiteLongAllowed = castling.indexOf("Q") >= 0;
-		this.castlingWhiteShortAllowed = castling.indexOf("K") >= 0;
-		this.castlingBlackLongAllowed = castling.indexOf("q") >= 0;
-		this.castlingBlackShortAllowed = castling.indexOf("k") >= 0;
-
-		// Ep field
-		String epField = fenFormat.getEnPassant();
-		if (!epField.equals("-")) {
-			this.enPassantField = BoardUtil.coordToField(epField);
-		} else {
-			this.enPassantField = Integer.MIN_VALUE;
-		}
-
-		logger.fine("Board created: \n" + this.toString());
-	}
-
-	public FenFormat getFenFormat() {
-
-		String position = "";
-		for (int n = 9; n >= 2; n--) {
-			String line = "";
-			int sinceLast = 0;
-			for (int i = n * 10 + 1; i <= n * 10 + 8; i++) {
-				if (fields[i].getPiece() == null) {
-					sinceLast++;
-				} else {
-					if (sinceLast > 0) {
-						line += sinceLast;
-						sinceLast = 0;
-					}
-					if (fields[i].getPieceColor() == GameColor.WHITE) {
-						line += fields[i].getPiece().getPieceCharCode().toUpperCase();
-					} else {
-						line += fields[i].getPiece().getPieceCharCode().toLowerCase();
-					}
-				}
-			}
-			if (sinceLast > 0) {
-				line += sinceLast;
-			}
-			position += line;
-			if (n > 2) {
-				position += "/";
-			}
-		}
-
-		String castling = "";
-		if (!castlingWhiteLongAllowed && !castlingWhiteShortAllowed && !castlingBlackLongAllowed
-				&& !castlingBlackShortAllowed) {
-			castling = "-";
-		} else {
-			if (castlingWhiteLongAllowed) {
-				castling += "K";
-			}
-			if (castlingWhiteShortAllowed) {
-				castling += "Q";
-			}
-			if (castlingBlackLongAllowed) {
-				castling += "k";
-			}
-			if (castlingBlackShortAllowed) {
-				castling += "q";
-			}
-		}
-
-		String enPassant = "";
-		if (enPassantField != Integer.MIN_VALUE) {
-			enPassant = BoardUtil.fieldToCoord(enPassantField);
-		} else {
-			enPassant = "-";
-		}
-
-		return new FenFormat(position, castling, enPassant);
-	}
-
-	public int getPieceCount() {
-		int pieceCount = 0;
-		for (Field field : fields) {
-			if (field.getPiece() != null) {
-				pieceCount++;
-			}
-		}
-		return pieceCount;
-	}
+    /**
+     * Create a chess board by given fen
+     */
+    public Board(FenFormat fenFormat) {
+        initializeBoard(fenFormat);
+    }
 
 
+    public Board copy() {
+        Board copy = new Board();
 
-	public boolean isCastlingAllowed(Castling castling) {
-		switch (castling) {
-		case WHITE_LONG:
-			return castlingWhiteLongAllowed;
-		case WHITE_SHORT:
-			return castlingWhiteShortAllowed;
-		case BLACK_LONG:
-			return castlingBlackLongAllowed;
-		case BLACK_SHORT:
-			return castlingBlackShortAllowed;
-		}
+        copy.setCastlingBlackLongAllowed(castlingBlackLongAllowed);
+        copy.setCastlingWhiteLongAllowed(castlingWhiteLongAllowed);
+        copy.setCastlingBlackShortAllowed(castlingBlackShortAllowed);
+        copy.setCastlingWhiteShortAllowed(castlingWhiteShortAllowed);
 
-		throw new IllegalArgumentException("Unknown Castling enum val: " + castling);
+        copy.setEnPassantField(enPassantField);
 
-	}
+        copy.boardSquares = new BoardSquare[boardSquares.length];
 
-	public void setCastlingAllowed(Castling castling, boolean flag) {
-		switch (castling) {
-		case WHITE_LONG: {
-			castlingWhiteLongAllowed = flag;
-			return;
-		}
-		case WHITE_SHORT: {
-			castlingWhiteShortAllowed = flag;
-			return;
-		}
-		case BLACK_LONG: {
-			castlingBlackLongAllowed = flag;
-			return;
-		}
-		case BLACK_SHORT: {
-			castlingBlackShortAllowed = flag;
-			return;
-		}
-		}
+        for (int i = 0; i < boardSquares.length; i++) {
+            if (boardSquares[i] != null) {
+                copy.boardSquares[i] = boardSquares[i].copy();
+            }
+        }
 
-		throw new IllegalArgumentException("Unknown Castling enum val: " + castling);
+        return copy;
+    }
 
-	}
 
-	public GameColor getPieceColor(int idx) {
-		if (fields[idx].getPiece() == null) {
-			throw new IllegalArgumentException("No piece at idx: " + idx);
-		}
-		return fields[idx].getPieceColor();
-	}
+    // ****************************************************************************************************************************************
+    // *** FEN
+    // ****************************************************************************************************************************************
 
-	public boolean containsPiece(int idx) {
-		return fields[idx].getPiece() != null;
-	}
 
-	public boolean isVoid(int idx) {
-		return fields[idx].getType() == FieldType.VOID;
-	}
+    /**
+     * Initialize board by fen, including castling flags and en passant field
+     */
+    private void initializeBoard(FenFormat fenFormat) {
+        // Reset
+        Arrays.fill(boardSquares, null);
 
-	public boolean isPieceAndColor(int idx, Piece piece, GameColor color) {
-		return fields[idx].getPieceColor() == color && fields[idx].getPiece() == piece;
-	}
+        // Add legal fields
+        for (Square square : Square.values()) {
+            boardSquares[square.getBoardIdx()] = new BoardSquare();
+        }
 
-	private void setPieceAndColor(int idx, Piece piece, GameColor color) {
-		fields[idx].setPiece(piece);
-		fields[idx].setPieceColor(color);
-	}
+        // Set position
+        String position = fenFormat.getPosition();
 
-	private void movePiece(int from, int to) {
-		fields[to].setPiece(fields[from].getPiece());
-		fields[to].setPieceColor(fields[from].getPieceColor());
+        StringTokenizer positionTokenizer = new StringTokenizer(position, "/");
 
-		fields[from].setPiece(null);
-		fields[from].setPieceColor(null);
-	}
+        int currLineIdx = 9;
+        while (positionTokenizer.hasMoreTokens()) {
+            String line = positionTokenizer.nextToken();
+            int fieldIdx = 1;
+            for (int i = 0; i < line.length(); i++) {
+                char c = line.charAt(i);
+                if (Character.isDigit(c)) {
+                    fieldIdx += Integer.parseInt(line.substring(i, i + 1));
+                } else {
 
-	public void applyMove(Move move, GameColor colorToMove) {
+                    int toBePlacedId = currLineIdx * 10 + fieldIdx;
 
-		// logger.finer("Applying move: " + move.toString());
+                    Piece piece = Piece.getPieceByCharCode(Character.toString(c));
+                    setPiece(toBePlacedId, piece);
 
-		// 7 this.enPassantField = Integer.MIN_VALUE;
+                    fieldIdx++;
+                }
+            }
+            currLineIdx--;
 
-		if (move.getPromotion() != null) {
-			// promotion
+        }
 
-			setPieceAndColor(move.getTo(), move.getPromotion(), colorToMove);
-			fields[move.getFrom()].setPiece(null);
-			fields[move.getFrom()].setPieceColor(null);
+        // Castling
+        String castling = fenFormat.getCastling();
+        this.castlingWhiteLongAllowed = castling.contains("Q");
+        this.castlingWhiteShortAllowed = castling.contains("K");
+        this.castlingBlackLongAllowed = castling.contains("q");
+        this.castlingBlackShortAllowed = castling.contains("k");
 
-			this.enPassantField = Integer.MIN_VALUE;
+        // Ep field
+        String epField = fenFormat.getEnPassant();
+        if (!epField.equals("-")) {
+            this.enPassantField = Square.byName(epField);
+        } else {
+            this.enPassantField = null;
+        }
 
-		} else if (fields[move.getFrom()].getPiece() == Piece.PAWN && move.getTo() == enPassantField) {
-			// en passant
+    }
 
-			movePiece(move.getFrom(), move.getTo());
-			int epIdx = move.getTo() + (colorToMove.getCalculationModificator() * 10) * -1;
-			fields[epIdx].setPiece(null);
-			fields[epIdx].setPieceColor(null);
+    /**
+     * Returns partial fen string - position
+     */
+    public String getFenPosition() {
+        StringBuilder position = new StringBuilder();
 
-			this.enPassantField = Integer.MIN_VALUE;
+        for (int i = 9; i >= 2; i--) {
+            position.append(getRankFenString(i));
+            if (i > 2) {
+                position.append("/");
+            }
+        }
 
-		} else if (move.getCastling() != null) {
-			// castling
+        return position.toString();
+    }
 
-			switch (move.getCastling()) {
-			case WHITE_SHORT:
-			case WHITE_LONG: {
-				castlingWhiteLongAllowed = false;
-				castlingWhiteShortAllowed = false;
-				break;
-			}
-			case BLACK_SHORT:
-			case BLACK_LONG: {
-				castlingBlackLongAllowed = false;
-				castlingBlackShortAllowed = false;
-				break;
-			}
-			}
+    /**
+     * Converts a single rank to its FEN representation
+     */
+    private String getRankFenString(int rank) {
+        StringBuilder line = new StringBuilder();
+        int emptySquares = 0;
 
-			movePiece(move.getCastling().getFromRook(), move.getCastling().getToRook());
-			movePiece(move.getCastling().getFromKing(), move.getCastling().getToKing());
+        for (int i = rank * 10 + 1; i <= rank * 10 + 8; i++) {
+            if (boardSquares[i].getPiece() == null) {
+                emptySquares++;
+            } else {
+                if (emptySquares > 0) {
+                    line.append(emptySquares);
+                    emptySquares = 0;
+                }
+                line.append(getPieceCharCode(boardSquares[i].getPiece()));
+            }
+        }
 
-			this.enPassantField = Integer.MIN_VALUE;
+        if (emptySquares > 0) {
+            line.append(emptySquares);
+        }
 
-		} else {
+        return line.toString();
+    }
 
-			// Castling destroyed by movement of Rook / King or movement on Rook
-			// field (iE rook hit)
-			if (move.getTo() == Castling.WHITE_LONG.getFromRook() || move.getFrom() == Castling.WHITE_LONG.getFromRook()
-					|| move.getFrom() == Castling.WHITE_LONG.getFromKing()) {
-				castlingWhiteLongAllowed = false;
-			}
+    /**
+     * Returns the FEN character code for a piece (uppercase for white, lowercase for black)
+     */
+    private String getPieceCharCode(Piece piece) {
+        String charCode = piece.getCharCode();
+        return piece.getSide() == Side.WHITE ? charCode.toUpperCase() : charCode.toLowerCase();
+    }
 
-			if (move.getTo() == Castling.WHITE_SHORT.getFromRook()
-					|| move.getFrom() == Castling.WHITE_SHORT.getFromRook()
-					|| move.getFrom() == Castling.WHITE_SHORT.getFromKing()) {
-				castlingWhiteShortAllowed = false;
-			}
+    /**
+     * Returns partial fen string - legal castling
+     */
+    public String getFenCastling() {
+        String castling = "";
+        if (!castlingWhiteLongAllowed && !castlingWhiteShortAllowed
+                && !castlingBlackLongAllowed && !castlingBlackShortAllowed) {
+            castling = "-";
+        } else {
+            if (castlingWhiteShortAllowed) castling += "K";  // K = Kingside = Short
+            if (castlingWhiteLongAllowed)  castling += "Q";  // Q = Queenside = Long
+            if (castlingBlackShortAllowed) castling += "k";  // k = Kingside = Short
+            if (castlingBlackLongAllowed)  castling += "q";  // q = Queenside = Long
+        }
+        return castling;
+    }
 
-			if (move.getTo() == Castling.BLACK_LONG.getFromRook() || move.getFrom() == Castling.BLACK_LONG.getFromRook()
-					|| move.getFrom() == Castling.BLACK_LONG.getFromKing()) {
-				castlingBlackLongAllowed = false;
-			}
+    /**
+     * Returns partial fen string - en passant
+     */
+    public String getFenEnPassant() {
+        String enPassant = "";
+        if (enPassantField != null) {
+            enPassant = enPassantField.getLowerCaseName();
+        } else {
+            enPassant = "-";
+        }
 
-			if (move.getTo() == Castling.BLACK_SHORT.getFromRook()
-					|| move.getFrom() == Castling.BLACK_SHORT.getFromRook()
-					|| move.getFrom() == Castling.BLACK_SHORT.getFromKing()) {
-				castlingBlackShortAllowed = false;
-			}
+        return enPassant;
+    }
 
-			// En Passant field to be set?
-			if (fields[move.getFrom()].getPiece() == Piece.PAWN && Math.abs(move.getFrom() - move.getTo()) == 20) {
-				this.enPassantField = move.getTo() + (colorToMove.getCalculationModificator() * 10) * -1;
-			} else {
-				this.enPassantField = Integer.MIN_VALUE;
-			}
 
-			// Move piece
-			movePiece(move.getFrom(), move.getTo());
+    // ****************************************************************************************************************************************
+    // *** Support
+    // ****************************************************************************************************************************************
 
-		}
 
-	}
+    /**
+     * Returns the current amount of pieces on the board independent of side
+     */
+    public int getPieceCount() {
+        int pieceCount = 0;
+        for (BoardSquare boardSquare : boardSquares) {
+            if (boardSquare != null && boardSquare.getPiece() != null) {
+                pieceCount++;
+            }
+        }
+        return pieceCount;
+    }
 
-	@Override
-	public Board clone() {
-		Board clone;
-		try {
-			clone = (Board) super.clone();
-		} catch (CloneNotSupportedException e) {
-			throw new IllegalStateException("Unable to clone board", e);
-		}
+    /**
+     * Returns true if a given castling is allowed
+     */
+    public boolean isCastlingAllowed(Castling castling) {
+        return switch (castling) {
+            case WHITE_LONG -> castlingWhiteLongAllowed;
+            case WHITE_SHORT -> castlingWhiteShortAllowed;
+            case BLACK_LONG -> castlingBlackLongAllowed;
+            case BLACK_SHORT -> castlingBlackShortAllowed;
+        };
+    }
 
-		// Clone fields
-		clone.fields = new Field[fields.length];
+    /**
+     * Does return the piece on a given square. Throws a ChessGameException if no piece is present
+     */
+    public Piece getPiece(Square square) {
+        if (boardSquares[square.getBoardIdx()].getPiece() == null) {
+            throw new IllegalArgumentException("No piece at square: " + square);
+        }
+        return boardSquares[square.getBoardIdx()].getPiece();
+    }
 
-		for (int i = 0; i < fields.length; i++) {
-			clone.fields[i] = fields[i].clone();
-		}
+    /**
+     * Returns the side of a piece on the given square. Throws a ChessGameException if no piece is present
+     */
+    public Side getPieceSide(Square square) {
+        return getPiece(square).getSide();
+    }
 
-		return clone;
-	}
+    /**
+     * Returns the PieceType of a piece on the given square. Throws a ChessGameException if no piece is present
+     */
+    public PieceType getPieceType(Square square) {
+        return getPiece(square).getPieceType();
+    }
 
-	@Override
-	public String toString() {
-		return BoardUtil.dumpBoard(this);
-	}
+    /**
+     * Returns true if a given square is empty
+     */
+    public boolean isEmptySquare(Square square) {
+        return boardSquares[square.getBoardIdx()].getPiece() == null;
+    }
+
+
+    /**
+     * Returns true if given square contains a piece by given side
+     */
+    public boolean containsPieceOfSide(Square square, Side side) {
+        return !isEmptySquare(square) && getPieceSide(square) == side;
+    }
+
+
+    /**
+     * Returns true if given board idx / field contains a given PieceType of given side
+     */
+    public boolean containsPieceOfSide(int boardIdx, PieceType pieceType, Side side) {
+        return !isBorder(boardIdx) && boardSquares[boardIdx].getPiece() != null && boardSquares[boardIdx].getPiece().getSide() == side && boardSquares[boardIdx].getPiece().getPieceType() == pieceType;
+    }
+
+    /**
+     * Returns true if given board idx / field is part of the border
+     */
+    public boolean isBorder(int idx) {
+        return boardSquares[idx] == null;
+    }
+
+
+    /**
+     * Returns tru eif given board idx / field is not part of the border, empty or contains an opposite side piece
+     */
+    public boolean isPseudoLegalMoveToField(int boardIdx, Side sideToMove) {
+        if (isBorder(boardIdx)) {
+            return false;
+        }
+
+        if (boardSquares[boardIdx].getPiece() == null) {
+            return true;
+        }
+
+        return boardSquares[boardIdx].getPiece().getSide() == sideToMove.invert();
+    }
+
+
+    // ****************************************************************************************************************************************
+    // *** Move  & Rules
+    // ****************************************************************************************************************************************
+
+
+    /**
+     * Set a given piece on the given board idx
+     */
+    private void setPiece(int idx, Piece piece) {
+        boardSquares[idx].setPiece(piece);
+    }
+
+    /**
+     * Move a piece from a given from to a given to board idx
+     */
+    private void movePiece(int from, int to) {
+        boardSquares[to].setPiece(boardSquares[from].getPiece());
+
+        boardSquares[from].setPiece(null);
+    }
+
+    /**
+     * Returns a list of legal moves on the current board for given side
+     */
+    public List<Move> getLegalMoves(Side sideToMove) {
+        List<Move> moves = new ArrayList<>();
+
+        BoardSquare[] currentBoardSquares = getBoardSquares();
+        List<Move> pseudoLegalMoves = new ArrayList<>();
+
+        for (int i = 0; i < currentBoardSquares.length; i++) {
+            if (currentBoardSquares[i] != null && currentBoardSquares[i].getPiece() != null && currentBoardSquares[i].getPiece().getSide() == sideToMove) {
+                pseudoLegalMoves.addAll(currentBoardSquares[i].getPiece().getPseudoLegalMoves(this, i));
+            }
+        }
+
+        for (Move move : pseudoLegalMoves) {
+            Board copy = copy();
+            copy.applyMove(move, sideToMove);
+            if (!copy.isInCheck(sideToMove)) {
+                moves.add(move);
+            }
+        }
+
+        return moves;
+    }
+
+
+    /**
+     * Returns true if given side is stalemated
+     */
+    public boolean isStaleMate(Side sideToMove) {
+        boolean isInCheck = isInCheck(sideToMove);
+
+        List<Move> legalMoves = getLegalMoves(sideToMove);
+
+        return !isInCheck && legalMoves.isEmpty();
+    }
+
+    /**
+     * Returns true if given side is checkmated
+     */
+    public boolean isMate(Side sideToMove) {
+        List<Move> legalMoves = getLegalMoves(sideToMove);
+        boolean isInCheck = isInCheck(sideToMove);
+        return isInCheck && legalMoves.isEmpty();
+    }
+
+    /**
+     * Returns true if given move of given side would leave to a check
+     */
+    public boolean leadsToCheck(Move move, Side sideToMove) {
+        Board copy = copy();
+        copy.applyMove(move, sideToMove);
+
+        return copy.isInCheck(sideToMove.invert());
+    }
+
+    /**
+     * Returns true if given move of given side would leave to a checkmate
+     */
+    public boolean leadsToMate(Move move, Side sideToMove) {
+        Board copy = copy();
+        copy.applyMove(move, sideToMove);
+
+        return copy.isMate(sideToMove.invert());
+    }
+
+    /**
+     * Returns true if given side is currently in check
+     */
+    public boolean isInCheck(Side sideToMove) {
+
+        BoardSquare[] playedBoardSquares = getBoardSquares();
+        boolean isCheck = false;
+        for (int x = 0; x < playedBoardSquares.length; x++) {
+            if (playedBoardSquares[x] != null && playedBoardSquares[x].getPiece() != null && playedBoardSquares[x].getPiece().getPieceType() == PieceType.KING && playedBoardSquares[x].getPiece().getSide() == sideToMove) {
+                isCheck = (KingMoveGenerator.isKingAttacked(this, x, sideToMove));
+            }
+        }
+
+        return isCheck;
+    }
+
+    /**
+     * Does apply a move on the board, updates enPassant fields and castling if affected
+     */
+    public void applyMove(Move move, Side sideToMove) {
+        if (move.getPromotion() != null) {
+            applyPromotion(move);
+        } else if (move.getCastling() != null) {
+            applyCastling(move);
+        } else if (isEnPassantCapture(move)) {
+            applyEnPassantCapture(move, sideToMove);
+        } else {
+            applyRegularMove(move, sideToMove);
+        }
+    }
+
+    private void applyPromotion(Move move) {
+        setPiece(move.getTo().getBoardIdx(), move.getPromotion());
+        boardSquares[move.getFrom().getBoardIdx()].setPiece(null);
+        this.enPassantField = null;
+    }
+
+    private void applyCastling(Move move) {
+        updateCastlingRightsAfterCastling(move.getCastling());
+        movePiece(move.getCastling().getFromRook().getBoardIdx(), move.getCastling().getToRook().getBoardIdx());
+        movePiece(move.getCastling().getFromKing().getBoardIdx(), move.getCastling().getToKing().getBoardIdx());
+        this.enPassantField = null;
+    }
+
+    private void updateCastlingRightsAfterCastling(Castling castling) {
+        switch (castling) {
+            case WHITE_SHORT, WHITE_LONG -> {
+                castlingWhiteLongAllowed = false;
+                castlingWhiteShortAllowed = false;
+            }
+            case BLACK_SHORT, BLACK_LONG -> {
+                castlingBlackLongAllowed = false;
+                castlingBlackShortAllowed = false;
+            }
+        }
+    }
+
+    private boolean isEnPassantCapture(Move move) {
+        return boardSquares[move.getFrom().getBoardIdx()].getPiece().getPieceType() == PieceType.PAWN
+                && enPassantField != null
+                && move.getTo().getBoardIdx() == enPassantField.getBoardIdx();
+    }
+
+    private void applyEnPassantCapture(Move move, Side sideToMove) {
+        movePiece(move.getFrom().getBoardIdx(), move.getTo().getBoardIdx());
+        int capturedPawnIdx = move.getTo().getBoardIdx() + (sideToMove.getCalculationModifier() * 10) * -1;
+        boardSquares[capturedPawnIdx].setPiece(null);
+        this.enPassantField = null;
+    }
+
+    private void applyRegularMove(Move move, Side sideToMove) {
+        updateCastlingRightsAfterRegularMove(move);
+        updateEnPassantField(move, sideToMove);
+        movePiece(move.getFrom().getBoardIdx(), move.getTo().getBoardIdx());
+    }
+
+    private void updateCastlingRightsAfterRegularMove(Move move) {
+        int fromIdx = move.getFrom().getBoardIdx();
+        int toIdx = move.getTo().getBoardIdx();
+
+        if (affectsCastling(fromIdx, toIdx, Castling.WHITE_LONG)) {
+            castlingWhiteLongAllowed = false;
+        }
+        if (affectsCastling(fromIdx, toIdx, Castling.WHITE_SHORT)) {
+            castlingWhiteShortAllowed = false;
+        }
+        if (affectsCastling(fromIdx, toIdx, Castling.BLACK_LONG)) {
+            castlingBlackLongAllowed = false;
+        }
+        if (affectsCastling(fromIdx, toIdx, Castling.BLACK_SHORT)) {
+            castlingBlackShortAllowed = false;
+        }
+    }
+
+    private boolean affectsCastling(int fromIdx, int toIdx, Castling castling) {
+        int rookIdx = castling.getFromRook().getBoardIdx();
+        int kingIdx = castling.getFromKing().getBoardIdx();
+
+        return fromIdx == rookIdx || fromIdx == kingIdx || toIdx == rookIdx;
+    }
+
+    private void updateEnPassantField(Move move, Side sideToMove) {
+        Piece piece = boardSquares[move.getFrom().getBoardIdx()].getPiece();
+        boolean isPawnDoubleMove = piece.getPieceType() == PieceType.PAWN
+                && Math.abs(move.getFrom().getBoardIdx() - move.getTo().getBoardIdx()) == 20;
+
+        if (isPawnDoubleMove) {
+            int enPassantIdx = move.getTo().getBoardIdx() + (sideToMove.getCalculationModifier() * 10) * -1;
+            this.enPassantField = Square.byBoardIdx(enPassantIdx);
+        } else {
+            this.enPassantField = null;
+        }
+    }
+
+
+
+    // ****************************************************************************************************************************************
+    // *** Support
+    // ****************************************************************************************************************************************
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Board board = (Board) o;
+        return castlingWhiteShortAllowed == board.castlingWhiteShortAllowed && castlingBlackShortAllowed == board.castlingBlackShortAllowed && castlingWhiteLongAllowed == board.castlingWhiteLongAllowed && castlingBlackLongAllowed == board.castlingBlackLongAllowed && enPassantField == board.enPassantField && Objects.deepEquals(boardSquares, board.boardSquares);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(castlingWhiteShortAllowed, castlingBlackShortAllowed, castlingWhiteLongAllowed, castlingBlackLongAllowed, enPassantField, Arrays.hashCode(boardSquares));
+    }
+
+    /**
+     * Returns a simple console representation of the actual board
+     */
+    @Override
+    public String toString() {
+        String result = "";
+        result += dumpRow(91, 98);
+        result += dumpRow(81, 88);
+        result += dumpRow(71, 78);
+        result += dumpRow(61, 68);
+        result += dumpRow(51, 58);
+        result += dumpRow(41, 48);
+        result += dumpRow(31, 38);
+        result += dumpRow(21, 28);
+        result += "  A  B  C  D  E  F  G  H  ";
+
+        return result;
+    }
+
+    private String dumpRow(int beg, int end) {
+        StringBuilder result = new StringBuilder(((beg - 11) / 10) + " ");
+        for (int i = beg; i <= end; i++) {
+
+            BoardSquare boardSquare = getBoardSquares()[i];
+
+            if (boardSquare.getPiece() == null) {
+                result.append("[] ");
+            } else {
+                if (boardSquare.getPiece().getSide() == Side.WHITE) {
+                   result.append("W");
+                } else {
+                    result.append("B");
+                }
+                result.append(boardSquare.getPiece().getCharCode().toUpperCase());
+                result.append(" ");
+            }
+
+        }
+        return result + "\n";
+    }
 
 }

@@ -1,0 +1,61 @@
+[Event "Test Scholar's Mate Example"]
+[Result "*"]
+
+1. e4 e5 2. Bc4 Nc6 3. Qh5 Nf6 (3... d6 { This looks safe but... } 4. Qxf7# { Scholar's Mate! } 1-0) 4. Qxe5+ Be7 *
+
+
+[Event "Test Black Variations"]
+[Result "0-1"]
+
+1. d4 d5 2. Nf3 Nc6 { D02 Queen's Pawn Game: Chigorin Variation } (2... Nf6 { Classical approach } 3. c4 e6 4. Nc3) (2... Bg4 { Pinning the knight } 3. e3 e6 4. Be2) 3. c3 Nf6 { Black wins on time. } 0-1
+
+
+[Event "Test White Variations"]
+[Result "0-1"]
+
+1. d4 d5 2. Nf3 Nc6 { D02 Queen's Pawn Game: Chigorin Variation } 3. c3 (3. c4 dxc4 4. e3 { London System approach }) (3. Bf4 Bg4 4. e3 e6 { Solid setup for Black }) 3... Nf6 { Black wins on time. } 0-1
+
+
+[Event "Test Variation with Decision"]
+[Result "*"]
+
+1. e4 e5 2. Bc4 Nc6 3. Qh5 Nf6 (3... d6 { This looks safe but... } 4. Qxf7# { Scholar's Mate! } 1-0) 4. Qxe5+ Be7 *
+
+
+[Event "Test Black Nested Variations with Nested"]
+[Result "*"]
+
+1. d4 Nf6 2. c4 e6 (2... g6 { King's Indian } 3. Nc3 Bg7 4. e4 d6 (4... O-O { Early castle } 5. Nf3 d6 6. Be2 e5 (6... c5 { Benoni structure } 7. O-O cxd4 8. Nxd4) 7. O-O Nc6) 5. Nf3 O-O) 3. Nc3 Bb4 *
+
+
+[Event "Test nested"]
+[Result "*"]
+
+1. a4 (1. b4 b5 2. c4 (2. d4 d5) 2... c5) 1... a6 *
+
+
+[Event "Test preamble comments"]
+[Result "*"]
+
+{Well some Infos upfront} {Two I mean} 1. a4 (1. b4 b5 2. c4 (2. d4 d5) 2... c5) 1... a6 *
+
+
+[Event "documented monster"]
+[Site "https://lichess.org/"]
+[Date "2025.11.02"]
+[White "wp"]
+[Black "dp"]
+[Result "1-0"]
+[TimeControl "-"]
+[Termination "Normal"]
+[UTCDate "2025.11.02"]
+[BlackElo "1454"]
+[Variant "Standard"]
+[ECO "C42"]
+[UTCTime "14:45:53"]
+[WhiteElo "1836"]
+[Opening "Petrov's Defense: Three Knights Game"]
+[Annotator "lichess.org"]
+[GameId "xxzzyy"]
+
+{Hello Comment 1} {Another Preamble Comment} 1. e4 { Classic } 1... e5 2. Nf3 Nf6 3. Nc3 Bb4 4. Bc4 d5 (4... Bxc3 5. dxc3 d6 6. a4 Be6 7. Bxe6 (7. Bb5+ Kf8 8. Bd7 (8. c4 a6) 8... Qxd7) 7... fxe6 8. Qe2 Qd7 9. Ng5) 5. exd5 (5. Nxd5 Nxd5 6. Bxd5 O-O 7. O-O Bd6 8. c3 c6 9. Bb3 c5) 5... Bxc3 (5... e4 6. Ne5 Qd6 7. d4 Nbd7 8. f4 exf3 9. Nxf3 Qe7+ 10. Be2) 6. dxc3 c6 (6... Nbd7 7. Be2 O-O 8. c4 Re8 9. b3 Nf8 10. O-O Ng6 11. Re1) 7. Nxe5 cxd5 8. Bb5+ Bd7 9. Bxd7+ (9. Nxd7 Nbxd7 10. Qe2+ Qe7 11. Qxe7+ Kxe7 12. Bf4 a6 13. Be2 Nc5 14. Be3 Nce4) 9... Nbxd7 10. Nxd7 Qxd7 11. O-O Rd8 (11... O-O 12. Be3 h6 13. Bd4 Ne4 14. Re1 a5 15. Qd3 b5 16. Re3 Rac8 17. Rae1) 12. Bg5 h6 (12... O-O 13. Bxf6 gxf6 14. Qf3 Qc6 15. Rad1 Rfe8 16. Rd3 Re5 17. Rfd1 Qe6 18. h3) 13. Bxf6 gxf6 14. Re1+ Kf8 15. Re3 d4 (15... Rg8 16. Qd4 Qc6 17. Rae1 h5 18. h3 Rg6 19. g3 Rg5 20. Re7 a5 21. b3) 16. Rd3 dxc3 (16... Qf5 17. Qd2 Kg7 18. cxd4 Rhe8 19. c3 Qh5 20. Qf4 f5 21. Re3 Rxe3 22. Qxe3) 17. Rxd7 Rxd7 18. Qxd7 cxb2 19. Rb1 Kg7 20. Rxb2 Rh7 (20... Rb8 21. Rxb7 Rxb7 22. Qxb7 Kg6 23. Qe7 f5 24. Kf1 f4 25. Ke2 Kg7 26. Kf3) 21. Rxb7 Kg6 22. Rb8 h5 23. g4 hxg4 24. Qxg4+ Kh6 25. Rg8 a5 26. Qh4# 1-0
