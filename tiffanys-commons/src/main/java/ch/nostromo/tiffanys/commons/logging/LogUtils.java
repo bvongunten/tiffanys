@@ -9,11 +9,11 @@ import java.util.logging.*;
 @UtilityClass
 public class LogUtils {
 
-    public static void initializeLogging(Level consoleLevel, Level logfileLevel, String logDirectory, String logFile) {
+    public static void initializeLogging(Level consoleLevel, Level logfileLevel, String logDirectory, String logFile, String rootLogger) {
 
         try {
             LogManager.getLogManager().reset();
-            Logger root = Logger.getLogger("ch.nostromo.tiffanys");
+            Logger root = Logger.getLogger(rootLogger);
             root.setLevel(Level.FINEST);
             LogManager.getLogManager().addLogger(root);
 
@@ -32,6 +32,10 @@ public class LogUtils {
             throw new RuntimeException("Unable to configure logging, because of error " + e.getMessage(), e);
         }
     }
+
+    public static void initializeLogging(Level consoleLevel, Level logfileLevel, String logDirectory, String logFile) {
+        initializeLogging(consoleLevel, logfileLevel, logDirectory, logFile, "ch.nostromo.tiffanys");
+     }
 
     public static File getLogDirectory(String logDirectory) {
         File result = new File(logDirectory);

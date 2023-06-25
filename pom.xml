@@ -13,8 +13,9 @@
 
     <modules>
         <module>tiffanys-commons</module>
-        <module>tiffanys-dragonborn</module>
+        <module>tiffanys-engine</module>
         <module>tiffanys-uci</module>
+        <module>tiffanys-testing</module>
     </modules>
 
     <properties>

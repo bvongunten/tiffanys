@@ -2,25 +2,26 @@ package ch.nostromo.tiffanys.uci.controller;
 
 import ch.nostromo.tiffanys.commons.ChessGame;
 import ch.nostromo.tiffanys.commons.ChessGameInfo;
+import ch.nostromo.tiffanys.commons.app.Application;
 import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.fen.FenFormat;
 import ch.nostromo.tiffanys.commons.move.Move;
 import ch.nostromo.tiffanys.commons.uci.UciMoveTranslator;
-import ch.nostromo.tiffanys.dragonborn.commons.Engine;
-import ch.nostromo.tiffanys.dragonborn.commons.EngineException;
-import ch.nostromo.tiffanys.dragonborn.commons.EngineSettings;
-import ch.nostromo.tiffanys.dragonborn.commons.events.EngineEvent;
-import ch.nostromo.tiffanys.dragonborn.commons.events.EngineEventListener;
-import ch.nostromo.tiffanys.dragonborn.commons.opening.OpeningBook;
-import ch.nostromo.tiffanys.dragonborn.engine.EngineFactory;
+import ch.nostromo.tiffanys.engine.commons.Engine;
+import ch.nostromo.tiffanys.engine.commons.EngineException;
+import ch.nostromo.tiffanys.engine.commons.EngineSettings;
+import ch.nostromo.tiffanys.engine.commons.events.EngineEvent;
+import ch.nostromo.tiffanys.engine.commons.events.EngineEventListener;
+import ch.nostromo.tiffanys.engine.commons.opening.OpeningBook;
+import ch.nostromo.tiffanys.engine.impl.EngineFactory;
 import ch.nostromo.tiffanys.uci.UciApp;
-import ch.nostromo.tiffanys.uci.utils.logging.LogUtils;
 import ch.nostromo.tiffanys.uci.utils.system.ConsoleScanner;
 import ch.nostromo.tiffanys.uci.utils.system.ConsoleScannerListener;
 
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import ch.nostromo.tiffanys.commons.logging.LogUtils;
 
 public class UciController implements ConsoleScannerListener, EngineEventListener {
 
@@ -38,13 +39,13 @@ public class UciController implements ConsoleScannerListener, EngineEventListene
 
     /**
      * Initialize the application (read parameters, start logging etc.)
-     * 
+     *
      * @param args
      *            Command line arguments
      */
     public void init(String[] args) {
         try {
-            LogUtils.initializeLogging(Level.OFF, Level.ALL, UciApp.HOME_DIRECTORY, "tiffanys-uci.log");
+            LogUtils.initializeLogging(Level.OFF, Level.INFO, Application.HOME_DIRECTORY, UciApp.LOG_FILE);
 
             openingBook = new OpeningBook("/opening.txt");
 
@@ -63,7 +64,7 @@ public class UciController implements ConsoleScannerListener, EngineEventListene
 
     private void handleCommandUci() {
         doOutput("id name " + UciApp.TITLE);
-        doOutput("id author " + UciApp.AUTHOR);
+        doOutput("id author " + Application.AUTHOR);
 
         doOutput(uciOptions.getOptions());
 
@@ -153,7 +154,7 @@ public class UciController implements ConsoleScannerListener, EngineEventListene
             String fen = cmd.substring(12, cmd.indexOf("moves"));
 
             logger.fine("Fen received: " + fen);
-            
+
             game = new ChessGame(new ChessGameInfo(), new FenFormat(fen));
 
             String moves = cmd.substring(cmd.indexOf("moves") + 6);
@@ -183,6 +184,8 @@ public class UciController implements ConsoleScannerListener, EngineEventListene
             logger.fine("Move received, entering move: " + move);
             game.applyMove(UciMoveTranslator.uciStringToMove(move, game.getCurrentBoard()));
         }
+
+        logger.info("Board after entered moves:\n" + game.getCurrentBoard());
 
     }
 
@@ -292,13 +295,13 @@ public class UciController implements ConsoleScannerListener, EngineEventListene
 
     @Override
     public void engineUpdateEventOccured(EngineEvent event) {
-        logger.fine("Update received from engine. Best move: " + event.getEngineResult().getSelectedMove());
+        logger.info("Update received from engine. Best move: " + event.getEngineResult().getSelectedMove());
         sendInfoLine(event);
     }
 
     @Override
     public void engineFinishedEventOccured(EngineEvent event) {
-        logger.fine("Finished received from engine: Best move: " + event.getEngineResult().getSelectedMove());
+        logger.info("Finished received from engine: Best move: " + event.getEngineResult().getSelectedMove());
         game.applyMove(event.getEngineResult().getSelectedMove());
 
         sendInfoLine(event);
@@ -314,15 +317,16 @@ public class UciController implements ConsoleScannerListener, EngineEventListene
 
             String currmove = " currmove " + UciMoveTranslator.moveToUciString(moveTomake);
 
-            int scoreVal = (int) moveTomake.getMoveAttributes().getScore();
-            String score = " score cp " + (int) moveTomake.getMoveAttributes().getScore();
+            double scoreVal = moveTomake.getMoveAttributes().getScore() * 100;
 
-            if (Math.abs(scoreVal) > 9000) {
-                int plys = 9999 - Math.abs(scoreVal);
-                int mateIn = plys / 2;
-                score = " score mate " + mateIn;
+            logger.info("ScoreVal=" + scoreVal);
+
+            String score = "";
+
+            if (moveTomake.getMoveAttributes().getMateIn() > 0) {
+                score = " score mate " + moveTomake.getMoveAttributes().getMateIn();
             } else {
-                score = " score cp " + (int) moveTomake.getMoveAttributes().getScore();
+                score = " score cp " + (int) scoreVal;
             }
 
             String time = " time " + event.getEngineResult().getTotalTimeInMs();

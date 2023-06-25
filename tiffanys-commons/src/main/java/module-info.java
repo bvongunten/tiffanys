@@ -3,8 +3,10 @@ module ch.nostromo.tiffanys.commons {
     requires static lombok;
 
     exports ch.nostromo.tiffanys.commons;
+    exports ch.nostromo.tiffanys.commons.app;
     exports ch.nostromo.tiffanys.commons.board;
     exports ch.nostromo.tiffanys.commons.enums;
+    exports ch.nostromo.tiffanys.commons.epd;
     exports ch.nostromo.tiffanys.commons.fen;
     exports ch.nostromo.tiffanys.commons.fields;
     exports ch.nostromo.tiffanys.commons.move;
@@ -13,5 +15,4 @@ module ch.nostromo.tiffanys.commons {
     exports ch.nostromo.tiffanys.commons.rules;
     exports ch.nostromo.tiffanys.commons.logging;
     exports ch.nostromo.tiffanys.commons.uci;
-    exports ch.nostromo.tiffanys.commons.epd;
 }
