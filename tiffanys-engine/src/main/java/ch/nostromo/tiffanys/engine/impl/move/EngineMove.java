@@ -23,8 +23,6 @@ public class EngineMove implements Comparable<EngineMove>, DragonbornEngineConst
     public static final int SHORT_CASTLING = 15;
     public static final int LONG_CASTLING = 16;
 
-    public static final int HIT_MOVES_TRESHHOLD = 20;
-
     public static final int HIT_MOVE_PAWN = 25;
     public static final int HIT_MOVE_QUEEN = 26;
     public static final int HIT_MOVE_KNIGHT = 27;
@@ -48,8 +46,6 @@ public class EngineMove implements Comparable<EngineMove>, DragonbornEngineConst
 
     public int from = -1;
     public int to = -1;
-    public int rookFrom = -1;
-    public int rookTo = -1;
     public int epField = -1;
 
     public int promotionPiece = -1;
@@ -309,9 +305,10 @@ public class EngineMove implements Comparable<EngineMove>, DragonbornEngineConst
 
         // cpScoreWhite
         double cpScoreWhite = ((double)score) / 100;
-//        if (colorToMove == GameColor.BLACK) {
-//            cpScoreWhite = cpScoreWhite * -1;
-//        }
+
+        //        if (colorToMove == GameColor.BLACK) {
+        //            cpScoreWhite = cpScoreWhite * -1;
+        //        }
 
         cpScoreWhite = Math.round(cpScoreWhite * 100.0) / 100.0;
 

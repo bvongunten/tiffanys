@@ -11,7 +11,6 @@ import ch.nostromo.tiffanys.engine.impl.ai.CalculationResult;
 import ch.nostromo.tiffanys.engine.impl.ai.CalculationTimeoutException;
 import ch.nostromo.tiffanys.engine.impl.ai.callable.AlphaBetaCallable;
 import ch.nostromo.tiffanys.engine.impl.ai.callable.AlphaBetaCallableResult;
-import ch.nostromo.tiffanys.engine.impl.ai.callable.TranspositionsTable;
 import ch.nostromo.tiffanys.engine.impl.board.RobustBoard;
 import ch.nostromo.tiffanys.engine.impl.move.EngineMove;
 
@@ -241,12 +240,6 @@ public class DragonbornEngine implements Engine, DragonbornEngineConstants {
             calculationResult.moves = legalMoves;
 
 
-            TranspositionsTable[] transpositionTables = new TranspositionsTable[legalMoves.length];
-            for (int i = 0; i < transpositionTables.length; i++) {
-                transpositionTables[i] = new TranspositionsTable();
-            }
-
-
 
 
             int targetDepth = 0;
@@ -277,7 +270,7 @@ public class DragonbornEngine implements Engine, DragonbornEngineConstants {
 
                     board.makeAndCheckMove(currentMove);
 
-                    AlphaBetaCallable cb = new AlphaBetaCallable(engineSettings, board.safeClone(), currentMove, targetDepth, transpositionTables[i]);
+                    AlphaBetaCallable cb = new AlphaBetaCallable(engineSettings, board.safeClone(), currentMove, targetDepth);
 
                     FutureTask<AlphaBetaCallableResult> futureTask = new FutureTask<AlphaBetaCallableResult>(cb);
                     taskList.add(futureTask);

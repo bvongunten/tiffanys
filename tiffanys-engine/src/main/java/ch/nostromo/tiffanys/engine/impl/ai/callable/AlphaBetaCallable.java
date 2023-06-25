@@ -11,8 +11,6 @@ import java.util.concurrent.Callable;
 
 public class AlphaBetaCallable implements Callable<AlphaBetaCallableResult>, DragonbornEngineConstants {
 
-    private TranspositionsTable transpositionTable;
-
     private TiffanysEvaluation evaluation = new TiffanysEvaluation();
 
     private EngineMove[] killersBuffer;
@@ -35,11 +33,9 @@ public class AlphaBetaCallable implements Callable<AlphaBetaCallableResult>, Dra
 
     private boolean pvCutOff = false;
 
-    public AlphaBetaCallable(EngineSettings engineSettings, RobustBoard board, EngineMove initialMove, int targetDepth, TranspositionsTable transpositionTable) {
+    public AlphaBetaCallable(EngineSettings engineSettings, RobustBoard board, EngineMove initialMove, int targetDepth) {
 
         initializeLists();
-
-        this.transpositionTable = transpositionTable;
 
         this.initialMove = initialMove;
         this.targetDepth = targetDepth;
@@ -112,10 +108,6 @@ public class AlphaBetaCallable implements Callable<AlphaBetaCallableResult>, Dra
 
     public final int alphaBeta(int alpha, int beta, int depth, PrincipalVariation principalVariant) {
 
-
-        int origAlpha = alpha;
-
-        boolean doTranspose = false;
         boolean doPv = true;
 
         int currentRelativeDepth = targetDepth - depth;
@@ -128,32 +120,6 @@ public class AlphaBetaCallable implements Callable<AlphaBetaCallableResult>, Dra
         localPrincipalVariant.moveCount = 0;
 
 
-        // ***************** TRANSPOSITION **********************
-
-        long zobristKey = board.generateBoardZobristHash();
-
-        if (doTranspose) {
-            if (transpositionTable.entryExists(zobristKey) && transpositionTable.getDepth(zobristKey) >= depth) {
-
-                int value = transpositionTable.getEval(zobristKey);
-                int mode = transpositionTable.getFlag(zobristKey);
-
-                if (mode == TranspositionsTable.VALUE_EXACT) {
-                    return value;
-                }
-
-                if (mode == TranspositionsTable.VALUE_LOWER && value >= beta) {
-                    return beta;
-                } else if (mode == TranspositionsTable.VALUE_UPPER && value <= alpha) { // <= ?!
-                    return alpha;
-                }
-
-
-            }
-        }
-        // ***************** TRANSPOSITION **********************
-
-
         if (depth == 0) {
             principalVariant.moveCount = 0;
 
@@ -163,19 +129,6 @@ public class AlphaBetaCallable implements Callable<AlphaBetaCallableResult>, Dra
             }
 
             int value = quiescentSearch(alpha, beta);
-
-            // ***************** TRANSPOSITION **********************
-//            if (doTranspose) {
-//                if (value <= alpha) {
-//                    transpositionTable.record(zobristKey, depth, TranspositionsTable.VALUE_UPPER, value, 0);
-//                } else if (value >= beta) {
-//                    transpositionTable.record(zobristKey, depth, TranspositionsTable.VALUE_LOWER, value, 0);
-//                } else {
-//                    transpositionTable.record(zobristKey, depth, TranspositionsTable.VALUE_EXACT, value, 0);
-//                }
-//            }
-            // ***************** TRANSPOSITION **********************
-
 
             return value;
         }
@@ -275,17 +228,6 @@ public class AlphaBetaCallable implements Callable<AlphaBetaCallableResult>, Dra
             }
         }
 
-        // ******************************************* TRANSPOSITION ********************************************************
-        if (doTranspose && Math.abs(best) < 9000) {
-            if (best <= origAlpha) {
-                transpositionTable.record(board.generateBoardZobristHash(), depth, TranspositionsTable.VALUE_UPPER, best);
-            } else if (best >= beta) {
-                transpositionTable.record(board.generateBoardZobristHash(), depth, TranspositionsTable.VALUE_LOWER, best);
-            } else {
-                transpositionTable.record(board.generateBoardZobristHash(), depth, TranspositionsTable.VALUE_EXACT, best);
-            }
-        }
-        // ******************************************* TRANSPOSITION ********************************************************
 
         return best;
 

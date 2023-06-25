@@ -1,9 +1,5 @@
 # Tiffany's
 
-Latest release:
-
-- [Download Tiffany's 0.8.0-alpha UCI Engine for Windows](https://github.com/bvongunten/tiffanys/releases/download/v0.8.0-alpha/TiffanysDragonbornUci-0.8.msi)
-
 Beware: Tiffanys is in early stage of development. 
 
 ## Artifacts
