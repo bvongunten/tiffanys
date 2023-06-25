@@ -1,5 +1,6 @@
 package ch.nostromo.tiffanys.commons.epd;
 
+import ch.nostromo.tiffanys.commons.fen.FenFormat;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -66,5 +67,10 @@ public class EpdFormat {
             return null;
         }
     }
+
+    public FenFormat toFenFormat() {
+        return new FenFormat(position, colorToMove, castling, enPassant, 0, 0);
+    }
+
 
 }

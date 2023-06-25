@@ -13,4 +13,5 @@ module ch.nostromo.tiffanys.commons {
     exports ch.nostromo.tiffanys.commons.rules;
     exports ch.nostromo.tiffanys.commons.logging;
     exports ch.nostromo.tiffanys.commons.uci;
+    exports ch.nostromo.tiffanys.commons.epd;
 }

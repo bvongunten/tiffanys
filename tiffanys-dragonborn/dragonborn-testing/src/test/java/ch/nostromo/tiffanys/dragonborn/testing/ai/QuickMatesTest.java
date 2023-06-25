@@ -38,7 +38,7 @@ public class QuickMatesTest {
 
     @Test
     public void checkMateIn2A() throws EngineException {
-        runMateTest("5r1k/5p1p/1p4p1/8/2pqPn1n/3p1PN1/6r1/4R2K b - - 0 37", -2);
+        runMateTest("5r1k/5p1p/1p4p1/8/2pqPn1n/3p1PN1/6r1/4R2K b - - 0 37", 2);
     }
 
     @Test

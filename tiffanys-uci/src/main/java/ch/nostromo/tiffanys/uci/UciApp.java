@@ -4,7 +4,7 @@ import ch.nostromo.tiffanys.uci.controller.UciController;
 
 public class UciApp {
 
-    public static final String VERSION = "0.1.0";
+    public static final String VERSION = "0.9.0";
 
     public static final String APPLICATION = "Tiffanys Dragonborn";
 
@@ -18,5 +18,6 @@ public class UciApp {
     public static void main(String... args) {
         new UciController().init(args);
     }
+
 
 }

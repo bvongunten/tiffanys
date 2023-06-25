@@ -322,9 +322,10 @@ public class EngineMove implements Comparable<EngineMove>, DragonbornEngineConst
             mateIn = plys / 2;
             mateIn ++;
 
-            if (cpScoreWhite < 0) {
-                mateIn = mateIn * -1;
-            }
+            // Remove "-" for black mates
+            //            if (cpScoreWhite < 0) {
+            //                mateIn = mateIn * -1;
+            //            }
 
         }
 

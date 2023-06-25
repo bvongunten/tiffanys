@@ -184,6 +184,12 @@ public class SanUtil {
 
 			Piece movedPiece = Piece.getPieceByCharCode(pieceDescription);
 
+			// Filter a trailing "-"
+			if (disambiguatePart.endsWith("-")) {
+				disambiguatePart = disambiguatePart.substring(0, disambiguatePart.length() -1);
+			}
+
+
 			// Get legal move by remaining moveDescription
 			int filteredMovesCount = 0;
 			for (Move legalMove : legalMoves) {

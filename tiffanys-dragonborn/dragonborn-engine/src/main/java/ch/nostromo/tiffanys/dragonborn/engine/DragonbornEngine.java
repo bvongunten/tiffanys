@@ -174,7 +174,7 @@ public class DragonbornEngine implements Engine, DragonbornEngineConstants {
     private List<Move> filterBestEqualMoves(List<Move> moves) {
         List<Move> result = new ArrayList<Move>();
         for (Move move : moves) {
-            if (move.getMoveAttributes().getScore() > 0) {
+            if (move.getMoveAttributes().getScore() > 0 || move.getMoveAttributes().getScore() < 0) {
                 result.add(move);
             }
         }

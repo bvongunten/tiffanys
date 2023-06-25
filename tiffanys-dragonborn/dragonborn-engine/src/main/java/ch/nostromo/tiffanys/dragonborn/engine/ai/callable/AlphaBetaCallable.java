@@ -115,7 +115,7 @@ public class AlphaBetaCallable implements Callable<AlphaBetaCallableResult>, Dra
 
         int origAlpha = alpha;
 
-        boolean doTranspose = true;
+        boolean doTranspose = false;
         boolean doPv = true;
 
         int currentRelativeDepth = targetDepth - depth;
