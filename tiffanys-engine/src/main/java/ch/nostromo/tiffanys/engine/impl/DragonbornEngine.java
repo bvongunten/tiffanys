@@ -261,13 +261,6 @@ public class DragonbornEngine implements Engine, DragonbornEngineConstants {
 
                     EngineMove currentMove = legalMoves[i];
 
-                    if (currentMove.killersBuffer == null) {
-                        currentMove.killersBuffer = new EngineMove[100];
-                        for (int x = 0; x < currentMove.killersBuffer.length; x++) {
-                            currentMove.killersBuffer[x] = new EngineMove();
-                        }
-                    }
-
                     board.makeAndCheckMove(currentMove);
 
                     AlphaBetaCallable cb = new AlphaBetaCallable(engineSettings, board.safeClone(), currentMove, targetDepth);

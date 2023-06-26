@@ -13,8 +13,6 @@ public class AlphaBetaCallable implements Callable<AlphaBetaCallableResult>, Dra
 
     private TiffanysEvaluation evaluation = new TiffanysEvaluation();
 
-    private EngineMove[] killersBuffer;
-
     private EngineMove[][] movesBuffer = new EngineMove[100][100];
     private EngineMove[][] qmovesBuffer = new EngineMove[100][100];
     private PrincipalVariation[] pvBuffer = new PrincipalVariation[100];
@@ -40,7 +38,6 @@ public class AlphaBetaCallable implements Callable<AlphaBetaCallableResult>, Dra
         this.initialMove = initialMove;
         this.targetDepth = targetDepth;
         this.currentPv = initialMove.principalVariation;
-        this.killersBuffer = initialMove.killersBuffer;
 
         this.board = board;
 
@@ -55,29 +52,6 @@ public class AlphaBetaCallable implements Callable<AlphaBetaCallableResult>, Dra
         workingPv = pvBuffer[0];
         workingPv.moveCount = 0;
         workingPv.moves[0] = initialMove;
-
-    }
-
-    private void initializeLists() {
-        for (int i = 0; i < 100; i++) {
-            EngineMove[] moves = new EngineMove[100];
-            for (int x = 0; x < moves.length; x++) {
-                moves[x] = new EngineMove();
-            }
-            movesBuffer[i] = moves;
-        }
-
-        for (int i = 0; i < 100; i++) {
-            EngineMove[] moves = new EngineMove[100];
-            for (int x = 0; x < moves.length; x++) {
-                moves[x] = new EngineMove();
-            }
-            qmovesBuffer[i] = moves;
-        }
-
-        for (int i = 0; i < 100; i++) {
-            pvBuffer[i] = new PrincipalVariation();
-        }
 
     }
 
@@ -108,7 +82,7 @@ public class AlphaBetaCallable implements Callable<AlphaBetaCallableResult>, Dra
 
     public final int alphaBeta(int alpha, int beta, int depth, PrincipalVariation principalVariant) {
 
-        boolean doPv = true;
+        boolean doPv = false;
 
         int currentRelativeDepth = targetDepth - depth;
 
@@ -152,14 +126,6 @@ public class AlphaBetaCallable implements Callable<AlphaBetaCallableResult>, Dra
                 }
 
             }
-
-            for (int i = 0; i < movesCount; i++) {
-                if (movesArray[i].from == killersBuffer[currentRelativeDepth].from
-                        && movesArray[i].to == killersBuffer[currentRelativeDepth].to) {
-                    movesArray[i].hitScore += 9000;
-                    break;
-                }
-            }
         }
 
 
@@ -199,7 +165,6 @@ public class AlphaBetaCallable implements Callable<AlphaBetaCallableResult>, Dra
 
                 if (best >= beta) {
                     result.cutOffs++;
-                    killersBuffer[currentRelativeDepth] = currentMove.copy();
                     break;
                 }
 
@@ -317,5 +282,30 @@ public class AlphaBetaCallable implements Callable<AlphaBetaCallableResult>, Dra
     public AlphaBetaCallableResult call() throws Exception {
         return runAB();
     }
+
+
+    private void initializeLists() {
+        for (int i = 0; i < 100; i++) {
+            EngineMove[] moves = new EngineMove[100];
+            for (int x = 0; x < moves.length; x++) {
+                moves[x] = new EngineMove();
+            }
+            movesBuffer[i] = moves;
+        }
+
+        for (int i = 0; i < 100; i++) {
+            EngineMove[] moves = new EngineMove[100];
+            for (int x = 0; x < moves.length; x++) {
+                moves[x] = new EngineMove();
+            }
+            qmovesBuffer[i] = moves;
+        }
+
+        for (int i = 0; i < 100; i++) {
+            pvBuffer[i] = new PrincipalVariation();
+        }
+
+    }
+
 
 }

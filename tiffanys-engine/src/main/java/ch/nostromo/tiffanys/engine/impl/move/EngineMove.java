@@ -75,7 +75,6 @@ public class EngineMove implements Comparable<EngineMove>, DragonbornEngineConst
     public int plannedDepth;
     public long timeMs;
 
-    public EngineMove[] killersBuffer;
     public long stackZobristKey;
 
     public final void setMove(int from, int to) {
