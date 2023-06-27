@@ -113,7 +113,7 @@ public class EpdMateTest {
         }
 
         if (move.isPromotion()) {
-            return move.getFromCoord() + "-" + move.getToCoord() + move.getPromotion().getPieceCharCode();
+            return move.getFromCoord() + "-" + move.getToCoord() + move.getPromotion().getCharCode();
         } else {
             return move.getFromCoord() + "-" + move.getToCoord();
         }

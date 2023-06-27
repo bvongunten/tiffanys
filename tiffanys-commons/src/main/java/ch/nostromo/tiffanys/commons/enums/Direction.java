@@ -1,8 +1,11 @@
 package ch.nostromo.tiffanys.commons.enums;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public enum Direction {
 
     //@formatter:off
@@ -14,7 +17,7 @@ public enum Direction {
     SOUTH_EAST(-11),
     NORTH_EAST(+9),
     SOUTH_WEST(-9),
-    
+
     KNIGHT_ONE(19),
     KNIGHT_TWO(21),
     KNIGHT_THREE(12),
@@ -22,8 +25,8 @@ public enum Direction {
     KNIGHT_FIVE(-19),
     KNIGHT_SIX(-21),
     KNIGHT_SEVEN(-12),
-    KNIGHT_EIGHT(-8);    
-    
+    KNIGHT_EIGHT(-8);
+
     //@formatter:on
 
     private static List<Direction> knightDirections = new ArrayList<Direction>();
@@ -55,10 +58,6 @@ public enum Direction {
 
     private Direction(int value) {
         this.value = value;
-    }
-
-    public int getValue() {
-        return value;
     }
 
     public static List<Direction> getKnightDirections() {

@@ -3,11 +3,11 @@ package ch.nostromo.tiffanys.commons.fields;
 import ch.nostromo.tiffanys.commons.enums.FieldType;
 import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.enums.Piece;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 public class Field implements Cloneable {
 
     FieldType type;

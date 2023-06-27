@@ -2,13 +2,13 @@ package ch.nostromo.tiffanys.commons.move;
 
 import ch.nostromo.tiffanys.commons.enums.GameColor;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 public class MoveAttributes {
 

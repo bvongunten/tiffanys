@@ -9,7 +9,7 @@ import java.util.logging.LogRecord;
 
 public class LogFormatter extends java.util.logging.Formatter {
     private final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss.SSS");
-    
+
     Date dat = new Date();
     private Object[] args = new Object[1];
     private String lineSeparator = System.getProperty("line.separator");
@@ -19,9 +19,9 @@ public class LogFormatter extends java.util.logging.Formatter {
     	StringBuilder sb = new StringBuilder();
         this.dat.setTime(record.getMillis());
         this.args[0] = this.dat;
-        
+
         sb.append(dateFormat.format(new Date(record.getMillis()))).append(" - ");
-        
+
         sb.append("[");
         sb.append(record.getLevel().getName());
         sb.append("] ");
@@ -43,6 +43,7 @@ public class LogFormatter extends java.util.logging.Formatter {
                 // Ignored
             }
         }
+
         return sb.toString();
     }
 }

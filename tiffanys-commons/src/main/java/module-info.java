@@ -9,10 +9,9 @@ module ch.nostromo.tiffanys.commons {
     exports ch.nostromo.tiffanys.commons.epd;
     exports ch.nostromo.tiffanys.commons.fen;
     exports ch.nostromo.tiffanys.commons.fields;
+    exports ch.nostromo.tiffanys.commons.logging;
     exports ch.nostromo.tiffanys.commons.move;
     exports ch.nostromo.tiffanys.commons.pgn;
     exports ch.nostromo.tiffanys.commons.pieces;
     exports ch.nostromo.tiffanys.commons.rules;
-    exports ch.nostromo.tiffanys.commons.logging;
-    exports ch.nostromo.tiffanys.commons.uci;
 }

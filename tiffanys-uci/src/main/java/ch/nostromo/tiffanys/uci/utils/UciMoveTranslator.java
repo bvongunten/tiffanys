@@ -1,4 +1,4 @@
-package ch.nostromo.tiffanys.commons.uci;
+package ch.nostromo.tiffanys.uci.utils;
 
 import ch.nostromo.tiffanys.commons.board.Board;
 import ch.nostromo.tiffanys.commons.board.BoardUtil;
@@ -19,7 +19,7 @@ public class UciMoveTranslator {
             result = move.getFromCoord();
             result += move.getToCoord();
             if (move.isPromotion()) {
-                result += move.getPromotion().getPieceCharCode();
+                result += move.getPromotion().getCharCode();
             }
         }
 

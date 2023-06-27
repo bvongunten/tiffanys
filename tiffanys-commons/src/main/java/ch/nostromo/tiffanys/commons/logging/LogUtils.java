@@ -35,7 +35,7 @@ public class LogUtils {
 
     public static void initializeLogging(Level consoleLevel, Level logfileLevel, String logDirectory, String logFile) {
         initializeLogging(consoleLevel, logfileLevel, logDirectory, logFile, "ch.nostromo.tiffanys");
-     }
+    }
 
     public static File getLogDirectory(String logDirectory) {
         File result = new File(logDirectory);

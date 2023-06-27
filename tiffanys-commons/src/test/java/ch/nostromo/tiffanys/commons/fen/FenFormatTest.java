@@ -19,7 +19,7 @@ public class FenFormatTest extends TestHelper {
 		assertEquals(Integer.valueOf(0), fenFormat.getHalfMoveClock());
 		assertEquals(Integer.valueOf(1), fenFormat.getMoveNr());
 
-		assertEquals(fen, fenFormat.generateFen());
+		assertEquals(fen, fenFormat.toString());
 	}
 
 	@Test
@@ -28,7 +28,7 @@ public class FenFormatTest extends TestHelper {
 
 		FenFormat fenFormat = new FenFormat("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR", "w", "KQkq", "-", 0, 1);
 
-		assertEquals(fen, fenFormat.generateFen());
+		assertEquals(fen, fenFormat.toString());
 	}
 
 }

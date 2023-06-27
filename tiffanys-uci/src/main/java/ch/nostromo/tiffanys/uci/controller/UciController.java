@@ -5,8 +5,8 @@ import ch.nostromo.tiffanys.commons.ChessGameInfo;
 import ch.nostromo.tiffanys.commons.app.Application;
 import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.fen.FenFormat;
+import ch.nostromo.tiffanys.commons.logging.LogUtils;
 import ch.nostromo.tiffanys.commons.move.Move;
-import ch.nostromo.tiffanys.commons.uci.UciMoveTranslator;
 import ch.nostromo.tiffanys.engine.commons.Engine;
 import ch.nostromo.tiffanys.engine.commons.EngineException;
 import ch.nostromo.tiffanys.engine.commons.EngineSettings;
@@ -15,13 +15,13 @@ import ch.nostromo.tiffanys.engine.commons.events.EngineEventListener;
 import ch.nostromo.tiffanys.engine.commons.opening.OpeningBook;
 import ch.nostromo.tiffanys.engine.impl.EngineFactory;
 import ch.nostromo.tiffanys.uci.UciApp;
+import ch.nostromo.tiffanys.uci.utils.UciMoveTranslator;
 import ch.nostromo.tiffanys.uci.utils.system.ConsoleScanner;
 import ch.nostromo.tiffanys.uci.utils.system.ConsoleScannerListener;
 
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import ch.nostromo.tiffanys.commons.logging.LogUtils;
 
 public class UciController implements ConsoleScannerListener, EngineEventListener {
 

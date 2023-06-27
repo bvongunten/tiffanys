@@ -77,13 +77,13 @@ public class SanUtil {
 				boolean none = (!onSameCol && !onSameRow && !same);
 
 				if (none) {
-					result += movedPiece.getPieceCharCode();
+					result += movedPiece.getCharCode();
 				} else if (both) {
-					result += movedPiece.getPieceCharCode() + move.getFromCoord();
+					result += movedPiece.getCharCode() + move.getFromCoord();
 				} else if (onSameCol) {
-					result += movedPiece.getPieceCharCode() + move.getFromCoord().substring(1, 2);
+					result += movedPiece.getCharCode() + move.getFromCoord().substring(1, 2);
 				} else if (onSameRow || same) {
-					result += movedPiece.getPieceCharCode() + move.getFromCoord().substring(0, 1);
+					result += movedPiece.getCharCode() + move.getFromCoord().substring(0, 1);
 				}
 
 				if (board.getFields()[move.getTo()].getPiece() != null) {
@@ -95,7 +95,7 @@ public class SanUtil {
 			result += move.getToCoord();
 
 			if (move.isPromotion()) {
-				result += "=" + move.getPromotion().getPieceCharCode();
+				result += "=" + move.getPromotion().getCharCode();
 			}
 
 			result += generateMoveState(board, move, colorToMove);
@@ -184,7 +184,7 @@ public class SanUtil {
 
 			Piece movedPiece = Piece.getPieceByCharCode(pieceDescription);
 
-			// Filter a trailing "-"
+			// Filter a trailing "-" (possible left over from epd files)
 			if (disambiguatePart.endsWith("-")) {
 				disambiguatePart = disambiguatePart.substring(0, disambiguatePart.length() -1);
 			}

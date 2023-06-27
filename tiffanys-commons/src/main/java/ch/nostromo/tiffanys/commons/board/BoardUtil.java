@@ -7,7 +7,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class BoardUtil {
 
-  
+
     public static String dumpBoard(Board board) {
         String result = "";
         result += dumpRow(board, 91, 98);
@@ -37,7 +37,7 @@ public class BoardUtil {
                 } else {
                     result += "B";
                 }
-                result += field.getPiece().getPieceCharCode();
+                result += field.getPiece().getCharCode();
                 result += " ";
             }
 
@@ -127,6 +127,6 @@ public class BoardUtil {
         return result;
     }
 
-    
-    
+
+
 }

@@ -11,7 +11,7 @@ public class GameTest extends TestHelper {
     @Test
     public void testInitialFen() {
         ChessGame game = new ChessGame(new ChessGameInfo());
-        game.getCurrentFenFormat().generateFen();
+        game.getCurrentFenFormat().toString();
     }
 
     @Test

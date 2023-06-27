@@ -4,7 +4,6 @@ import ch.nostromo.tiffanys.commons.enums.Castling;
 
 public class MoveTranslator {
 
-
     public static String moveToString(Move move) {
 
         String result;
@@ -17,7 +16,7 @@ public class MoveTranslator {
             result += "-";
             result += move.getToCoord();
             if (move.isPromotion()) {
-                result += move.getPromotion().getPieceCharCode();
+                result += move.getPromotion().getCharCode();
             }
         }
 

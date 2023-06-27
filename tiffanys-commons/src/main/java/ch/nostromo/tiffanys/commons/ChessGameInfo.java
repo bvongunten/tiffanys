@@ -1,5 +1,6 @@
 package ch.nostromo.tiffanys.commons;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,8 +9,7 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-@Getter
-@Setter
+@Data
 public class ChessGameInfo implements Cloneable {
 
     // 7 Tags roster
@@ -21,8 +21,6 @@ public class ChessGameInfo implements Cloneable {
     String blackPlayer;
 
     Map<String, String> optionalTags = new LinkedHashMap<>();
-
-
 
     public ChessGameInfo(String whitePlayer, String blackPlayer, String event, String site, String date, String round, Map<String, String> optionalTags) {
         super();

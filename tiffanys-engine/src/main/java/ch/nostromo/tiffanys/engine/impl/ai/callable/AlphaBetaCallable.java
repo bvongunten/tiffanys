@@ -29,8 +29,6 @@ public class AlphaBetaCallable implements Callable<AlphaBetaCallableResult>, Dra
     private AlphaBetaCallableResult result;
     private EngineMove initialMove;
 
-    private boolean pvCutOff = false;
-
     public AlphaBetaCallable(EngineSettings engineSettings, RobustBoard board, EngineMove initialMove, int targetDepth) {
 
         initializeLists();
@@ -136,7 +134,6 @@ public class AlphaBetaCallable implements Callable<AlphaBetaCallableResult>, Dra
         int best = -10000;
 
         for (int i = 0; i < movesCount; i++) {
-            pvCutOff = false;
 
             EngineMove currentMove = movesArray[i];
 

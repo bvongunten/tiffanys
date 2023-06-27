@@ -1,6 +1,7 @@
 package ch.nostromo.tiffanys.commons.pgn;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,8 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 public class PgnFormat {
 

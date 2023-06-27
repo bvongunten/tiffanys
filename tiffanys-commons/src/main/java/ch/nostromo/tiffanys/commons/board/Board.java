@@ -7,14 +7,12 @@ import ch.nostromo.tiffanys.commons.enums.Piece;
 import ch.nostromo.tiffanys.commons.fen.FenFormat;
 import ch.nostromo.tiffanys.commons.fields.Field;
 import ch.nostromo.tiffanys.commons.move.Move;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.StringTokenizer;
 import java.util.logging.Logger;
 
-@Getter
-@Setter
+@Data
 public class Board implements Cloneable {
 
 	Logger logger = Logger.getLogger(getClass().getName());
@@ -131,9 +129,9 @@ public class Board implements Cloneable {
 						sinceLast = 0;
 					}
 					if (fields[i].getPieceColor() == GameColor.WHITE) {
-						line += fields[i].getPiece().getPieceCharCode().toUpperCase();
+						line += fields[i].getPiece().getCharCode().toUpperCase();
 					} else {
-						line += fields[i].getPiece().getPieceCharCode().toLowerCase();
+						line += fields[i].getPiece().getCharCode().toLowerCase();
 					}
 				}
 			}

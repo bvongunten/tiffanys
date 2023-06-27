@@ -9,6 +9,7 @@ import ch.nostromo.tiffanys.commons.fields.Field;
 import ch.nostromo.tiffanys.commons.move.Move;
 import ch.nostromo.tiffanys.commons.pieces.King;
 import ch.nostromo.tiffanys.commons.rules.RulesUtil;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,14 +17,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-@Getter
-@Setter
+@Data
 public class ChessGame {
 
     protected Logger logger = Logger.getLogger(getClass().getName());
 
-    List<Board> historyBoards = null;
-    List<Move> historyMoves = null;
+    List<Board> historyBoards = new ArrayList<Board>();
+    List<Move> historyMoves = new ArrayList<Move>();
 
     Double historyInitialBoardScore = null;
 
@@ -52,19 +52,8 @@ public class ChessGame {
     public ChessGame(ChessGameInfo gameInfo, FenFormat fenFormat) {
         this.gameInfo = gameInfo;
         this.initialFen = fenFormat;
-        historyBoards = new ArrayList<Board>();
-        historyMoves = new ArrayList<Move>();
-        setGameByFen(initialFen);
-    }
 
-    public void resetToInitialFen() {
-        historyBoards = new ArrayList<Board>();
-        historyMoves = new ArrayList<Move>();
-        setGameByFen(initialFen);
-    }
-
-    private void setGameByFen(FenFormat fenFormat) {
-        if (fenFormat.generateFen().equalsIgnoreCase(FenFormat.INITIAL_BOARD)) {
+        if (fenFormat.toString().equalsIgnoreCase(FenFormat.INITIAL_BOARD)) {
             this.eligibleForOB = true;
         }
 
@@ -81,8 +70,8 @@ public class ChessGame {
 
         this.offsetHalfMoveClock = fenFormat.getHalfMoveClock();
         this.offsetMoveCount = fenFormat.getMoveNr();
-
     }
+
 
     public Board getCurrentBoard() {
         return historyBoards.get(historyBoards.size() - 1);
@@ -126,10 +115,6 @@ public class ChessGame {
         return colorToMove;
     }
 
-    public void overWriteColorToMove(GameColor colorToMove) {
-        this.colorToMove = colorToMove;
-    }
-
     public GameState getCurrentGameState() {
         if (getFinishedGameState() != null) {
             return getFinishedGameState();
@@ -159,14 +144,6 @@ public class ChessGame {
 
         return GameState.GAME_OPEN;
 
-    }
-
-    public boolean isGameFinished() {
-        if (this.getFinishedGameState() != null) {
-            return true;
-        }
-
-        return getCurrentGameState() != GameState.GAME_OPEN;
     }
 
     public void applyMove(Move moveInput) {
@@ -201,9 +178,5 @@ public class ChessGame {
         colorToMove = colorToMove.invert();
     }
 
-
-    public ChessGame duplicateChessGameByStart() {
-        return new ChessGame(this.gameInfo, this.initialFen);
-    }
 
 }
