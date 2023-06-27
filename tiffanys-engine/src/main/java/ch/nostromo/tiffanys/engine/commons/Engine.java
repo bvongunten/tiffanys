@@ -12,12 +12,9 @@ public interface Engine {
 
     void asyncScoreMoves(ChessGame game);
 
-    boolean isRunning();
-
     void halt();
 
     void addEventListener(EngineEventListener engineEventListener);
-
 
 
     List<Move> generateLegalHitMovesList(ChessGame game);

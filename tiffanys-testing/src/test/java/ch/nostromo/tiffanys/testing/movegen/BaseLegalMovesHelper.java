@@ -9,7 +9,7 @@ import ch.nostromo.tiffanys.commons.move.Move;
 import ch.nostromo.tiffanys.commons.rules.RulesUtil;
 import ch.nostromo.tiffanys.engine.commons.Engine;
 import ch.nostromo.tiffanys.engine.commons.EngineSettings;
-import ch.nostromo.tiffanys.engine.impl.EngineFactory;
+import ch.nostromo.tiffanys.engine.EngineFactory;
 
 import java.util.ArrayList;
 import java.util.List;

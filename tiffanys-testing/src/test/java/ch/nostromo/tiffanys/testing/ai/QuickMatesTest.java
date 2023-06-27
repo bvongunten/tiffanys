@@ -7,7 +7,7 @@ import ch.nostromo.tiffanys.engine.commons.Engine;
 import ch.nostromo.tiffanys.engine.commons.EngineException;
 import ch.nostromo.tiffanys.engine.commons.EngineResult;
 import ch.nostromo.tiffanys.engine.commons.EngineSettings;
-import ch.nostromo.tiffanys.engine.impl.EngineFactory;
+import ch.nostromo.tiffanys.engine.EngineFactory;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

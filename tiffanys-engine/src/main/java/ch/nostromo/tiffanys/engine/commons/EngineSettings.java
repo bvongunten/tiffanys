@@ -1,5 +1,8 @@
 package ch.nostromo.tiffanys.engine.commons;
 
+import lombok.Data;
+
+@Data
 public class EngineSettings {
 
 	public enum EngineMode {
@@ -38,62 +41,6 @@ public class EngineSettings {
 
 		return result;
 
-	}
-
-	public EngineMode getMode() {
-		return mode;
-	}
-
-	public void setMode(EngineMode mode) {
-		this.mode = mode;
-	}
-
-	public boolean isUseOpeningBook() {
-		return useOpeningBook;
-	}
-
-	public void setUseOpeningBook(boolean useOpeningBook) {
-		this.useOpeningBook = useOpeningBook;
-	}
-
-	public int getDepth() {
-		return depth;
-	}
-
-	public void setDepth(int depth) {
-		this.depth = depth;
-	}
-
-	public int getTime() {
-		return time;
-	}
-
-	public void setTime(int time) {
-		this.time = time;
-	}
-
-	public int getThreads() {
-		return threads;
-	}
-
-	public void setThreads(int threads) {
-		this.threads = threads;
-	}
-
-	public int getTimeForGame() {
-		return timeForGame;
-	}
-
-	public void setTimeForGame(int timeForGame) {
-		this.timeForGame = timeForGame;
-	}
-
-	public int getMovesForGame() {
-		return movesForGame;
-	}
-
-	public void setMovesForGame(int movesForGame) {
-		this.movesForGame = movesForGame;
 	}
 
 

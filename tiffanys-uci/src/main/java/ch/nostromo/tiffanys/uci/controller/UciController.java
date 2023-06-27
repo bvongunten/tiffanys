@@ -13,7 +13,7 @@ import ch.nostromo.tiffanys.engine.commons.EngineSettings;
 import ch.nostromo.tiffanys.engine.commons.events.EngineEvent;
 import ch.nostromo.tiffanys.engine.commons.events.EngineEventListener;
 import ch.nostromo.tiffanys.engine.commons.opening.OpeningBook;
-import ch.nostromo.tiffanys.engine.impl.EngineFactory;
+import ch.nostromo.tiffanys.engine.EngineFactory;
 import ch.nostromo.tiffanys.uci.UciApp;
 import ch.nostromo.tiffanys.uci.utils.UciMoveTranslator;
 import ch.nostromo.tiffanys.uci.utils.system.ConsoleScanner;

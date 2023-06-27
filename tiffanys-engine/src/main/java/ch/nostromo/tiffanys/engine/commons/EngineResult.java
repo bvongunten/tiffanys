@@ -1,6 +1,5 @@
 package ch.nostromo.tiffanys.engine.commons;
 
-import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.move.Move;
 import lombok.Data;
 
@@ -9,17 +8,18 @@ import java.util.List;
 @Data
 public class EngineResult {
 
-    GameColor colorToMove;
 
-    boolean openingBook = false;
+    private Move selectedMove;
+    private List<Move> legalMoves;
 
-    int depth = 0;
+    private boolean openingBook = false;
 
-	long totalTimeInMs;
-    int positionsEvaluated;
+    private int depth = 0;
 
-    List<Move> legalMoves;
+    private long totalTimeInMs;
 
-    Move selectedMove;
+    private int positionsEvaluated;
+
+
 
 }

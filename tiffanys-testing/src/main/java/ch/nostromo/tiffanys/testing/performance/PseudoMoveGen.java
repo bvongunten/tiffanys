@@ -6,7 +6,7 @@ import ch.nostromo.tiffanys.commons.fen.FenFormat;
 import ch.nostromo.tiffanys.engine.commons.Engine;
 import ch.nostromo.tiffanys.engine.commons.EngineException;
 import ch.nostromo.tiffanys.engine.commons.EngineSettings;
-import ch.nostromo.tiffanys.engine.impl.EngineFactory;
+import ch.nostromo.tiffanys.engine.EngineFactory;
 import ch.nostromo.tiffanys.testing.matepd.EpdMateTest;
 
 import java.util.ArrayList;
