@@ -35,17 +35,19 @@ public class TestingApp {
 
         List<String> results = new ArrayList<>();
 
+        // Run mate epd tests
+        EpdMateTest mateTests = new EpdMateTest();
+        results.add(mateTests.runMateTests("matein5.epd", limitedMateTests));
+        results.add(mateTests.runMateTests("matein4.epd", limitedMateTests));
+        results.add(mateTests.runMateTests("matein3.epd", limitedMateTests));
+        results.add(mateTests.runMateTests("matein2.epd", limitedMateTests));
+        results.add(mateTests.runMateTests("matein1.epd", limitedMateTests));
+
         // Pseude Move Gen
         PseudoMoveGen pseudoMoveGen = new PseudoMoveGen();
         results.addAll(pseudoMoveGen.runTests());
 
-        // Run mate epd tests
-        EpdMateTest mateTests = new EpdMateTest();
-        results.add(mateTests.runMateTests("matein1.epd", limitedMateTests));
-        results.add(mateTests.runMateTests("matein2.epd", limitedMateTests));
-        results.add(mateTests.runMateTests("matein3.epd", limitedMateTests));
-        results.add(mateTests.runMateTests("matein4.epd", limitedMateTests));
-        results.add(mateTests.runMateTests("matein5.epd", limitedMateTests));
+
 
         // Run wac tests
         WacTest wacTest = new WacTest();

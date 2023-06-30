@@ -31,10 +31,18 @@ public class AlphaBetaCallable implements Callable<AlphaBetaCallableResult>, Dra
 
     public AlphaBetaCallable(EngineSettings engineSettings, RobustBoard board, EngineMove initialMove, int targetDepth) {
 
-        initializeLists();
+
+        this.movesBuffer = AlphaBetaCallableTools.generateMovesBuffer();
+        this.qmovesBuffer = AlphaBetaCallableTools.generateMovesBuffer();
+
+        for (int i = 0; i < 100; i++) {
+            pvBuffer[i] = new PrincipalVariation();
+        }
+
+
+        this.targetDepth = targetDepth;
 
         this.initialMove = initialMove;
-        this.targetDepth = targetDepth;
         this.currentPv = initialMove.principalVariation;
 
         this.board = board;
@@ -80,7 +88,7 @@ public class AlphaBetaCallable implements Callable<AlphaBetaCallableResult>, Dra
 
     public final int alphaBeta(int alpha, int beta, int depth, PrincipalVariation principalVariant) {
 
-        boolean doPv = false;
+        boolean doPv = true;
 
         int currentRelativeDepth = targetDepth - depth;
 
@@ -127,7 +135,7 @@ public class AlphaBetaCallable implements Callable<AlphaBetaCallableResult>, Dra
         }
 
 
-        bubbleSortMoves(movesArray, movesCount);
+        AlphaBetaCallableTools.bubbleSortMovesByHitScore(movesArray, movesCount);
 
         boolean moveFound = false;
 
@@ -140,17 +148,9 @@ public class AlphaBetaCallable implements Callable<AlphaBetaCallableResult>, Dra
             if (!board.makeAndCheckMove(currentMove)) {
 
                 int score = 0;
-                if (i >= 0) {
 
-                    score = -alphaBeta(-beta, -alpha, depth - 1, localPrincipalVariant);
+                score = -alphaBeta(-beta, -alpha, depth - 1, localPrincipalVariant);
 
-                } else {
-                    score = -alphaBeta(-alpha - 1, -alpha, depth - 1, localPrincipalVariant);
-
-                    if (score > alpha && score < beta) {
-                        score = -alphaBeta(-beta, -alpha, depth - 1, localPrincipalVariant);
-                    }
-                }
 
                 board.unmakeMove(currentMove);
 
@@ -199,7 +199,7 @@ public class AlphaBetaCallable implements Callable<AlphaBetaCallableResult>, Dra
 
         result.nodes++;
 
-        int currentRelativeDepth = targetDepth + qmovesBufferDepth;
+        int currentRelativeDepth = targetDepth + qmovesBufferDepth + 1;
 
         int value = evaluation.evaluate(board, currentRelativeDepth, true);
 
@@ -221,7 +221,7 @@ public class AlphaBetaCallable implements Callable<AlphaBetaCallableResult>, Dra
         EngineMove[] movesArray = qmovesBuffer[qmovesBufferDepth];
         int movesCount = board.generateMovesHitList(movesArray);
 
-        bubbleSortMoves(movesArray, movesCount);
+        AlphaBetaCallableTools.bubbleSortMovesByHitScore(movesArray, movesCount);
 
         for (int i = 0; i < movesCount; i++) {
             if (!board.makeAndCheckMove(movesArray[i])) {
@@ -251,25 +251,6 @@ public class AlphaBetaCallable implements Callable<AlphaBetaCallableResult>, Dra
         return alpha;
     }
 
-    private void bubbleSortMoves(EngineMove[] toSort, int len) {
-        boolean done = false;
-        for (int i = 0; i < len; i++) {
-            if (done) {
-                break;
-            }
-            done = true;
-
-            for (int j = len - 1; j > i; j--) {
-                if (toSort[j].hitScore > toSort[j - 1].hitScore) {
-                    EngineMove temp = toSort[j];
-                    toSort[j] = toSort[j - 1];
-                    toSort[j - 1] = temp;
-                    done = false;
-                }
-            }
-        }
-    }
-
     /*
      * (non-Javadoc)
      *
@@ -278,30 +259,6 @@ public class AlphaBetaCallable implements Callable<AlphaBetaCallableResult>, Dra
     @Override
     public AlphaBetaCallableResult call() throws Exception {
         return runAB();
-    }
-
-
-    private void initializeLists() {
-        for (int i = 0; i < 100; i++) {
-            EngineMove[] moves = new EngineMove[100];
-            for (int x = 0; x < moves.length; x++) {
-                moves[x] = new EngineMove();
-            }
-            movesBuffer[i] = moves;
-        }
-
-        for (int i = 0; i < 100; i++) {
-            EngineMove[] moves = new EngineMove[100];
-            for (int x = 0; x < moves.length; x++) {
-                moves[x] = new EngineMove();
-            }
-            qmovesBuffer[i] = moves;
-        }
-
-        for (int i = 0; i < 100; i++) {
-            pvBuffer[i] = new PrincipalVariation();
-        }
-
     }
 
 
