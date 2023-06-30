@@ -11,62 +11,45 @@ import java.util.concurrent.Callable;
 
 public class AlphaBetaCallable implements Callable<AlphaBetaCallableResult>, DragonbornConstants {
 
+    boolean doPv = true;
+
+
     private TiffanysEvaluation evaluation = new TiffanysEvaluation();
 
-    private EngineMove[][] movesBuffer = new EngineMove[100][100];
-    private EngineMove[][] qmovesBuffer = new EngineMove[100][100];
-    private PrincipalVariation[] pvBuffer = new PrincipalVariation[100];
+    private EngineMove[][] movesBuffer =  AlphaBetaCallableTools.generateMovesBuffer();
+    private PrincipalVariation[] pvBuffer =  AlphaBetaCallableTools.generatePrincipalVariationBuffer();
 
-    public static int MAX_RANGE = 99999;
-
-    private PrincipalVariation currentPv;
     private PrincipalVariation workingPv;
     private boolean inPvPath;
     private int targetDepth;
     private RobustBoard board;
-    private int qmovesBufferDepth = 0;
 
     private AlphaBetaCallableResult result;
     private EngineMove initialMove;
 
     public AlphaBetaCallable(EngineSettings engineSettings, RobustBoard board, EngineMove initialMove, int targetDepth) {
-
-
-        this.movesBuffer = AlphaBetaCallableTools.generateMovesBuffer();
-        this.qmovesBuffer = AlphaBetaCallableTools.generateMovesBuffer();
-
-        for (int i = 0; i < 100; i++) {
-            pvBuffer[i] = new PrincipalVariation();
-        }
-
-
-        this.targetDepth = targetDepth;
-
-        this.initialMove = initialMove;
-        this.currentPv = initialMove.principalVariation;
-
         this.board = board;
+        this.targetDepth = targetDepth;
+        this.initialMove = initialMove;
+    }
 
-        if (currentPv == null || currentPv.moveCount < 2) {
+    public AlphaBetaCallableResult runAB() {
+        this.result = new AlphaBetaCallableResult();
+
+        if (initialMove.principalVariation == null || initialMove.principalVariation.moveCount < PrincipalVariation.MINIMAL_DEPTH) {
             inPvPath = false;
         } else {
             inPvPath = true;
         }
 
-        this.result = new AlphaBetaCallableResult();
-
         workingPv = pvBuffer[0];
         workingPv.moveCount = 0;
         workingPv.moves[0] = initialMove;
 
-    }
 
-    public AlphaBetaCallableResult runAB() {
-
-        int score = 0;
         long startMs = System.currentTimeMillis();
 
-        score = -alphaBeta(-MAX_RANGE, +MAX_RANGE, targetDepth - 1, workingPv);
+        int score = -alphaBeta(-Integer.MAX_VALUE, Integer.MAX_VALUE, 1, workingPv);
 
         result.score = score;
         result.plannedDepth = targetDepth;
@@ -86,79 +69,61 @@ public class AlphaBetaCallable implements Callable<AlphaBetaCallableResult>, Dra
         return result;
     }
 
-    public final int alphaBeta(int alpha, int beta, int depth, PrincipalVariation principalVariant) {
+    public final int alphaBeta(int alpha, int beta, int depth, PrincipalVariation parentPrincipalVariation) {
+        result.nodes++;
 
-        boolean doPv = true;
-
-        int currentRelativeDepth = targetDepth - depth;
-
-        if (inPvPath && currentRelativeDepth > currentPv.moveCount) {
-            inPvPath = false;
+        // Switch to quiescent search
+        if (depth - targetDepth == 0) {
+            return quiescentSearch(alpha, beta, depth + 1);
         }
 
-        PrincipalVariation localPrincipalVariant = pvBuffer[currentRelativeDepth];
+        // Get new local principal variation for this depth
+        PrincipalVariation localPrincipalVariant = pvBuffer[depth];
         localPrincipalVariant.moveCount = 0;
 
 
-        if (depth == 0) {
-            principalVariant.moveCount = 0;
-
-            // current depth
-            if (result.maxDepth < targetDepth) {
-                result.maxDepth = targetDepth;
-            }
-
-            int value = quiescentSearch(alpha, beta);
-
-            return value;
-        }
-
-        result.nodes++;
-
-
         // Generate Moves
-        EngineMove[] movesArray = movesBuffer[depth];
-        int movesCount = board.generateMovesList(movesArray);
+        EngineMove[] localMoves = movesBuffer[depth];
+        int movesCount = board.generateMovesList(localMoves);
 
+
+        // Apply best score to corresponding local move if there is a pv given
         if (doPv) {
-            if (inPvPath && currentPv.moveCount > currentRelativeDepth) {
-
+            // TODO > || >= ?!
+            if (inPvPath && initialMove.principalVariation.moveCount > depth) {
                 for (int i = 0; i < movesCount; i++) {
-                    if (movesArray[i].from == currentPv.moves[currentRelativeDepth].from
-                            && movesArray[i].to == currentPv.moves[currentRelativeDepth].to) {
-                        movesArray[i].hitScore += 10000;
+                    if (localMoves[i].from == initialMove.principalVariation.moves[depth].from
+                            && localMoves[i].to == initialMove.principalVariation.moves[depth].to) {
+                        localMoves[i].hitScore += 10000;
                         break;
                     }
                 }
-
+            } else {
+                inPvPath = false;
             }
         }
 
-
-        AlphaBetaCallableTools.bubbleSortMovesByHitScore(movesArray, movesCount);
+        // Sort moves - pv first :)
+        AlphaBetaCallableTools.bubbleSortMovesByHitScore(localMoves, movesCount);
 
         boolean moveFound = false;
-
         int best = -10000;
 
         for (int i = 0; i < movesCount; i++) {
 
-            EngineMove currentMove = movesArray[i];
+            EngineMove currentMove = localMoves[i];
 
             if (!board.makeAndCheckMove(currentMove)) {
 
-                int score = 0;
-
-                score = -alphaBeta(-beta, -alpha, depth - 1, localPrincipalVariant);
-
+                int score = -alphaBeta(-beta, -alpha, depth + 1, localPrincipalVariant);
 
                 board.unmakeMove(currentMove);
+
+                moveFound = true;
 
                 if (score > best) {
                     best = score;
                 }
-
-                moveFound = true;
 
                 if (best >= beta) {
                     result.cutOffs++;
@@ -169,9 +134,9 @@ public class AlphaBetaCallable implements Callable<AlphaBetaCallableResult>, Dra
                     alpha = best;
 
                     if (doPv) {
-                        principalVariant.moves[0] = currentMove.copy();
-                        System.arraycopy(localPrincipalVariant.moves, 0, principalVariant.moves, 1, localPrincipalVariant.moveCount);
-                        principalVariant.moveCount = localPrincipalVariant.moveCount + 1;
+                        parentPrincipalVariation.moves[0] = currentMove.copy();
+                        System.arraycopy(localPrincipalVariant.moves, 0, parentPrincipalVariation.moves, 1, localPrincipalVariant.moveCount);
+                        parentPrincipalVariation.moveCount = localPrincipalVariant.moveCount + 1;
                     }
                 }
 
@@ -184,9 +149,9 @@ public class AlphaBetaCallable implements Callable<AlphaBetaCallableResult>, Dra
 
         if (!moveFound) {
             if (!board.isCheckNow()) {
-                best = 0;
+                return 0;
             } else {
-                best = -TiffanysEvaluation.MAT_RANGE + currentRelativeDepth;
+                return -TiffanysEvaluation.MAT_RANGE + depth;
             }
         }
 
@@ -195,18 +160,16 @@ public class AlphaBetaCallable implements Callable<AlphaBetaCallableResult>, Dra
 
     }
 
-    private int quiescentSearch(int alpha, int beta) {
+    private int quiescentSearch(int alpha, int beta, int relativeDepth) {
 
         result.nodes++;
 
-        int currentRelativeDepth = targetDepth + qmovesBufferDepth + 1;
-
-        int value = evaluation.evaluate(board, currentRelativeDepth, true);
+        int value = evaluation.evaluate(board, relativeDepth);
 
         result.positionsEvaluated++;
 
-        if (result.maxDepth < currentRelativeDepth) {
-            result.maxDepth = currentRelativeDepth;
+        if (result.maxDepth < relativeDepth) {
+            result.maxDepth = relativeDepth;
         }
 
         if (value >= beta) {
@@ -218,7 +181,7 @@ public class AlphaBetaCallable implements Callable<AlphaBetaCallableResult>, Dra
             alpha = value;
         }
 
-        EngineMove[] movesArray = qmovesBuffer[qmovesBufferDepth];
+        EngineMove[] movesArray = movesBuffer[relativeDepth];
         int movesCount = board.generateMovesHitList(movesArray);
 
         AlphaBetaCallableTools.bubbleSortMovesByHitScore(movesArray, movesCount);
@@ -226,9 +189,7 @@ public class AlphaBetaCallable implements Callable<AlphaBetaCallableResult>, Dra
         for (int i = 0; i < movesCount; i++) {
             if (!board.makeAndCheckMove(movesArray[i])) {
 
-                qmovesBufferDepth++;
-                value = -quiescentSearch(-beta, -alpha);
-                qmovesBufferDepth--;
+                value = -quiescentSearch(-beta, -alpha, relativeDepth + 1);
 
                 board.unmakeMove(movesArray[i]);
 
@@ -244,9 +205,7 @@ public class AlphaBetaCallable implements Callable<AlphaBetaCallableResult>, Dra
             } else {
                 board.unmakeMove(movesArray[i]);
             }
-
         }
-
 
         return alpha;
     }

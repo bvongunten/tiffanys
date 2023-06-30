@@ -50,7 +50,7 @@ public class WacTest {
 
             long time = System.currentTimeMillis() - startMs;
 
-            String logMessage = "Count: " + counter + ", time: " + time + ", selected move: " + san + ", best move: " + bm + ", puzzle: " + wacLine;
+            String logMessage = "Count: " + counter + ", time: " + time + ", selected move: " + san + ", best move: " + bm + ", puzzle: " + wacLine +", move Attributes: "  + result.getSelectedMove().getMoveAttributes();
 
             if (success) {
                 logger.info(logMessage);

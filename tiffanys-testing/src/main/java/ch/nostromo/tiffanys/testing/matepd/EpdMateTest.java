@@ -51,7 +51,7 @@ public class EpdMateTest {
 
             long time = System.currentTimeMillis() - startMs;
 
-            String logMessage = "Count: " + counter + ", time: " + time + ", expected mate: " + expectedMate + ", found mate: " + result.getSelectedMove().getMoveAttributes().getMateIn() +", selected move: " + epdizedMove + ", best move: " + bm + ", puzzle: " + epd;
+            String logMessage = "Count: " + counter + ", time: " + time + ", expected mate: " + expectedMate + ", found mate: " + result.getSelectedMove().getMoveAttributes().getMateIn() +", selected move: " + epdizedMove + ", best move: " + bm + ", puzzle: " + epd + ", attributes: " + result.getSelectedMove().getMoveAttributes();
 
             if (success) {
                 logger.info(logMessage);

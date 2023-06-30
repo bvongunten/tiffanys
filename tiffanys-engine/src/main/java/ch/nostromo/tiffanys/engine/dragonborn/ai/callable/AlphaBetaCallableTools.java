@@ -1,5 +1,6 @@
 package ch.nostromo.tiffanys.engine.dragonborn.ai.callable;
 
+import ch.nostromo.tiffanys.engine.dragonborn.ai.PrincipalVariation;
 import ch.nostromo.tiffanys.engine.dragonborn.move.EngineMove;
 
 public class AlphaBetaCallableTools {
@@ -18,7 +19,15 @@ public class AlphaBetaCallableTools {
         }
 
         return result;
+    }
 
+    public static PrincipalVariation[] generatePrincipalVariationBuffer() {
+        PrincipalVariation[] result = new PrincipalVariation[MOVELIST_DEPTH];
+        for (int i = 0; i < MOVELIST_DEPTH; i++) {
+            result[i] = new PrincipalVariation();
+        }
+
+        return result;
     }
 
 

@@ -4,6 +4,8 @@ import ch.nostromo.tiffanys.engine.dragonborn.move.EngineMove;
 
 public class PrincipalVariation {
 
+    public static final int MINIMAL_DEPTH = 2;
+
     public EngineMove[] moves;;
     public int moveCount = 0;
 

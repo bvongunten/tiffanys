@@ -33,25 +33,29 @@ public class TestingApp {
         // Fire up logging
         LogUtils.initializeLogging(Level.INFO, Level.OFF, Application.HOME_DIRECTORY, LOG_FILE);
 
+
+
         List<String> results = new ArrayList<>();
+
 
         // Run mate epd tests
         EpdMateTest mateTests = new EpdMateTest();
+        // results.add(mateTests.runMateTests("matein6.epd", limitedMateTests));
         results.add(mateTests.runMateTests("matein5.epd", limitedMateTests));
         results.add(mateTests.runMateTests("matein4.epd", limitedMateTests));
         results.add(mateTests.runMateTests("matein3.epd", limitedMateTests));
         results.add(mateTests.runMateTests("matein2.epd", limitedMateTests));
         results.add(mateTests.runMateTests("matein1.epd", limitedMateTests));
 
+        // Run wac tests
+        WacTest wacTest = new WacTest();
+        results.add(wacTest.wacTests("wac.epd", MAX_TIME_WAC));
+
         // Pseude Move Gen
         PseudoMoveGen pseudoMoveGen = new PseudoMoveGen();
         results.addAll(pseudoMoveGen.runTests());
 
 
-
-        // Run wac tests
-        WacTest wacTest = new WacTest();
-        results.add(wacTest.wacTests("wac.epd", MAX_TIME_WAC));
 
 
         logger.info("Test results: ");

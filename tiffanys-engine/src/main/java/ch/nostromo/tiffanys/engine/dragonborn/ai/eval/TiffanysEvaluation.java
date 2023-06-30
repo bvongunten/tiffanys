@@ -18,7 +18,7 @@ public class TiffanysEvaluation implements DragonbornConstants {
         }
     }
 
-    public int evaluate(RobustBoard board, int currentRelativeDepth, boolean isInQuiescence) {
+    public int evaluate(RobustBoard board, int currentRelativeDepth) {
 
         // Abort by timeout
         if (!Dragonborn.running) {
