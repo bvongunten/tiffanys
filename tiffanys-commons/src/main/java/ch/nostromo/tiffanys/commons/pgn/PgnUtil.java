@@ -32,6 +32,10 @@ public class PgnUtil {
 
                 String move = st.nextToken().replace(" ", "");
 
+                if (move.startsWith("{") || move.startsWith("$")) {
+                    continue;
+                }
+
                 if (move.startsWith("*")) {
                     return result;
                 } else if (move.startsWith("1-0") || move.startsWith("0-1") || move.startsWith("1/2-1/2")) {
