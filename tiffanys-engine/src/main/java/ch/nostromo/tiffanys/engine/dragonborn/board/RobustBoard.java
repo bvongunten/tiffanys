@@ -65,7 +65,7 @@ public class RobustBoard implements DragonbornConstants, Cloneable {
 
         Field[] boardArray = importBoard.getFields();
 
-        this.enPassantField = getShortField(importBoard.getEnPassantField());
+        this.enPassantField = getShortField(importBoard.getEnPassantField().getPosition());
 
         this.whiteShortCastling = importBoard.isCastlingAllowed(Castling.WHITE_SHORT);
         this.whiteLongCastling = importBoard.isCastlingAllowed(Castling.WHITE_LONG);

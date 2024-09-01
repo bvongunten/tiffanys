@@ -107,7 +107,7 @@ public class BoardTest extends TestHelper {
         assertTrue(board.castlingBlackShortAllowed);
         assertTrue(board.castlingWhiteLongAllowed);
         assertTrue(board.castlingWhiteShortAllowed);
-        assertEquals(board.enPassantField, Integer.MIN_VALUE);
+        assertEquals(board.enPassantField, BoardCoordinates.UNDEF);
     }
 
     @Test
@@ -127,7 +127,7 @@ public class BoardTest extends TestHelper {
         assertTrue(board.castlingBlackShortAllowed);
         assertTrue(board.castlingWhiteLongAllowed);
         assertTrue(board.castlingWhiteShortAllowed);
-        assertEquals(board.enPassantField, 45);
+        assertEquals(board.enPassantField, BoardCoordinates.E3);
     }
 
     @Test
@@ -151,7 +151,7 @@ public class BoardTest extends TestHelper {
         assertFalse(board.castlingWhiteLongAllowed);
         assertFalse(board.castlingWhiteShortAllowed);
 
-        assertEquals(board.enPassantField, Integer.MIN_VALUE);
+        assertEquals(board.enPassantField, BoardCoordinates.UNDEF);
     }
 
     @Test
@@ -175,7 +175,7 @@ public class BoardTest extends TestHelper {
         assertTrue(board.castlingWhiteLongAllowed);
         assertTrue(board.castlingWhiteShortAllowed);
 
-        assertEquals(board.enPassantField, Integer.MIN_VALUE);
+        assertEquals(board.enPassantField, BoardCoordinates.UNDEF);
     }
 
     @Test
@@ -200,7 +200,7 @@ public class BoardTest extends TestHelper {
         assertFalse(board.castlingWhiteLongAllowed);
         assertFalse(board.castlingWhiteShortAllowed);
 
-        assertEquals(board.enPassantField, Integer.MIN_VALUE);
+        assertEquals(board.enPassantField, BoardCoordinates.UNDEF);
     }
 
     @Test
@@ -225,7 +225,7 @@ public class BoardTest extends TestHelper {
         assertTrue(board.castlingWhiteLongAllowed);
         assertTrue(board.castlingWhiteShortAllowed);
 
-        assertEquals(board.enPassantField, Integer.MIN_VALUE);
+        assertEquals(board.enPassantField, BoardCoordinates.UNDEF);
     }
 
     @Test
@@ -250,7 +250,7 @@ public class BoardTest extends TestHelper {
         assertFalse(board.castlingWhiteLongAllowed);
         assertFalse(board.castlingWhiteShortAllowed);
 
-        assertEquals(board.enPassantField, Integer.MIN_VALUE);
+        assertEquals(board.enPassantField, BoardCoordinates.UNDEF);
     }
 
     @Test
@@ -275,7 +275,7 @@ public class BoardTest extends TestHelper {
         assertTrue(board.castlingWhiteLongAllowed);
         assertTrue(board.castlingWhiteShortAllowed);
 
-        assertEquals(board.enPassantField, Integer.MIN_VALUE);
+        assertEquals(board.enPassantField, BoardCoordinates.UNDEF);
     }
 
     @Test
@@ -359,7 +359,7 @@ public class BoardTest extends TestHelper {
     public void testEnPassantField() {
         Board board = new Board(new FenFormat("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1"));
 
-        assertEquals(45, board.getEnPassantField());
+        assertEquals(BoardCoordinates.E3, board.getEnPassantField());
 
     }
 

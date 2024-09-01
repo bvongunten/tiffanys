@@ -63,11 +63,11 @@ public class SanUtil {
 			if (movedPiece == Piece.PAWN) {
 
 				if (onSameRow || board.getFields()[move.getTo()].getPiece() != null
-						|| board.getEnPassantField() == move.getTo()) {
+						|| board.getEnPassantField().getPosition() == move.getTo()) {
 					result += move.getFromCoord().substring(0, 1);
 				}
 
-				if (board.getFields()[move.getTo()].getPiece() != null || board.getEnPassantField() == move.getTo()) {
+				if (board.getFields()[move.getTo()].getPiece() != null || board.getEnPassantField().getPosition() == move.getTo()) {
 					result += "x";
 				}
 

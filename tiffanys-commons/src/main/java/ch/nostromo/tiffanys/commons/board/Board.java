@@ -19,7 +19,7 @@ public class Board implements Cloneable {
 
 	Field[] fields = new Field[120];
 
-	int enPassantField;
+	BoardCoordinates enPassantField;
 	boolean castlingWhiteShortAllowed;
 	boolean castlingBlackShortAllowed;
 	boolean castlingWhiteLongAllowed;
@@ -106,9 +106,9 @@ public class Board implements Cloneable {
 		// Ep field
 		String epField = fenFormat.getEnPassant();
 		if (!epField.equals("-")) {
-			this.enPassantField = BoardUtil.coordToField(epField);
+			this.enPassantField = BoardCoordinates.getBoardCoordinatesByIdx(BoardUtil.coordToField(epField));
 		} else {
-			this.enPassantField = Integer.MIN_VALUE;
+			this.enPassantField = BoardCoordinates.UNDEF;
 		}
 
 		logger.fine("Board created: \n" + this.toString());
@@ -172,8 +172,8 @@ public class Board implements Cloneable {
 
 	public String getFenEnpassant() {
 		String enPassant = "";
-		if (enPassantField != Integer.MIN_VALUE) {
-			enPassant = BoardUtil.fieldToCoord(enPassantField);
+		if (enPassantField != BoardCoordinates.UNDEF) {
+			enPassant = BoardUtil.fieldToCoord(enPassantField.getPosition());
 		} else {
 			enPassant = "-";
 		}
@@ -279,9 +279,9 @@ public class Board implements Cloneable {
 			fields[move.getFrom()].setPiece(null);
 			fields[move.getFrom()].setPieceColor(null);
 
-			this.enPassantField = Integer.MIN_VALUE;
+			this.enPassantField = BoardCoordinates.UNDEF;
 
-		} else if (fields[move.getFrom()].getPiece() == Piece.PAWN && move.getTo() == enPassantField) {
+		} else if (fields[move.getFrom()].getPiece() == Piece.PAWN && move.getTo() == enPassantField.getPosition()) {
 			// en passant
 
 			movePiece(move.getFrom(), move.getTo());
@@ -289,7 +289,7 @@ public class Board implements Cloneable {
 			fields[epIdx].setPiece(null);
 			fields[epIdx].setPieceColor(null);
 
-			this.enPassantField = Integer.MIN_VALUE;
+			this.enPassantField = BoardCoordinates.UNDEF;
 
 		} else if (move.getCastling() != null) {
 			// castling
@@ -312,7 +312,7 @@ public class Board implements Cloneable {
 			movePiece(move.getCastling().getFromRook(), move.getCastling().getToRook());
 			movePiece(move.getCastling().getFromKing(), move.getCastling().getToKing());
 
-			this.enPassantField = Integer.MIN_VALUE;
+			this.enPassantField = BoardCoordinates.UNDEF;
 
 		} else {
 
@@ -342,9 +342,9 @@ public class Board implements Cloneable {
 
 			// En Passant field to be set?
 			if (fields[move.getFrom()].getPiece() == Piece.PAWN && Math.abs(move.getFrom() - move.getTo()) == 20) {
-				this.enPassantField = move.getTo() + (colorToMove.getCalculationModificator() * 10) * -1;
+				this.enPassantField = BoardCoordinates.getBoardCoordinatesByIdx(move.getTo() + (colorToMove.getCalculationModificator() * 10) * -1);
 			} else {
-				this.enPassantField = Integer.MIN_VALUE;
+				this.enPassantField = BoardCoordinates.UNDEF;
 			}
 
 			// Move piece

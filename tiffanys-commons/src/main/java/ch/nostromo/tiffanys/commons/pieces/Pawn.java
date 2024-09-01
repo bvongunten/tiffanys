@@ -51,7 +51,7 @@ public class Pawn extends AbstractPiece {
         }
 
         // also for enpassant
-        if (toField == board.getEnPassantField()) {
+        if (toField == board.getEnPassantField().getPosition()) {
             moves.add(new Move(startPos, toField));
         }
 
@@ -61,7 +61,7 @@ public class Pawn extends AbstractPiece {
             createMoves(moves, startPos, toField);
         }
         // also for enpassant
-        if (toField == board.getEnPassantField()) {
+        if (toField == board.getEnPassantField().getPosition()) {
             moves.add(new Move(startPos, toField));
         }
 
