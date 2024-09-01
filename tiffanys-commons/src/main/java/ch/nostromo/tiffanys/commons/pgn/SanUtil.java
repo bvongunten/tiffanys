@@ -38,7 +38,7 @@ public class SanUtil {
             String result = "";
 
             List<Move> legalMoves = RulesUtil.getLegalMoves(board, colorToMove);
-            Piece movedPiece = board.getFields()[move.getFrom()].getPiece();
+            Piece movedPiece = board.getFields()[move.getFrom().getIdx()].getPiece();
 
             String row = move.getFromCoord().substring(1, 2);
             String col = move.getFromCoord().substring(0, 1);
@@ -48,7 +48,7 @@ public class SanUtil {
             boolean same = false;
 
             for (Move legalMove : legalMoves) {
-                if (!legalMove.isCastling() && board.getFields()[legalMove.getFrom()].getPiece() == movedPiece
+                if (!legalMove.isCastling() && board.getFields()[legalMove.getFrom().getIdx()].getPiece() == movedPiece
                         && legalMove.getFrom() != move.getFrom() && legalMove.getTo() == move.getTo()) {
                     if (legalMove.getFromCoord().endsWith(row)) {
                         onSameRow = true;
@@ -62,12 +62,12 @@ public class SanUtil {
 
             if (movedPiece == Piece.PAWN) {
 
-                if (onSameRow || board.getFields()[move.getTo()].getPiece() != null
-                        || (board.getEnPassantField() != null && board.getEnPassantField().getIdx() == move.getTo())) {
+                if (onSameRow || board.getFields()[move.getTo().getIdx()].getPiece() != null
+                        || (board.getEnPassantField() != null && board.getEnPassantField().getIdx() == move.getTo().getIdx())) {
                     result += move.getFromCoord().substring(0, 1);
                 }
 
-                if (board.getFields()[move.getTo()].getPiece() != null || (board.getEnPassantField() != null && board.getEnPassantField().getIdx() == move.getTo())) {
+                if (board.getFields()[move.getTo().getIdx()].getPiece() != null || (board.getEnPassantField() != null && board.getEnPassantField().getIdx() == move.getTo().getIdx())) {
                     result += "x";
                 }
 
@@ -86,7 +86,7 @@ public class SanUtil {
                     result += movedPiece.getCharCode() + move.getFromCoord().substring(0, 1);
                 }
 
-                if (board.getFields()[move.getTo()].getPiece() != null) {
+                if (board.getFields()[move.getTo().getIdx()].getPiece() != null) {
                     result += "x";
                 }
 
@@ -193,7 +193,7 @@ public class SanUtil {
             // Get legal move by remaining moveDescription
             int filteredMovesCount = 0;
             for (Move legalMove : legalMoves) {
-                if (!legalMove.isCastling() && board.getFields()[legalMove.getFrom()].getPiece() == movedPiece
+                if (!legalMove.isCastling() && board.getFields()[legalMove.getFrom().getIdx()].getPiece() == movedPiece
                         && legalMove.getToCoord().equals(to)) {
                     // @formatter:off
                     if ((disambiguatePart.length() == 0

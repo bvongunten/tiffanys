@@ -114,7 +114,7 @@ public class RulesUtil {
                 Board board = boardHistory.get(i);
                 Field[] fields = board.getFields();
 
-                if (fields[move.getTo()].getPiece() == Piece.PAWN) {
+                if (fields[move.getTo().getIdx()].getPiece() == Piece.PAWN) {
                     return false;
                 }
 

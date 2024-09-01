@@ -48,19 +48,19 @@ public class UciMoveTranslator {
 
     public static Castling isUciCastling(Board board, Move move) {
 
-        if (board.isCastlingAllowed(Castling.WHITE_LONG) && move.getFrom() == Castling.WHITE_LONG.getFromKing().getIdx() && move.getTo() == Castling.WHITE_LONG.getToKing().getIdx()) {
+        if (board.isCastlingAllowed(Castling.WHITE_LONG) && move.getFrom().getIdx() == Castling.WHITE_LONG.getFromKing().getIdx() && move.getTo().getIdx() == Castling.WHITE_LONG.getToKing().getIdx()) {
             return Castling.WHITE_LONG;
         }
 
-        if (board.isCastlingAllowed(Castling.WHITE_SHORT) && move.getFrom() == Castling.WHITE_SHORT.getFromKing().getIdx() && move.getTo() == Castling.WHITE_SHORT.getToKing().getIdx()) {
+        if (board.isCastlingAllowed(Castling.WHITE_SHORT) && move.getFrom().getIdx() == Castling.WHITE_SHORT.getFromKing().getIdx() && move.getTo().getIdx() == Castling.WHITE_SHORT.getToKing().getIdx()) {
             return Castling.WHITE_SHORT;
         }
 
-        if (board.isCastlingAllowed(Castling.BLACK_LONG) && move.getFrom() == Castling.BLACK_LONG.getFromKing().getIdx() && move.getTo() == Castling.BLACK_LONG.getToKing().getIdx()) {
+        if (board.isCastlingAllowed(Castling.BLACK_LONG) && move.getFrom().getIdx() == Castling.BLACK_LONG.getFromKing().getIdx() && move.getTo().getIdx() == Castling.BLACK_LONG.getToKing().getIdx()) {
             return Castling.BLACK_LONG;
         }
 
-        if (board.isCastlingAllowed(Castling.BLACK_SHORT) && move.getFrom() == Castling.BLACK_SHORT.getFromKing().getIdx() && move.getTo() == Castling.BLACK_SHORT.getToKing().getIdx()) {
+        if (board.isCastlingAllowed(Castling.BLACK_SHORT) && move.getFrom().getIdx() == Castling.BLACK_SHORT.getFromKing().getIdx() && move.getTo().getIdx() == Castling.BLACK_SHORT.getToKing().getIdx()) {
             return Castling.BLACK_SHORT;
         }
 

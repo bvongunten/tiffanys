@@ -12,8 +12,8 @@ public class MoveTest {
     public void testSimpleMoveByCoord() {
         Move move = new Move("a1", "b1");
 
-        assertEquals(move.getFrom(), 21);
-        assertEquals(move.getTo(), 22);
+        assertEquals(move.getFrom().getIdx(), 21);
+        assertEquals(move.getTo().getIdx(), 22);
     }
 
     @Test
@@ -28,8 +28,8 @@ public class MoveTest {
     public void testSimplePromotionByCoord() {
         Move move = new Move("a1", "b1", Piece.KING);
 
-        assertEquals(move.getFrom(), 21);
-        assertEquals(move.getTo(), 22);
+        assertEquals(move.getFrom().getIdx(), 21);
+        assertEquals(move.getTo().getIdx(), 22);
         assertEquals(move.getPromotion(), Piece.KING);
         assertTrue(move.isPromotion());
 

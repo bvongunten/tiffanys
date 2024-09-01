@@ -281,19 +281,9 @@ public class Board implements Cloneable {
         if (move.getPromotion() != null) {
             // promotion
 
-            setPieceAndColor(move.getTo(), move.getPromotion(), colorToMove);
-            fields[move.getFrom()].setPiece(null);
-            fields[move.getFrom()].setPieceColor(null);
-
-            this.enPassantField = null;
-
-        } else if (fields[move.getFrom()].getPiece() == Piece.PAWN && enPassantField != null && move.getTo() == enPassantField.getIdx()) {
-            // en passant
-
-            movePiece(move.getFrom(), move.getTo());
-            int epIdx = move.getTo() + (colorToMove.getCalculationModificator() * 10) * -1;
-            fields[epIdx].setPiece(null);
-            fields[epIdx].setPieceColor(null);
+            setPieceAndColor(move.getTo().getIdx(), move.getPromotion(), colorToMove);
+            fields[move.getFrom().getIdx()].setPiece(null);
+            fields[move.getFrom().getIdx()].setPieceColor(null);
 
             this.enPassantField = null;
 
@@ -320,41 +310,51 @@ public class Board implements Cloneable {
 
             this.enPassantField = null;
 
+        } else if (fields[move.getFrom().getIdx()].getPiece() == Piece.PAWN && enPassantField != null && move.getTo().getIdx() == enPassantField.getIdx()) {
+            // en passant
+
+            movePiece(move.getFrom().getIdx(), move.getTo().getIdx());
+            int epIdx = move.getTo().getIdx() + (colorToMove.getCalculationModificator() * 10) * -1;
+            fields[epIdx].setPiece(null);
+            fields[epIdx].setPieceColor(null);
+
+            this.enPassantField = null;
+
         } else {
 
             // Castling destroyed by movement of Rook / King or movement on Rook
             // field (iE rook hit)
-            if (move.getTo() == Castling.WHITE_LONG.getFromRook().getIdx() || move.getFrom() == Castling.WHITE_LONG.getFromRook().getIdx()
-                    || move.getFrom() == Castling.WHITE_LONG.getFromKing().getIdx()) {
+            if (move.getTo().getIdx() == Castling.WHITE_LONG.getFromRook().getIdx() || move.getFrom().getIdx() == Castling.WHITE_LONG.getFromRook().getIdx()
+                    || move.getFrom().getIdx() == Castling.WHITE_LONG.getFromKing().getIdx()) {
                 castlingWhiteLongAllowed = false;
             }
 
-            if (move.getTo() == Castling.WHITE_SHORT.getFromRook().getIdx()
-                    || move.getFrom() == Castling.WHITE_SHORT.getFromRook().getIdx()
-                    || move.getFrom() == Castling.WHITE_SHORT.getFromKing().getIdx()) {
+            if (move.getTo().getIdx() == Castling.WHITE_SHORT.getFromRook().getIdx()
+                    || move.getFrom().getIdx() == Castling.WHITE_SHORT.getFromRook().getIdx()
+                    || move.getFrom().getIdx() == Castling.WHITE_SHORT.getFromKing().getIdx()) {
                 castlingWhiteShortAllowed = false;
             }
 
-            if (move.getTo() == Castling.BLACK_LONG.getFromRook().getIdx() || move.getFrom() == Castling.BLACK_LONG.getFromRook().getIdx()
-                    || move.getFrom() == Castling.BLACK_LONG.getFromKing().getIdx()) {
+            if (move.getTo().getIdx() == Castling.BLACK_LONG.getFromRook().getIdx() || move.getFrom().getIdx() == Castling.BLACK_LONG.getFromRook().getIdx()
+                    || move.getFrom().getIdx() == Castling.BLACK_LONG.getFromKing().getIdx()) {
                 castlingBlackLongAllowed = false;
             }
 
-            if (move.getTo() == Castling.BLACK_SHORT.getFromRook().getIdx()
-                    || move.getFrom() == Castling.BLACK_SHORT.getFromRook().getIdx()
-                    || move.getFrom() == Castling.BLACK_SHORT.getFromKing().getIdx()) {
+            if (move.getTo().getIdx() == Castling.BLACK_SHORT.getFromRook().getIdx()
+                    || move.getFrom().getIdx() == Castling.BLACK_SHORT.getFromRook().getIdx()
+                    || move.getFrom().getIdx() == Castling.BLACK_SHORT.getFromKing().getIdx()) {
                 castlingBlackShortAllowed = false;
             }
 
             // En Passant field to be set?
-            if (fields[move.getFrom()].getPiece() == Piece.PAWN && Math.abs(move.getFrom() - move.getTo()) == 20) {
-                this.enPassantField = BoardCoordinates.getBoardCoordinatesByIdx(move.getTo() + (colorToMove.getCalculationModificator() * 10) * -1);
+            if (fields[move.getFrom().getIdx()].getPiece() == Piece.PAWN && Math.abs(move.getFrom().getIdx() - move.getTo().getIdx()) == 20) {
+                this.enPassantField = BoardCoordinates.getBoardCoordinatesByIdx(move.getTo().getIdx() + (colorToMove.getCalculationModificator() * 10) * -1);
             } else {
                 this.enPassantField = null;
             }
 
             // Move piece
-            movePiece(move.getFrom(), move.getTo());
+            movePiece(move.getFrom().getIdx(), move.getTo().getIdx());
 
         }
 

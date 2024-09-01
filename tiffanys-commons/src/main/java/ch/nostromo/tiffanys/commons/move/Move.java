@@ -1,5 +1,6 @@
 package ch.nostromo.tiffanys.commons.move;
 
+import ch.nostromo.tiffanys.commons.board.BoardCoordinates;
 import ch.nostromo.tiffanys.commons.board.BoardUtil;
 import ch.nostromo.tiffanys.commons.enums.Castling;
 import ch.nostromo.tiffanys.commons.enums.Piece;
@@ -8,17 +9,22 @@ import lombok.Data;
 @Data
 public class Move {
 
-    private int from;
-    private int to;
+    private BoardCoordinates from;
+    private BoardCoordinates to;
 
     private Piece promotion = null;
     private Castling castling = null;
 
     MoveAttributes moveAttributes = null;
 
-    public Move(int from, int to) {
+    public Move(BoardCoordinates from, BoardCoordinates to) {
         this.from = from;
         this.to = to;
+    }
+
+
+    public Move(int from, int to) {
+        this(BoardCoordinates.getBoardCoordinatesByIdx(from), BoardCoordinates.getBoardCoordinatesByIdx(to));
     }
 
     public Move(int from, int to, Piece promotion) {
@@ -40,11 +46,11 @@ public class Move {
     }
 
     public String getFromCoord() {
-        return BoardUtil.fieldToCoord(from);
+        return from.name().toLowerCase();
     }
 
     public String getToCoord() {
-        return BoardUtil.fieldToCoord(to);
+        return to.name().toLowerCase();
     }
 
     public boolean isPromotion() {
@@ -68,12 +74,10 @@ public class Move {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((castling == null) ? 0 : castling.hashCode());
-        result = prime * result + from;
-        result = prime * result + ((promotion == null) ? 0 : promotion.hashCode());
-        result = prime * result + to;
+        int result = from != null ? from.hashCode() : 0;
+        result = 31 * result + (to != null ? to.hashCode() : 0);
+        result = 31 * result + (promotion != null ? promotion.hashCode() : 0);
+        result = 31 * result + (castling != null ? castling.hashCode() : 0);
         return result;
     }
 
