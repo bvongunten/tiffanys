@@ -1,6 +1,7 @@
 package ch.nostromo.tiffanys.commons.pieces;
 
 import ch.nostromo.tiffanys.commons.board.Board;
+import ch.nostromo.tiffanys.commons.board.BoardCoordinates;
 import ch.nostromo.tiffanys.commons.enums.Direction;
 import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.enums.Piece;
@@ -28,7 +29,7 @@ public abstract class AbstractPiece {
 
     public static void checkAndAddPossibleFreeOrHitMove(Board board, List<Move> moveList, int fromField, int toField, GameColor colorToMove) {
         if (!board.isVoid(toField) && (!board.containsPiece(toField) || !board.getPieceColor(toField).equals(colorToMove))) {
-            moveList.add(new Move(fromField, toField));
+            moveList.add(new Move(BoardCoordinates.byIdx(fromField), BoardCoordinates.byIdx(toField)));
         }
     }
 
@@ -111,10 +112,10 @@ public abstract class AbstractPiece {
             if (board.isVoid(toField)) {
                 exit = true;
             } else if (!board.containsPiece(toField)) {
-                moveList.add(new Move(startPosition, toField));
+                moveList.add(new Move(BoardCoordinates.byIdx(startPosition), BoardCoordinates.byIdx(toField)));
                 counter++;
             } else if (board.containsPiece(toField) && board.getPieceColor(toField) != colorToMove) {
-                moveList.add(new Move(startPosition, toField));
+                moveList.add(new Move(BoardCoordinates.byIdx(startPosition), BoardCoordinates.byIdx(toField)));
                 counter++;
                 exit = true;
             } else if (board.containsPiece(toField) && board.getPieceColor(toField) == colorToMove) {

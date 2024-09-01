@@ -113,7 +113,7 @@ public class Board implements Cloneable {
         // Ep field
         String epField = fenFormat.getEnPassant();
         if (!epField.equals("-")) {
-            this.enPassantField = BoardCoordinates.getBoardCoordinatesByIdx(BoardUtil.coordToField(epField));
+            this.enPassantField = BoardCoordinates.byIdx(BoardUtil.coordToField(epField));
         } else {
             this.enPassantField = null;
         }
@@ -348,7 +348,7 @@ public class Board implements Cloneable {
 
             // En Passant field to be set?
             if (fields[move.getFrom().getIdx()].getPiece() == Piece.PAWN && Math.abs(move.getFrom().getIdx() - move.getTo().getIdx()) == 20) {
-                this.enPassantField = BoardCoordinates.getBoardCoordinatesByIdx(move.getTo().getIdx() + (colorToMove.getCalculationModificator() * 10) * -1);
+                this.enPassantField = BoardCoordinates.byIdx(move.getTo().getIdx() + (colorToMove.getCalculationModificator() * 10) * -1);
             } else {
                 this.enPassantField = null;
             }

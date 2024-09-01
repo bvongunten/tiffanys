@@ -63,10 +63,10 @@ public class OpeningBook {
                     Castling castling = Castling.valueOf(nextMove);
                     return new Move(castling);
                 } else if (tokenz.length == 2) {
-                    return new Move(BoardCoordinates.getBoardCoordinatesByName(tokenz[0]), BoardCoordinates.getBoardCoordinatesByName(tokenz[1]));
+                    return new Move(BoardCoordinates.byName(tokenz[0]), BoardCoordinates.byName(tokenz[1]));
                 } else if (tokenz.length == 3) {
                     Piece p = Piece.valueOf(tokenz[2]);
-                    return new Move(BoardCoordinates.getBoardCoordinatesByName(tokenz[1]), BoardCoordinates.getBoardCoordinatesByName(tokenz[2]), p);
+                    return new Move(BoardCoordinates.byName(tokenz[1]), BoardCoordinates.byName(tokenz[2]), p);
                 }
             }
         }

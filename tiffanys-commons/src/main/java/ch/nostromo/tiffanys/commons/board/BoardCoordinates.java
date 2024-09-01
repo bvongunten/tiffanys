@@ -20,7 +20,7 @@ public enum BoardCoordinates {
 
     private final int idx;
 
-    public static BoardCoordinates getBoardCoordinatesByIdx(int idx) {
+    public static BoardCoordinates byIdx(int idx) {
         for (BoardCoordinates coordinates : BoardCoordinates.values()) {
             if (coordinates.idx == idx) {
                 return coordinates;
@@ -30,7 +30,7 @@ public enum BoardCoordinates {
 
     }
 
-    public static BoardCoordinates getBoardCoordinatesByName(String name) {
+    public static BoardCoordinates byName(String name) {
         for (BoardCoordinates coordinates : BoardCoordinates.values()) {
             if (coordinates.name().equalsIgnoreCase(name)) {
                 return coordinates;

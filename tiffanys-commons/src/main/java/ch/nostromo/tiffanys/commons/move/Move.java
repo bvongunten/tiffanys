@@ -1,7 +1,6 @@
 package ch.nostromo.tiffanys.commons.move;
 
 import ch.nostromo.tiffanys.commons.board.BoardCoordinates;
-import ch.nostromo.tiffanys.commons.board.BoardUtil;
 import ch.nostromo.tiffanys.commons.enums.Castling;
 import ch.nostromo.tiffanys.commons.enums.Piece;
 import lombok.Data;
@@ -9,8 +8,8 @@ import lombok.Data;
 @Data
 public class Move {
 
-    private BoardCoordinates from;
-    private BoardCoordinates to;
+    private BoardCoordinates from = null;
+    private BoardCoordinates to = null;
 
     private Piece promotion = null;
     private Castling castling = null;
@@ -22,30 +21,10 @@ public class Move {
         this.to = to;
     }
 
-
     public Move(BoardCoordinates from, BoardCoordinates to, Piece promotion) {
         this(from, to);
         this.promotion = promotion;
     }
-
-
-    public Move(int from, int to) {
-        this(BoardCoordinates.getBoardCoordinatesByIdx(from), BoardCoordinates.getBoardCoordinatesByIdx(to));
-    }
-
-    public Move(int from, int to, Piece promotion) {
-        this(from, to);
-        this.promotion = promotion;
-    }
-//
-//    public Move(String from, String to) {
-//        this(BoardUtil.coordToField(from), BoardUtil.coordToField(to));
-//    }
-//
-//    public Move(String from, String to, Piece promotion) {
-//        this(BoardUtil.coordToField(from), BoardUtil.coordToField(to));
-//        this.promotion = promotion;
-//    }
 
     public Move(Castling castling) {
         this.castling = castling;

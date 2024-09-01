@@ -31,8 +31,8 @@ public class UciMoveTranslator {
         String froms = move.substring(0, 2);
         String tos = move.substring(2, 4);
 
-        BoardCoordinates from = BoardCoordinates.getBoardCoordinatesByName(froms);
-        BoardCoordinates to = BoardCoordinates.getBoardCoordinatesByName(tos);
+        BoardCoordinates from = BoardCoordinates.byName(froms);
+        BoardCoordinates to = BoardCoordinates.byName(tos);
 
 
 
