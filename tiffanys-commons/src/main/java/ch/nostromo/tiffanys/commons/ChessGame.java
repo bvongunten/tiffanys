@@ -39,23 +39,18 @@ public class ChessGame {
 
     FenFormat initialFen;
 
-    boolean eligibleForOB = false;
 
     public ChessGame() {
-        this(new ChessGameInfo(), new FenFormat(FenFormat.INITIAL_BOARD));
+        this(new ChessGameInfo());
     }
 
     public ChessGame(ChessGameInfo gameInfo) {
-        this(gameInfo, new FenFormat(FenFormat.INITIAL_BOARD));
+        this(gameInfo, FenFormat.START_FEN);
     }
 
     public ChessGame(ChessGameInfo gameInfo, FenFormat fenFormat) {
         this.gameInfo = gameInfo;
         this.initialFen = fenFormat;
-
-        if (fenFormat.toString().equalsIgnoreCase(FenFormat.INITIAL_BOARD)) {
-            this.eligibleForOB = true;
-        }
 
         historyBoards.add(new Board(fenFormat));
 

@@ -4,12 +4,15 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Objects;
 import java.util.StringTokenizer;
 
 @Data
 public class FenFormat {
-
     public static final String INITIAL_BOARD = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+
+    public static final FenFormat START_FEN = new FenFormat(INITIAL_BOARD);
+
 
     protected String position;
     protected String colorToMove;
@@ -42,5 +45,31 @@ public class FenFormat {
         return position + " " + colorToMove + " " + castling + " " + enPassant + " " + halfMoveClock + " " + moveNr;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        FenFormat fenFormat = (FenFormat) o;
+
+        if (!Objects.equals(position, fenFormat.position)) return false;
+        if (!Objects.equals(colorToMove, fenFormat.colorToMove))
+            return false;
+        if (!Objects.equals(castling, fenFormat.castling)) return false;
+        if (!Objects.equals(enPassant, fenFormat.enPassant)) return false;
+        if (!Objects.equals(halfMoveClock, fenFormat.halfMoveClock))
+            return false;
+        return Objects.equals(moveNr, fenFormat.moveNr);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = position != null ? position.hashCode() : 0;
+        result = 31 * result + (colorToMove != null ? colorToMove.hashCode() : 0);
+        result = 31 * result + (castling != null ? castling.hashCode() : 0);
+        result = 31 * result + (enPassant != null ? enPassant.hashCode() : 0);
+        result = 31 * result + (halfMoveClock != null ? halfMoveClock.hashCode() : 0);
+        result = 31 * result + (moveNr != null ? moveNr.hashCode() : 0);
+        return result;
+    }
 }

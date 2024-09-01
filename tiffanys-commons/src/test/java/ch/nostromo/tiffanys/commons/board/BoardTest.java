@@ -107,7 +107,7 @@ public class BoardTest extends TestHelper {
         assertTrue(board.castlingBlackShortAllowed);
         assertTrue(board.castlingWhiteLongAllowed);
         assertTrue(board.castlingWhiteShortAllowed);
-        assertEquals(board.enPassantField, BoardCoordinates.UNDEF);
+        assertEquals(board.enPassantField, null);
     }
 
     @Test
@@ -151,7 +151,7 @@ public class BoardTest extends TestHelper {
         assertFalse(board.castlingWhiteLongAllowed);
         assertFalse(board.castlingWhiteShortAllowed);
 
-        assertEquals(board.enPassantField, BoardCoordinates.UNDEF);
+        assertEquals(board.enPassantField, null);
     }
 
     @Test
@@ -175,7 +175,7 @@ public class BoardTest extends TestHelper {
         assertTrue(board.castlingWhiteLongAllowed);
         assertTrue(board.castlingWhiteShortAllowed);
 
-        assertEquals(board.enPassantField, BoardCoordinates.UNDEF);
+        assertEquals(board.enPassantField, null);
     }
 
     @Test
@@ -200,7 +200,7 @@ public class BoardTest extends TestHelper {
         assertFalse(board.castlingWhiteLongAllowed);
         assertFalse(board.castlingWhiteShortAllowed);
 
-        assertEquals(board.enPassantField, BoardCoordinates.UNDEF);
+        assertEquals(board.enPassantField, null);
     }
 
     @Test
@@ -225,7 +225,7 @@ public class BoardTest extends TestHelper {
         assertTrue(board.castlingWhiteLongAllowed);
         assertTrue(board.castlingWhiteShortAllowed);
 
-        assertEquals(board.enPassantField, BoardCoordinates.UNDEF);
+        assertEquals(board.enPassantField, null);
     }
 
     @Test
@@ -250,7 +250,7 @@ public class BoardTest extends TestHelper {
         assertFalse(board.castlingWhiteLongAllowed);
         assertFalse(board.castlingWhiteShortAllowed);
 
-        assertEquals(board.enPassantField, BoardCoordinates.UNDEF);
+        assertEquals(board.enPassantField, null);
     }
 
     @Test
@@ -275,7 +275,7 @@ public class BoardTest extends TestHelper {
         assertTrue(board.castlingWhiteLongAllowed);
         assertTrue(board.castlingWhiteShortAllowed);
 
-        assertEquals(board.enPassantField, BoardCoordinates.UNDEF);
+        assertEquals(board.enPassantField, null);
     }
 
     @Test

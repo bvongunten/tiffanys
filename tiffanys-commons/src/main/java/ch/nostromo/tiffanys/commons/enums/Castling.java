@@ -1,28 +1,31 @@
 package ch.nostromo.tiffanys.commons.enums;
 
-import lombok.Data;
+import ch.nostromo.tiffanys.commons.board.BoardCoordinates;
 import lombok.Getter;
+
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.*;
+
 
 @Getter
 public enum Castling {
 
     // @formatter:off
-    WHITE_LONG(GameColor.WHITE, 25, 23, 21, 24, new int[] { 22, 23, 24 }, new int[] { 23, 24, 25 }, "O-O-O"),
-    WHITE_SHORT(GameColor.WHITE, 25, 27, 28, 26, new int[] { 26, 27 }, new int[] { 25, 26, 27 }, "O-O"),
-    BLACK_LONG(GameColor.BLACK, 95, 93, 91, 94, new int[] { 92, 93, 94 }, new int[] { 93, 94, 95 }, "O-O-O"),
-    BLACK_SHORT(GameColor.BLACK, 95, 97, 98, 96, new int[] { 96, 97 }, new int[] { 95, 96, 97 }, "O-O");
+    WHITE_LONG(GameColor.WHITE, E1, C1, A1, D1, new BoardCoordinates[] { B1, C1, D1 }, new BoardCoordinates[] { C1, D1 , E1 }, "O-O-O"),
+    WHITE_SHORT(GameColor.WHITE, E1, G1, H1, F1, new BoardCoordinates[] { F1, G1 }, new BoardCoordinates[] { E1, F1, G1 }, "O-O"),
+    BLACK_LONG(GameColor.BLACK, E8, C8, A8, D8, new BoardCoordinates[] { B8, C8, D8 }, new BoardCoordinates[] { C8, D8, E8 }, "O-O-O"),
+    BLACK_SHORT(GameColor.BLACK, E8, G8, H8, F8, new BoardCoordinates[] { F8, G8 }, new BoardCoordinates[] { E8, F8, G8 }, "O-O");
     // @formatter:on
 
     private GameColor colorToMove;
-    private final int fromRook;
-    private final int toRook;
-    private final int fromKing;
-    private final int toKing;
-    private final int[] mustBeEmpty;
-    private final int[] mustNotBeCheck;
+    private final BoardCoordinates fromRook;
+    private final BoardCoordinates toRook;
+    private final BoardCoordinates fromKing;
+    private final BoardCoordinates toKing;
+    private final BoardCoordinates[] mustBeEmpty;
+    private final BoardCoordinates[] mustNotBeCheck;
     private String annotation;
 
-    private Castling(GameColor colorToMove, int fromKing, int toKing, int fromRook, int toRook, int[] mustBeEmpty, int[] mustNotBeCheck, String annotation) {
+    private Castling(GameColor colorToMove, BoardCoordinates fromKing, BoardCoordinates toKing, BoardCoordinates fromRook, BoardCoordinates toRook, BoardCoordinates[] mustBeEmpty, BoardCoordinates[] mustNotBeCheck, String annotation) {
         this.colorToMove = colorToMove;
         this.fromKing = fromKing;
         this.toKing = toKing;

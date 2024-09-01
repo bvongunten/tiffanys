@@ -8,7 +8,6 @@ import lombok.Getter;
 public enum BoardCoordinates {
 
     // @formatter:off
-    UNDEF(Integer.MIN_VALUE),
     A8(91),  B8(92),  C8(93),  D8(94),  E8(95),  F8(96),  G8(97),  H8(98),
     A7(81),  B7(82),  C7(83),  D7(84),  E7(85),  F7(86),  G7(87),  H7(88),
     A6(71),  B6(72),  C6(73),  D6(74),  E6(75),  F6(76),  G6(77),  H6(78),
@@ -19,15 +18,11 @@ public enum BoardCoordinates {
     A1(21),  B1(22),  C1(23),  D1(24),  E1(25),  F1(26),  G1(27),  H1(28);
     // @formatter:on
 
-    private final int position;
-
-    public static BoardCoordinates getCoordinatesByString(String coord) {
-        return BoardCoordinates.valueOf(coord.toUpperCase());
-    }
+    private final int idx;
 
     public static BoardCoordinates getBoardCoordinatesByIdx(int idx) {
         for (BoardCoordinates coordinates : BoardCoordinates.values()) {
-            if (coordinates.position == idx) {
+            if (coordinates.idx == idx) {
                 return coordinates;
             }
         }
@@ -35,13 +30,13 @@ public enum BoardCoordinates {
 
     }
 
-    public static String getCoordByPosition(int position) {
+    public static String getNameByIdx(int idx) {
         for (BoardCoordinates field : BoardCoordinates.values()) {
-            if (field.position == position) {
-                return field.name().toLowerCase();
+            if (field.idx == idx) {
+                return field.name();
             }
         }
-        throw new IllegalArgumentException("Unknown position: " + position);
+        throw new IllegalArgumentException("Unknown idx: " + idx);
     }
 
 

@@ -51,8 +51,10 @@ public class Pawn extends AbstractPiece {
         }
 
         // also for enpassant
-        if (toField == board.getEnPassantField().getPosition()) {
-            moves.add(new Move(startPos, toField));
+        if (board.getEnPassantField() != null) {
+            if (toField == board.getEnPassantField().getIdx()) {
+                moves.add(new Move(startPos, toField));
+            }
         }
 
         // hit Moves to the other side
@@ -60,10 +62,12 @@ public class Pawn extends AbstractPiece {
         if (!board.isVoid(toField) && board.containsPiece(toField) && !board.getPieceColor(toField).equals(colorToMove)) {
             createMoves(moves, startPos, toField);
         }
-        // also for enpassant
-        if (toField == board.getEnPassantField().getPosition()) {
-            moves.add(new Move(startPos, toField));
-        }
 
+        // also for enpassant
+        if (board.getEnPassantField() != null) {
+            if (toField == board.getEnPassantField().getIdx()) {
+                moves.add(new Move(startPos, toField));
+            }
+        }
     }
 }
