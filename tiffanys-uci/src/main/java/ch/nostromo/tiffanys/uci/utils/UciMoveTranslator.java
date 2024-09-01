@@ -1,6 +1,7 @@
 package ch.nostromo.tiffanys.uci.utils;
 
 import ch.nostromo.tiffanys.commons.board.Board;
+import ch.nostromo.tiffanys.commons.board.BoardCoordinates;
 import ch.nostromo.tiffanys.commons.board.BoardUtil;
 import ch.nostromo.tiffanys.commons.enums.Castling;
 import ch.nostromo.tiffanys.commons.enums.Piece;
@@ -16,8 +17,8 @@ public class UciMoveTranslator {
             result = BoardUtil.fieldToCoord(move.getCastling().getFromKing().getIdx());
             result += BoardUtil.fieldToCoord(move.getCastling().getToKing().getIdx());
         } else {
-            result = move.getFromCoord();
-            result += move.getToCoord();
+            result = move.getFrom().name().toLowerCase();
+            result += move.getTo().name().toLowerCase();
             if (move.isPromotion()) {
                 result += move.getPromotion().getCharCode();
             }
@@ -30,12 +31,17 @@ public class UciMoveTranslator {
         String froms = move.substring(0, 2);
         String tos = move.substring(2, 4);
 
+        BoardCoordinates from = BoardCoordinates.getBoardCoordinatesByName(froms);
+        BoardCoordinates to = BoardCoordinates.getBoardCoordinatesByName(tos);
+
+
+
         Move toMove;
         if (move.length() > 4) {
             Piece pieceCode = Piece.getPieceByCharCode(move.substring(4));
-            toMove = new Move(froms, tos, pieceCode);
+            toMove = new Move(from, to, pieceCode);
         } else {
-            toMove = new Move(froms, tos);
+            toMove = new Move(from, to);
         }
 
         Castling castling = isUciCastling(board, toMove);

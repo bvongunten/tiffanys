@@ -12,9 +12,9 @@ public class MoveTranslator {
         } else if (Castling.WHITE_SHORT.equals(move.getCastling()) || Castling.BLACK_SHORT.equals(move.getCastling())) {
             result = "O-O";
         } else {
-            result = move.getFromCoord();
+            result = move.getFrom().name().toLowerCase();
             result += "-";
-            result += move.getToCoord();
+            result += move.getTo().name().toLowerCase();
             if (move.isPromotion()) {
                 result += move.getPromotion().getCharCode();
             }

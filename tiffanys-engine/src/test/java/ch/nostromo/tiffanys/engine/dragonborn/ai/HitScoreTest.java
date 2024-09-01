@@ -9,6 +9,8 @@ import ch.nostromo.tiffanys.engine.dragonborn.board.RobustBoard;
 import ch.nostromo.tiffanys.engine.dragonborn.move.EngineMove;
 import org.junit.Test;
 
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E6;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F7;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -25,7 +27,7 @@ public class HitScoreTest {
         RobustBoard tiffBoard = new RobustBoard(board, GameColor.WHITE);
         EngineMove[] legalMoves = tiffBoard.generateLegalMovesList();
 
-        EngineMove qxp = getMoveInList(legalMoves, new Move("e6", "f7"), GameColor.WHITE);
+        EngineMove qxp = getMoveInList(legalMoves, new Move(E6, F7), GameColor.WHITE);
 
         assertEquals(300, qxp.hitScore);
 
@@ -42,7 +44,7 @@ public class HitScoreTest {
         RobustBoard tiffBoard = new RobustBoard(board, GameColor.BLACK);
         EngineMove[] legalMoves = tiffBoard.generateLegalMovesList();
 
-        EngineMove qxp = getMoveInList(legalMoves, new Move("f7", "e6"), GameColor.BLACK);
+        EngineMove qxp = getMoveInList(legalMoves, new Move(F7, E6), GameColor.BLACK);
 
         assertEquals(1700, qxp.hitScore);
 

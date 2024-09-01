@@ -1,16 +1,21 @@
 package ch.nostromo.tiffanys.commons.move;
 
+import ch.nostromo.tiffanys.commons.board.BoardCoordinates;
 import ch.nostromo.tiffanys.commons.enums.Castling;
 import ch.nostromo.tiffanys.commons.enums.Piece;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.A1;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.B1;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 public class MoveTest {
 
     @Test
     public void testSimpleMoveByCoord() {
-        Move move = new Move("a1", "b1");
+        Move move = new Move(A1, B1);
 
         assertEquals(move.getFrom().getIdx(), 21);
         assertEquals(move.getTo().getIdx(), 22);
@@ -20,13 +25,13 @@ public class MoveTest {
     public void testSimpleMoveByField() {
         Move move = new Move(21, 22);
 
-        assertEquals(move.getFromCoord(), "a1");
-        assertEquals(move.getToCoord(), "b1");
+        assertEquals(move.getFrom(), A1);
+        assertEquals(move.getTo(), BoardCoordinates.B1);
     }
 
     @Test
     public void testSimplePromotionByCoord() {
-        Move move = new Move("a1", "b1", Piece.KING);
+        Move move = new Move(A1, B1, Piece.KING);
 
         assertEquals(move.getFrom().getIdx(), 21);
         assertEquals(move.getTo().getIdx(), 22);
@@ -39,8 +44,8 @@ public class MoveTest {
     public void testSimplePromotionByField() {
         Move move = new Move(21, 22, Piece.KING);
 
-        assertEquals(move.getFromCoord(), "a1");
-        assertEquals(move.getToCoord(), "b1");
+        assertEquals(move.getFrom(), A1);
+        assertEquals(move.getTo(), B1);
         assertEquals(move.getPromotion(), Piece.KING);
 
         assertTrue(move.isPromotion());
@@ -75,15 +80,15 @@ public class MoveTest {
         assertEquals(castling1, castling1b);
         assertNotEquals(castling1, castling2);
 
-        Move moveNormal1 = new Move("a1", "b1");
+        Move moveNormal1 = new Move(A1, B1);
         Move moveNormal2 = new Move(21, 22);
         assertEquals(moveNormal1, moveNormal2);
 
-        Move moveEp1 = new Move("a1", "b1");
+        Move moveEp1 = new Move(A1, B1);
         Move moveEp2 = new Move(21, 22);
         assertEquals(moveEp1, moveEp2);
 
-        Move movePromotion1 = new Move("a1", "b1", Piece.KING);
+        Move movePromotion1 = new Move(A1, B1, Piece.KING);
         Move movePromotion2 = new Move(21, 22, Piece.KING);
         assertEquals(movePromotion1, movePromotion2);
 

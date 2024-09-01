@@ -12,6 +12,28 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C5;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D1;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D2;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D5;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D7;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D8;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E1;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E2;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E5;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E7;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E8;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F1;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F2;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F7;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F8;
+
 public class KingTest extends TestHelper {
 
     @Test
@@ -22,14 +44,14 @@ public class KingTest extends TestHelper {
         List<Move> moves = new ArrayList<Move>();
         Piece.KING.addPseudoLegalMoves(board, moves, 54, GameColor.WHITE);
 
-        this.checkAndDeleteMove(moves, new Move("D4", "C3"));
-        this.checkAndDeleteMove(moves, new Move("D4", "D3"));
-        this.checkAndDeleteMove(moves, new Move("D4", "E3"));
-        this.checkAndDeleteMove(moves, new Move("D4", "C4"));
-        this.checkAndDeleteMove(moves, new Move("D4", "E4"));
-        this.checkAndDeleteMove(moves, new Move("D4", "C5"));
-        this.checkAndDeleteMove(moves, new Move("D4", "D5"));
-        this.checkAndDeleteMove(moves, new Move("D4", "E5"));
+        this.checkAndDeleteMove(moves, new Move(D4, C3));
+        this.checkAndDeleteMove(moves, new Move(D4, D3));
+        this.checkAndDeleteMove(moves, new Move(D4, E3));
+        this.checkAndDeleteMove(moves, new Move(D4, C4));
+        this.checkAndDeleteMove(moves, new Move(D4, E4));
+        this.checkAndDeleteMove(moves, new Move(D4, C5));
+        this.checkAndDeleteMove(moves, new Move(D4, D5));
+        this.checkAndDeleteMove(moves, new Move(D4, E5));
 
         this.checkRemainingMoves(moves);
     }
@@ -42,14 +64,14 @@ public class KingTest extends TestHelper {
         List<Move> moves = new ArrayList<Move>();
         Piece.KING.addPseudoLegalMoves(board, moves, 54, GameColor.WHITE);
 
-        this.checkAndDeleteMove(moves, new Move("D4", "C3"));
-        this.checkAndDeleteMove(moves, new Move("D4", "D3"));
-        this.checkAndDeleteMove(moves, new Move("D4", "E3"));
-        this.checkAndDeleteMove(moves, new Move("D4", "C4"));
-        this.checkAndDeleteMove(moves, new Move("D4", "E4"));
-        this.checkAndDeleteMove(moves, new Move("D4", "C5"));
-        this.checkAndDeleteMove(moves, new Move("D4", "D5"));
-        this.checkAndDeleteMove(moves, new Move("D4", "E5"));
+        this.checkAndDeleteMove(moves, new Move(D4, C3));
+        this.checkAndDeleteMove(moves, new Move(D4, D3));
+        this.checkAndDeleteMove(moves, new Move(D4, E3));
+        this.checkAndDeleteMove(moves, new Move(D4, C4));
+        this.checkAndDeleteMove(moves, new Move(D4, E4));
+        this.checkAndDeleteMove(moves, new Move(D4, C5));
+        this.checkAndDeleteMove(moves, new Move(D4, D5));
+        this.checkAndDeleteMove(moves, new Move(D4, E5));
 
         this.checkRemainingMoves(moves);
     }
@@ -73,22 +95,22 @@ public class KingTest extends TestHelper {
         Piece.KING.addPseudoLegalMoves(board, whiteMoves, 25, GameColor.WHITE);
         this.checkAndDeleteMove(whiteMoves, new Move(Castling.WHITE_LONG));
         this.checkAndDeleteMove(whiteMoves, new Move(Castling.WHITE_SHORT));
-        this.checkAndDeleteMove(whiteMoves, new Move("E1", "D1"));
-        this.checkAndDeleteMove(whiteMoves, new Move("E1", "D2"));
-        this.checkAndDeleteMove(whiteMoves, new Move("E1", "E2"));
-        this.checkAndDeleteMove(whiteMoves, new Move("E1", "F2"));
-        this.checkAndDeleteMove(whiteMoves, new Move("E1", "F1"));
+        this.checkAndDeleteMove(whiteMoves, new Move(E1, D1));
+        this.checkAndDeleteMove(whiteMoves, new Move(E1, D2));
+        this.checkAndDeleteMove(whiteMoves, new Move(E1, E2));
+        this.checkAndDeleteMove(whiteMoves, new Move(E1, F2));
+        this.checkAndDeleteMove(whiteMoves, new Move(E1, F1));
         this.checkRemainingMoves(whiteMoves);
 
         List<Move> blackMoves = new ArrayList<Move>();
         Piece.KING.addPseudoLegalMoves(board, blackMoves, 95, GameColor.BLACK);
         this.checkAndDeleteMove(blackMoves, new Move(Castling.BLACK_LONG));
         this.checkAndDeleteMove(blackMoves, new Move(Castling.BLACK_SHORT));
-        this.checkAndDeleteMove(blackMoves, new Move("E8", "D8"));
-        this.checkAndDeleteMove(blackMoves, new Move("E8", "D7"));
-        this.checkAndDeleteMove(blackMoves, new Move("E8", "E7"));
-        this.checkAndDeleteMove(blackMoves, new Move("E8", "F7"));
-        this.checkAndDeleteMove(blackMoves, new Move("E8", "F8"));
+        this.checkAndDeleteMove(blackMoves, new Move(E8, D8));
+        this.checkAndDeleteMove(blackMoves, new Move(E8, D7));
+        this.checkAndDeleteMove(blackMoves, new Move(E8, E7));
+        this.checkAndDeleteMove(blackMoves, new Move(E8, F7));
+        this.checkAndDeleteMove(blackMoves, new Move(E8, F8));
         this.checkRemainingMoves(blackMoves);
     }
 
@@ -99,20 +121,20 @@ public class KingTest extends TestHelper {
 
         List<Move> whiteMoves = new ArrayList<Move>();
         Piece.KING.addPseudoLegalMoves(board, whiteMoves, 25, GameColor.WHITE);
-        this.checkAndDeleteMove(whiteMoves, new Move("E1", "D1"));
-        this.checkAndDeleteMove(whiteMoves, new Move("E1", "D2"));
-        this.checkAndDeleteMove(whiteMoves, new Move("E1", "E2"));
-        this.checkAndDeleteMove(whiteMoves, new Move("E1", "F2"));
-        this.checkAndDeleteMove(whiteMoves, new Move("E1", "F1"));
+        this.checkAndDeleteMove(whiteMoves, new Move(E1, D1));
+        this.checkAndDeleteMove(whiteMoves, new Move(E1, D2));
+        this.checkAndDeleteMove(whiteMoves, new Move(E1, E2));
+        this.checkAndDeleteMove(whiteMoves, new Move(E1, F2));
+        this.checkAndDeleteMove(whiteMoves, new Move(E1, F1));
         this.checkRemainingMoves(whiteMoves);
 
         List<Move> blackMoves = new ArrayList<Move>();
         Piece.KING.addPseudoLegalMoves(board, blackMoves, 95, GameColor.BLACK);
-        this.checkAndDeleteMove(blackMoves, new Move("E8", "D8"));
-        this.checkAndDeleteMove(blackMoves, new Move("E8", "D7"));
-        this.checkAndDeleteMove(blackMoves, new Move("E8", "E7"));
-        this.checkAndDeleteMove(blackMoves, new Move("E8", "F7"));
-        this.checkAndDeleteMove(blackMoves, new Move("E8", "F8"));
+        this.checkAndDeleteMove(blackMoves, new Move(E8, D8));
+        this.checkAndDeleteMove(blackMoves, new Move(E8, D7));
+        this.checkAndDeleteMove(blackMoves, new Move(E8, E7));
+        this.checkAndDeleteMove(blackMoves, new Move(E8, F7));
+        this.checkAndDeleteMove(blackMoves, new Move(E8, F8));
         this.checkRemainingMoves(blackMoves);
     }
 
@@ -123,21 +145,21 @@ public class KingTest extends TestHelper {
         List<Move> whiteMoves = new ArrayList<Move>();
 
         Piece.KING.addPseudoLegalMoves(board, whiteMoves, 25, GameColor.WHITE);
-        this.checkAndDeleteMove(whiteMoves, new Move("E1", "D1"));
-        this.checkAndDeleteMove(whiteMoves, new Move("E1", "D2"));
-        this.checkAndDeleteMove(whiteMoves, new Move("E1", "E2"));
-        this.checkAndDeleteMove(whiteMoves, new Move("E1", "F2"));
-        this.checkAndDeleteMove(whiteMoves, new Move("E1", "F1"));
+        this.checkAndDeleteMove(whiteMoves, new Move(E1, D1));
+        this.checkAndDeleteMove(whiteMoves, new Move(E1, D2));
+        this.checkAndDeleteMove(whiteMoves, new Move(E1, E2));
+        this.checkAndDeleteMove(whiteMoves, new Move(E1, F2));
+        this.checkAndDeleteMove(whiteMoves, new Move(E1, F1));
         this.checkRemainingMoves(whiteMoves);
 
         List<Move> blackMoves = new ArrayList<Move>();
 
         Piece.KING.addPseudoLegalMoves(board, blackMoves, 95, GameColor.BLACK);
-        this.checkAndDeleteMove(blackMoves, new Move("E8", "D8"));
-        this.checkAndDeleteMove(blackMoves, new Move("E8", "D7"));
-        this.checkAndDeleteMove(blackMoves, new Move("E8", "E7"));
-        this.checkAndDeleteMove(blackMoves, new Move("E8", "F7"));
-        this.checkAndDeleteMove(blackMoves, new Move("E8", "F8"));
+        this.checkAndDeleteMove(blackMoves, new Move(E8, D8));
+        this.checkAndDeleteMove(blackMoves, new Move(E8, D7));
+        this.checkAndDeleteMove(blackMoves, new Move(E8, E7));
+        this.checkAndDeleteMove(blackMoves, new Move(E8, F7));
+        this.checkAndDeleteMove(blackMoves, new Move(E8, F8));
         this.checkRemainingMoves(blackMoves);
     }
 
@@ -148,20 +170,20 @@ public class KingTest extends TestHelper {
 
         List<Move> whiteMoves = new ArrayList<Move>();
         Piece.KING.addPseudoLegalMoves(board, whiteMoves, 25, GameColor.WHITE);
-        this.checkAndDeleteMove(whiteMoves, new Move("E1", "D1"));
-        this.checkAndDeleteMove(whiteMoves, new Move("E1", "D2"));
-        this.checkAndDeleteMove(whiteMoves, new Move("E1", "E2"));
-        this.checkAndDeleteMove(whiteMoves, new Move("E1", "F2"));
-        this.checkAndDeleteMove(whiteMoves, new Move("E1", "F1"));
+        this.checkAndDeleteMove(whiteMoves, new Move(E1, D1));
+        this.checkAndDeleteMove(whiteMoves, new Move(E1, D2));
+        this.checkAndDeleteMove(whiteMoves, new Move(E1, E2));
+        this.checkAndDeleteMove(whiteMoves, new Move(E1, F2));
+        this.checkAndDeleteMove(whiteMoves, new Move(E1, F1));
         this.checkRemainingMoves(whiteMoves);
 
         List<Move> blackMoves = new ArrayList<Move>();
         Piece.KING.addPseudoLegalMoves(board, blackMoves, 95, GameColor.BLACK);
-        this.checkAndDeleteMove(blackMoves, new Move("E8", "D8"));
-        this.checkAndDeleteMove(blackMoves, new Move("E8", "D7"));
-        this.checkAndDeleteMove(blackMoves, new Move("E8", "E7"));
-        this.checkAndDeleteMove(blackMoves, new Move("E8", "F7"));
-        this.checkAndDeleteMove(blackMoves, new Move("E8", "F8"));
+        this.checkAndDeleteMove(blackMoves, new Move(E8, D8));
+        this.checkAndDeleteMove(blackMoves, new Move(E8, D7));
+        this.checkAndDeleteMove(blackMoves, new Move(E8, E7));
+        this.checkAndDeleteMove(blackMoves, new Move(E8, F7));
+        this.checkAndDeleteMove(blackMoves, new Move(E8, F8));
         this.checkRemainingMoves(blackMoves);
     }
 
@@ -172,20 +194,20 @@ public class KingTest extends TestHelper {
         List<Move> whiteMoves = new ArrayList<Move>();
 
         Piece.KING.addPseudoLegalMoves(board, whiteMoves, 25, GameColor.WHITE);
-        this.checkAndDeleteMove(whiteMoves, new Move("E1", "D1"));
-        this.checkAndDeleteMove(whiteMoves, new Move("E1", "D2"));
-        this.checkAndDeleteMove(whiteMoves, new Move("E1", "E2"));
-        this.checkAndDeleteMove(whiteMoves, new Move("E1", "F2"));
-        this.checkAndDeleteMove(whiteMoves, new Move("E1", "F1"));
+        this.checkAndDeleteMove(whiteMoves, new Move(E1, D1));
+        this.checkAndDeleteMove(whiteMoves, new Move(E1, D2));
+        this.checkAndDeleteMove(whiteMoves, new Move(E1, E2));
+        this.checkAndDeleteMove(whiteMoves, new Move(E1, F2));
+        this.checkAndDeleteMove(whiteMoves, new Move(E1, F1));
         this.checkRemainingMoves(whiteMoves);
 
         List<Move> blackMoves = new ArrayList<Move>();
         Piece.KING.addPseudoLegalMoves(board, blackMoves, 95, GameColor.BLACK);
-        this.checkAndDeleteMove(blackMoves, new Move("E8", "D8"));
-        this.checkAndDeleteMove(blackMoves, new Move("E8", "D7"));
-        this.checkAndDeleteMove(blackMoves, new Move("E8", "E7"));
-        this.checkAndDeleteMove(blackMoves, new Move("E8", "F7"));
-        this.checkAndDeleteMove(blackMoves, new Move("E8", "F8"));
+        this.checkAndDeleteMove(blackMoves, new Move(E8, D8));
+        this.checkAndDeleteMove(blackMoves, new Move(E8, D7));
+        this.checkAndDeleteMove(blackMoves, new Move(E8, E7));
+        this.checkAndDeleteMove(blackMoves, new Move(E8, F7));
+        this.checkAndDeleteMove(blackMoves, new Move(E8, F8));
         this.checkRemainingMoves(blackMoves);
     }
 
@@ -196,20 +218,20 @@ public class KingTest extends TestHelper {
         List<Move> whiteMoves = new ArrayList<Move>();
 
         Piece.KING.addPseudoLegalMoves(board, whiteMoves, 25, GameColor.WHITE);
-        this.checkAndDeleteMove(whiteMoves, new Move("E1", "D1"));
-        this.checkAndDeleteMove(whiteMoves, new Move("E1", "D2"));
-        this.checkAndDeleteMove(whiteMoves, new Move("E1", "E2"));
-        this.checkAndDeleteMove(whiteMoves, new Move("E1", "F2"));
-        this.checkAndDeleteMove(whiteMoves, new Move("E1", "F1"));
+        this.checkAndDeleteMove(whiteMoves, new Move(E1, D1));
+        this.checkAndDeleteMove(whiteMoves, new Move(E1, D2));
+        this.checkAndDeleteMove(whiteMoves, new Move(E1, E2));
+        this.checkAndDeleteMove(whiteMoves, new Move(E1, F2));
+        this.checkAndDeleteMove(whiteMoves, new Move(E1, F1));
         this.checkRemainingMoves(whiteMoves);
 
         List<Move> blackMoves = new ArrayList<Move>();
         Piece.KING.addPseudoLegalMoves(board, blackMoves, 95, GameColor.BLACK);
-        this.checkAndDeleteMove(blackMoves, new Move("E8", "D8"));
-        this.checkAndDeleteMove(blackMoves, new Move("E8", "D7"));
-        this.checkAndDeleteMove(blackMoves, new Move("E8", "E7"));
-        this.checkAndDeleteMove(blackMoves, new Move("E8", "F7"));
-        this.checkAndDeleteMove(blackMoves, new Move("E8", "F8"));
+        this.checkAndDeleteMove(blackMoves, new Move(E8, D8));
+        this.checkAndDeleteMove(blackMoves, new Move(E8, D7));
+        this.checkAndDeleteMove(blackMoves, new Move(E8, E7));
+        this.checkAndDeleteMove(blackMoves, new Move(E8, F7));
+        this.checkAndDeleteMove(blackMoves, new Move(E8, F8));
         this.checkRemainingMoves(blackMoves);
     }
 }

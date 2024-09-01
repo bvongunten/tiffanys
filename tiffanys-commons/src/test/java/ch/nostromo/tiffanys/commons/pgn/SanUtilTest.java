@@ -9,6 +9,18 @@ import ch.nostromo.tiffanys.commons.fen.FenFormat;
 import ch.nostromo.tiffanys.commons.move.Move;
 import org.junit.Test;
 
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.A3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.B1;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D2;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D5;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D7;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D8;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E2;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F7;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F8;
 import static org.junit.Assert.assertEquals;
 
 public class SanUtilTest extends TestHelper {
@@ -38,7 +50,7 @@ public class SanUtilTest extends TestHelper {
         FenFormat fen = new FenFormat("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
         Board board = new Board(fen);
 
-        Move move = new Move("e2", "e4");
+        Move move = new Move(E2, E4);
 
         assertEquals("e4", SanUtil.move2San(move, board, GameColor.WHITE));
     }
@@ -48,7 +60,7 @@ public class SanUtilTest extends TestHelper {
         FenFormat fen = new FenFormat("rnbqkbnr/ppp1pppp/8/3p4/2P1P3/8/PPP2PPP/RNBQKBNR w KQkq - 0 1");
         Board board = new Board(fen);
 
-        Move move = new Move("e4", "d5");
+        Move move = new Move(E4, D5);
 
         assertEquals("exd5", SanUtil.move2San(move, board, GameColor.WHITE));
     }
@@ -58,7 +70,7 @@ public class SanUtilTest extends TestHelper {
         FenFormat fen = new FenFormat("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
         Board board = new Board(fen);
 
-        Move move = new Move("b1", "c3");
+        Move move = new Move(B1, C3);
 
         assertEquals("Nc3", SanUtil.move2San(move, board, GameColor.WHITE));
     }
@@ -68,7 +80,7 @@ public class SanUtilTest extends TestHelper {
         FenFormat fen = new FenFormat("7k/8/3Q4/8/8/Q2b4/2QQ4/K7 w - - 0 1");
         Board board = new Board(fen);
 
-        Move move = new Move("d2", "d3");
+        Move move = new Move(D2, D3);
 
         assertEquals("Qd2xd3", SanUtil.move2San(move, board, GameColor.WHITE));
     }
@@ -78,7 +90,7 @@ public class SanUtilTest extends TestHelper {
         FenFormat fen = new FenFormat("7k/8/3Q4/8/8/3b4/3Q4/K7 w - - 0 1");
         Board board = new Board(fen);
 
-        Move move = new Move("d2", "d3");
+        Move move = new Move(D2, D3);
 
         assertEquals("Q2xd3", SanUtil.move2San(move, board, GameColor.WHITE));
     }
@@ -88,7 +100,7 @@ public class SanUtilTest extends TestHelper {
         FenFormat fen = new FenFormat("7k/8/3Q4/8/8/Q2b4/8/K7 w - - 0 1");
         Board board = new Board(fen);
 
-        Move move = new Move("a3", "d3");
+        Move move = new Move(A3, D3);
 
         assertEquals("Qaxd3", SanUtil.move2San(move, board, GameColor.WHITE));
     }
@@ -98,7 +110,7 @@ public class SanUtilTest extends TestHelper {
         FenFormat fen = new FenFormat("7k/8/3Q4/8/8/Q2b4/8/K7 w - - 0 1");
         Board board = new Board(fen);
 
-        Move move = new Move("a3", "d3");
+        Move move = new Move(A3, D3);
 
         assertEquals("Qaxd3", SanUtil.move2San(move, board, GameColor.WHITE));
     }
@@ -108,7 +120,7 @@ public class SanUtilTest extends TestHelper {
         FenFormat fen = new FenFormat("7k/3P4/8/8/8/8/8/K7 w - - 0 1");
         Board board = new Board(fen);
 
-        Move move = new Move("d7", "d8", Piece.QUEEN);
+        Move move = new Move(D7, D8, Piece.QUEEN);
 
         assertEquals("d8=Q+", SanUtil.move2San(move, board, GameColor.WHITE));
     }
@@ -118,7 +130,7 @@ public class SanUtilTest extends TestHelper {
         FenFormat fen = new FenFormat("rnb5/pp3Ppk/5nNp/b7/2B5/8/PP3PPP/R1Bq1RK1 w - - 0 17");
         Board board = new Board(fen);
 
-        Move move = new Move("f7", "f8", Piece.KNIGHT);
+        Move move = new Move(F7, F8, Piece.KNIGHT);
 
         assertEquals("f8=N#", SanUtil.move2San(move, board, GameColor.WHITE));
     }
@@ -151,7 +163,7 @@ public class SanUtilTest extends TestHelper {
         Board board = new Board(fen);
 
         Move result = SanUtil.san2Move("f8=N#", board, GameColor.WHITE);
-        Move expectedMove = new Move("f7", "f8", Piece.KNIGHT);
+        Move expectedMove = new Move(F7, F8, Piece.KNIGHT);
 
         assertEquals(expectedMove, result);
     }
@@ -162,7 +174,7 @@ public class SanUtilTest extends TestHelper {
         Board board = new Board(fen);
 
         Move result = SanUtil.san2Move("d8=Q+", board, GameColor.WHITE);
-        Move expectedMove = new Move("d7", "d8", Piece.QUEEN);
+        Move expectedMove = new Move(D7, D8, Piece.QUEEN);
 
         assertEquals(expectedMove, result);
     }
@@ -173,7 +185,7 @@ public class SanUtilTest extends TestHelper {
         Board board = new Board(fen);
 
         Move result = SanUtil.san2Move("e4", board, GameColor.WHITE);
-        Move expectedMove = new Move("e2", "e4");
+        Move expectedMove = new Move(E2, E4);
 
         assertEquals(expectedMove, result);
     }
@@ -184,7 +196,7 @@ public class SanUtilTest extends TestHelper {
         Board board = new Board(fen);
 
         Move result = SanUtil.san2Move("e4xd5", board, GameColor.WHITE);
-        Move expectedMove = new Move("e4", "d5");
+        Move expectedMove = new Move(E4, D5);
 
         assertEquals(expectedMove, result);
     }
@@ -195,7 +207,7 @@ public class SanUtilTest extends TestHelper {
         Board board = new Board(fen);
 
         Move result = SanUtil.san2Move("Qd2xd3", board, GameColor.WHITE);
-        Move expectedMove = new Move("d2", "d3");
+        Move expectedMove = new Move(D2, D3);
 
         assertEquals(expectedMove, result);
     }

@@ -11,6 +11,29 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.B3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.B4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.B6;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C5;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C6;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D2;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D5;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D6;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D7;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E5;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E6;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F1;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F8;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.G1;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.G2;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.G7;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.G8;
+
 public class PawnTest extends TestHelper {
 
     @Test
@@ -20,14 +43,14 @@ public class PawnTest extends TestHelper {
 
         List<Move> whiteMoves = new ArrayList<Move>();
         Piece.PAWN.addPseudoLegalMoves(board, whiteMoves, 34, GameColor.WHITE);
-        this.checkAndDeleteMove(whiteMoves, new Move("D2", "D3"));
-        this.checkAndDeleteMove(whiteMoves, new Move("D2", "D4"));
+        this.checkAndDeleteMove(whiteMoves, new Move(D2, D3));
+        this.checkAndDeleteMove(whiteMoves, new Move(D2, D4));
         this.checkRemainingMoves(whiteMoves);
 
         List<Move> blackMoves = new ArrayList<Move>();
         Piece.PAWN.addPseudoLegalMoves(board, blackMoves, 84, GameColor.BLACK);
-        this.checkAndDeleteMove(blackMoves, new Move("D7", "D6"));
-        this.checkAndDeleteMove(blackMoves, new Move("D7", "D5"));
+        this.checkAndDeleteMove(blackMoves, new Move(D7, D6));
+        this.checkAndDeleteMove(blackMoves, new Move(D7, D5));
         this.checkRemainingMoves(blackMoves);
     }
 
@@ -52,12 +75,12 @@ public class PawnTest extends TestHelper {
 
         List<Move> whiteMoves = new ArrayList<Move>();
         Piece.PAWN.addPseudoLegalMoves(board, whiteMoves, 45, GameColor.WHITE);
-        this.checkAndDeleteMove(whiteMoves, new Move("E3", "E4"));
+        this.checkAndDeleteMove(whiteMoves, new Move(E3, E4));
         this.checkRemainingMoves(whiteMoves);
 
         List<Move> blackMoves = new ArrayList<Move>();
         Piece.PAWN.addPseudoLegalMoves(board, blackMoves, 75, GameColor.BLACK);
-        this.checkAndDeleteMove(blackMoves, new Move("E6", "E5"));
+        this.checkAndDeleteMove(blackMoves, new Move(E6, E5));
         this.checkRemainingMoves(blackMoves);
     }
 
@@ -82,14 +105,14 @@ public class PawnTest extends TestHelper {
 
         List<Move> whiteMoves = new ArrayList<Move>();
         Piece.PAWN.addPseudoLegalMoves(board, whiteMoves, 34, GameColor.WHITE);
-        this.checkAndDeleteMove(whiteMoves, new Move("D2", "C3"));
-        this.checkAndDeleteMove(whiteMoves, new Move("D2", "E3"));
+        this.checkAndDeleteMove(whiteMoves, new Move(D2, C3));
+        this.checkAndDeleteMove(whiteMoves, new Move(D2, E3));
         this.checkRemainingMoves(whiteMoves);
 
         List<Move> blackMoves = new ArrayList<Move>();
         Piece.PAWN.addPseudoLegalMoves(board, blackMoves, 84, GameColor.BLACK);
-        this.checkAndDeleteMove(blackMoves, new Move("D7", "C6"));
-        this.checkAndDeleteMove(blackMoves, new Move("D7", "E6"));
+        this.checkAndDeleteMove(blackMoves, new Move(D7, C6));
+        this.checkAndDeleteMove(blackMoves, new Move(D7, E6));
         this.checkRemainingMoves(blackMoves);
     }
 
@@ -100,26 +123,26 @@ public class PawnTest extends TestHelper {
 
         List<Move> whiteMoves = new ArrayList<Move>();
         Piece.PAWN.addPseudoLegalMoves(board, whiteMoves, 87, GameColor.WHITE);
-        this.checkAndDeleteMove(whiteMoves, new Move("G7", "G8", Piece.BISHOP));
-        this.checkAndDeleteMove(whiteMoves, new Move("G7", "G8", Piece.KNIGHT));
-        this.checkAndDeleteMove(whiteMoves, new Move("G7", "G8", Piece.ROOK));
-        this.checkAndDeleteMove(whiteMoves, new Move("G7", "G8", Piece.QUEEN));
-        this.checkAndDeleteMove(whiteMoves, new Move("G7", "F8", Piece.BISHOP));
-        this.checkAndDeleteMove(whiteMoves, new Move("G7", "F8", Piece.KNIGHT));
-        this.checkAndDeleteMove(whiteMoves, new Move("G7", "F8", Piece.ROOK));
-        this.checkAndDeleteMove(whiteMoves, new Move("G7", "F8", Piece.QUEEN));
+        this.checkAndDeleteMove(whiteMoves, new Move(G7, G8, Piece.BISHOP));
+        this.checkAndDeleteMove(whiteMoves, new Move(G7, G8, Piece.KNIGHT));
+        this.checkAndDeleteMove(whiteMoves, new Move(G7, G8, Piece.ROOK));
+        this.checkAndDeleteMove(whiteMoves, new Move(G7, G8, Piece.QUEEN));
+        this.checkAndDeleteMove(whiteMoves, new Move(G7, F8, Piece.BISHOP));
+        this.checkAndDeleteMove(whiteMoves, new Move(G7, F8, Piece.KNIGHT));
+        this.checkAndDeleteMove(whiteMoves, new Move(G7, F8, Piece.ROOK));
+        this.checkAndDeleteMove(whiteMoves, new Move(G7, F8, Piece.QUEEN));
         this.checkRemainingMoves(whiteMoves);
 
         List<Move> blackMoves = new ArrayList<Move>();
         Piece.PAWN.addPseudoLegalMoves(board, blackMoves, 37, GameColor.BLACK);
-        this.checkAndDeleteMove(blackMoves, new Move("G2", "G1", Piece.BISHOP));
-        this.checkAndDeleteMove(blackMoves, new Move("G2", "G1", Piece.KNIGHT));
-        this.checkAndDeleteMove(blackMoves, new Move("G2", "G1", Piece.ROOK));
-        this.checkAndDeleteMove(blackMoves, new Move("G2", "G1", Piece.QUEEN));
-        this.checkAndDeleteMove(blackMoves, new Move("G2", "F1", Piece.BISHOP));
-        this.checkAndDeleteMove(blackMoves, new Move("G2", "F1", Piece.KNIGHT));
-        this.checkAndDeleteMove(blackMoves, new Move("G2", "F1", Piece.ROOK));
-        this.checkAndDeleteMove(blackMoves, new Move("G2", "F1", Piece.QUEEN));
+        this.checkAndDeleteMove(blackMoves, new Move(G2, G1, Piece.BISHOP));
+        this.checkAndDeleteMove(blackMoves, new Move(G2, G1, Piece.KNIGHT));
+        this.checkAndDeleteMove(blackMoves, new Move(G2, G1, Piece.ROOK));
+        this.checkAndDeleteMove(blackMoves, new Move(G2, G1, Piece.QUEEN));
+        this.checkAndDeleteMove(blackMoves, new Move(G2, F1, Piece.BISHOP));
+        this.checkAndDeleteMove(blackMoves, new Move(G2, F1, Piece.KNIGHT));
+        this.checkAndDeleteMove(blackMoves, new Move(G2, F1, Piece.ROOK));
+        this.checkAndDeleteMove(blackMoves, new Move(G2, F1, Piece.QUEEN));
         this.checkRemainingMoves(blackMoves);
     }
 
@@ -130,8 +153,8 @@ public class PawnTest extends TestHelper {
 
         List<Move> moves = new ArrayList<Move>();
         Piece.PAWN.addPseudoLegalMoves(board, moves, 63, GameColor.WHITE);
-        this.checkAndDeleteMove(moves, new Move("C5", "C6"));
-        this.checkAndDeleteMove(moves, new Move("C5", "B6"));
+        this.checkAndDeleteMove(moves, new Move(C5, C6));
+        this.checkAndDeleteMove(moves, new Move(C5, B6));
         this.checkRemainingMoves(moves);
     }
 
@@ -142,8 +165,8 @@ public class PawnTest extends TestHelper {
 
         List<Move> moves = new ArrayList<Move>();
         Piece.PAWN.addPseudoLegalMoves(board, moves, 52, GameColor.BLACK);
-        this.checkAndDeleteMove(moves, new Move("B4", "B3"));
-        this.checkAndDeleteMove(moves, new Move("B4", "C3"));
+        this.checkAndDeleteMove(moves, new Move(B4, B3));
+        this.checkAndDeleteMove(moves, new Move(B4, C3));
         this.checkRemainingMoves(moves);
     }
 

@@ -30,14 +30,17 @@ public enum BoardCoordinates {
 
     }
 
-    public static String getNameByIdx(int idx) {
-        for (BoardCoordinates field : BoardCoordinates.values()) {
-            if (field.idx == idx) {
-                return field.name();
+    public static BoardCoordinates getBoardCoordinatesByName(String name) {
+        for (BoardCoordinates coordinates : BoardCoordinates.values()) {
+            if (coordinates.name().equalsIgnoreCase(name)) {
+                return coordinates;
             }
         }
-        throw new IllegalArgumentException("Unknown idx: " + idx);
+        throw new IllegalArgumentException("Unknown idx: " + name);
+
     }
+
+
 
 
 }

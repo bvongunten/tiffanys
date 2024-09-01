@@ -1,5 +1,6 @@
 package ch.nostromo.tiffanys.engine.dragonborn.move;
 
+import ch.nostromo.tiffanys.commons.board.BoardCoordinates;
 import ch.nostromo.tiffanys.commons.enums.Castling;
 import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.enums.Piece;
@@ -240,8 +241,8 @@ public class EngineMove implements Comparable<EngineMove>, DragonbornConstants, 
     }
 
     public Move convertToMove(GameColor colorToMove) {
-        String fromS = RobustBoard.BOARD64_COORDS[from];
-        String toS = RobustBoard.BOARD64_COORDS[to];
+        BoardCoordinates fromS = RobustBoard.BOARD64_COORDS[from];
+        BoardCoordinates toS = RobustBoard.BOARD64_COORDS[to];
 
         Move result;
 

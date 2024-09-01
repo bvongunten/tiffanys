@@ -11,6 +11,35 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.A1;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.A4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.A7;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.B2;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.B4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.B6;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C5;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D1;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D2;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D5;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D6;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D7;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D8;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E5;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F2;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F6;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.G1;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.G4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.G7;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.H4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.H8;
+
 public class QueenTest extends TestHelper {
 
     @Test
@@ -21,34 +50,34 @@ public class QueenTest extends TestHelper {
         List<Move> moves = new ArrayList<Move>();
         Piece.QUEEN.addPseudoLegalMoves(board, moves, 54, GameColor.WHITE);
 
-        this.checkAndDeleteMove(moves, new Move("D4", "D3"));
-        this.checkAndDeleteMove(moves, new Move("D4", "D2"));
-        this.checkAndDeleteMove(moves, new Move("D4", "D1"));
-        this.checkAndDeleteMove(moves, new Move("D4", "D5"));
-        this.checkAndDeleteMove(moves, new Move("D4", "D6"));
-        this.checkAndDeleteMove(moves, new Move("D4", "D7"));
-        this.checkAndDeleteMove(moves, new Move("D4", "D8"));
-        this.checkAndDeleteMove(moves, new Move("D4", "C4"));
-        this.checkAndDeleteMove(moves, new Move("D4", "B4"));
-        this.checkAndDeleteMove(moves, new Move("D4", "A4"));
-        this.checkAndDeleteMove(moves, new Move("D4", "E4"));
-        this.checkAndDeleteMove(moves, new Move("D4", "F4"));
-        this.checkAndDeleteMove(moves, new Move("D4", "G4"));
-        this.checkAndDeleteMove(moves, new Move("D4", "H4"));
+        this.checkAndDeleteMove(moves, new Move(D4, D3));
+        this.checkAndDeleteMove(moves, new Move(D4, D2));
+        this.checkAndDeleteMove(moves, new Move(D4, D1));
+        this.checkAndDeleteMove(moves, new Move(D4, D5));
+        this.checkAndDeleteMove(moves, new Move(D4, D6));
+        this.checkAndDeleteMove(moves, new Move(D4, D7));
+        this.checkAndDeleteMove(moves, new Move(D4, D8));
+        this.checkAndDeleteMove(moves, new Move(D4, C4));
+        this.checkAndDeleteMove(moves, new Move(D4, B4));
+        this.checkAndDeleteMove(moves, new Move(D4, A4));
+        this.checkAndDeleteMove(moves, new Move(D4, E4));
+        this.checkAndDeleteMove(moves, new Move(D4, F4));
+        this.checkAndDeleteMove(moves, new Move(D4, G4));
+        this.checkAndDeleteMove(moves, new Move(D4, H4));
 
-        this.checkAndDeleteMove(moves, new Move("D4", "C3"));
-        this.checkAndDeleteMove(moves, new Move("D4", "B2"));
-        this.checkAndDeleteMove(moves, new Move("D4", "A1"));
-        this.checkAndDeleteMove(moves, new Move("D4", "C5"));
-        this.checkAndDeleteMove(moves, new Move("D4", "B6"));
-        this.checkAndDeleteMove(moves, new Move("D4", "A7"));
-        this.checkAndDeleteMove(moves, new Move("D4", "E3"));
-        this.checkAndDeleteMove(moves, new Move("D4", "F2"));
-        this.checkAndDeleteMove(moves, new Move("D4", "G1"));
-        this.checkAndDeleteMove(moves, new Move("D4", "E5"));
-        this.checkAndDeleteMove(moves, new Move("D4", "F6"));
-        this.checkAndDeleteMove(moves, new Move("D4", "G7"));
-        this.checkAndDeleteMove(moves, new Move("D4", "H8"));
+        this.checkAndDeleteMove(moves, new Move(D4, C3));
+        this.checkAndDeleteMove(moves, new Move(D4, B2));
+        this.checkAndDeleteMove(moves, new Move(D4, A1));
+        this.checkAndDeleteMove(moves, new Move(D4, C5));
+        this.checkAndDeleteMove(moves, new Move(D4, B6));
+        this.checkAndDeleteMove(moves, new Move(D4, A7));
+        this.checkAndDeleteMove(moves, new Move(D4, E3));
+        this.checkAndDeleteMove(moves, new Move(D4, F2));
+        this.checkAndDeleteMove(moves, new Move(D4, G1));
+        this.checkAndDeleteMove(moves, new Move(D4, E5));
+        this.checkAndDeleteMove(moves, new Move(D4, F6));
+        this.checkAndDeleteMove(moves, new Move(D4, G7));
+        this.checkAndDeleteMove(moves, new Move(D4, H8));
 
         this.checkRemainingMoves(moves);
     }
@@ -61,23 +90,23 @@ public class QueenTest extends TestHelper {
         List<Move> moves = new ArrayList<Move>();
         Piece.QUEEN.addPseudoLegalMoves(board, moves, 54, GameColor.WHITE);
 
-        this.checkAndDeleteMove(moves, new Move("D4", "D3"));
-        this.checkAndDeleteMove(moves, new Move("D4", "D2"));
-        this.checkAndDeleteMove(moves, new Move("D4", "D5"));
-        this.checkAndDeleteMove(moves, new Move("D4", "D6"));
-        this.checkAndDeleteMove(moves, new Move("D4", "C4"));
-        this.checkAndDeleteMove(moves, new Move("D4", "B4"));
-        this.checkAndDeleteMove(moves, new Move("D4", "E4"));
-        this.checkAndDeleteMove(moves, new Move("D4", "F4"));
+        this.checkAndDeleteMove(moves, new Move(D4, D3));
+        this.checkAndDeleteMove(moves, new Move(D4, D2));
+        this.checkAndDeleteMove(moves, new Move(D4, D5));
+        this.checkAndDeleteMove(moves, new Move(D4, D6));
+        this.checkAndDeleteMove(moves, new Move(D4, C4));
+        this.checkAndDeleteMove(moves, new Move(D4, B4));
+        this.checkAndDeleteMove(moves, new Move(D4, E4));
+        this.checkAndDeleteMove(moves, new Move(D4, F4));
 
-        this.checkAndDeleteMove(moves, new Move("D4", "C5"));
-        this.checkAndDeleteMove(moves, new Move("D4", "B6"));
-        this.checkAndDeleteMove(moves, new Move("D4", "C3"));
-        this.checkAndDeleteMove(moves, new Move("D4", "B2"));
-        this.checkAndDeleteMove(moves, new Move("D4", "E3"));
-        this.checkAndDeleteMove(moves, new Move("D4", "F2"));
-        this.checkAndDeleteMove(moves, new Move("D4", "E5"));
-        this.checkAndDeleteMove(moves, new Move("D4", "F6"));
+        this.checkAndDeleteMove(moves, new Move(D4, C5));
+        this.checkAndDeleteMove(moves, new Move(D4, B6));
+        this.checkAndDeleteMove(moves, new Move(D4, C3));
+        this.checkAndDeleteMove(moves, new Move(D4, B2));
+        this.checkAndDeleteMove(moves, new Move(D4, E3));
+        this.checkAndDeleteMove(moves, new Move(D4, F2));
+        this.checkAndDeleteMove(moves, new Move(D4, E5));
+        this.checkAndDeleteMove(moves, new Move(D4, F6));
 
         this.checkRemainingMoves(moves);
 
@@ -91,15 +120,15 @@ public class QueenTest extends TestHelper {
         List<Move> moves = new ArrayList<Move>();
         Piece.QUEEN.addPseudoLegalMoves(board, moves, 54, GameColor.WHITE);
 
-        this.checkAndDeleteMove(moves, new Move("D4", "C5"));
-        this.checkAndDeleteMove(moves, new Move("D4", "C3"));
-        this.checkAndDeleteMove(moves, new Move("D4", "E3"));
-        this.checkAndDeleteMove(moves, new Move("D4", "E5"));
+        this.checkAndDeleteMove(moves, new Move(D4, C5));
+        this.checkAndDeleteMove(moves, new Move(D4, C3));
+        this.checkAndDeleteMove(moves, new Move(D4, E3));
+        this.checkAndDeleteMove(moves, new Move(D4, E5));
 
-        this.checkAndDeleteMove(moves, new Move("D4", "D3"));
-        this.checkAndDeleteMove(moves, new Move("D4", "D5"));
-        this.checkAndDeleteMove(moves, new Move("D4", "C4"));
-        this.checkAndDeleteMove(moves, new Move("D4", "E4"));
+        this.checkAndDeleteMove(moves, new Move(D4, D3));
+        this.checkAndDeleteMove(moves, new Move(D4, D5));
+        this.checkAndDeleteMove(moves, new Move(D4, C4));
+        this.checkAndDeleteMove(moves, new Move(D4, E4));
 
         this.checkRemainingMoves(moves);
 

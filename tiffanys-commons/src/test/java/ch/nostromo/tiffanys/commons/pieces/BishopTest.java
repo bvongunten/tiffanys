@@ -11,6 +11,8 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.*;
+
 public class BishopTest extends TestHelper {
 
     @Test
@@ -21,19 +23,19 @@ public class BishopTest extends TestHelper {
         List<Move> moves = new ArrayList<Move>();
         Piece.BISHOP.addPseudoLegalMoves(board, moves, 54, GameColor.WHITE);
 
-        this.checkAndDeleteMove(moves, new Move("D4", "C3"));
-        this.checkAndDeleteMove(moves, new Move("D4", "B2"));
-        this.checkAndDeleteMove(moves, new Move("D4", "A1"));
-        this.checkAndDeleteMove(moves, new Move("D4", "C5"));
-        this.checkAndDeleteMove(moves, new Move("D4", "B6"));
-        this.checkAndDeleteMove(moves, new Move("D4", "A7"));
-        this.checkAndDeleteMove(moves, new Move("D4", "E3"));
-        this.checkAndDeleteMove(moves, new Move("D4", "F2"));
-        this.checkAndDeleteMove(moves, new Move("D4", "G1"));
-        this.checkAndDeleteMove(moves, new Move("D4", "E5"));
-        this.checkAndDeleteMove(moves, new Move("D4", "F6"));
-        this.checkAndDeleteMove(moves, new Move("D4", "G7"));
-        this.checkAndDeleteMove(moves, new Move("D4", "H8"));
+        this.checkAndDeleteMove(moves, new Move(D4, C3));
+        this.checkAndDeleteMove(moves, new Move(D4, B2));
+        this.checkAndDeleteMove(moves, new Move(D4, A1));
+        this.checkAndDeleteMove(moves, new Move(D4, C5));
+        this.checkAndDeleteMove(moves, new Move(D4, B6));
+        this.checkAndDeleteMove(moves, new Move(D4, A7));
+        this.checkAndDeleteMove(moves, new Move(D4, E3));
+        this.checkAndDeleteMove(moves, new Move(D4, F2));
+        this.checkAndDeleteMove(moves, new Move(D4, G1));
+        this.checkAndDeleteMove(moves, new Move(D4, E5));
+        this.checkAndDeleteMove(moves, new Move(D4, F6));
+        this.checkAndDeleteMove(moves, new Move(D4, G7));
+        this.checkAndDeleteMove(moves, new Move(D4, H8));
 
         this.checkRemainingMoves(moves);
     }
@@ -46,14 +48,14 @@ public class BishopTest extends TestHelper {
         List<Move> moves = new ArrayList<Move>();
         Piece.BISHOP.addPseudoLegalMoves(board, moves, 54, GameColor.WHITE);
 
-        this.checkAndDeleteMove(moves, new Move("D4", "C5"));
-        this.checkAndDeleteMove(moves, new Move("D4", "B6"));
-        this.checkAndDeleteMove(moves, new Move("D4", "C3"));
-        this.checkAndDeleteMove(moves, new Move("D4", "B2"));
-        this.checkAndDeleteMove(moves, new Move("D4", "E3"));
-        this.checkAndDeleteMove(moves, new Move("D4", "F2"));
-        this.checkAndDeleteMove(moves, new Move("D4", "E5"));
-        this.checkAndDeleteMove(moves, new Move("D4", "F6"));
+        this.checkAndDeleteMove(moves, new Move(D4, C5));
+        this.checkAndDeleteMove(moves, new Move(D4, B6));
+        this.checkAndDeleteMove(moves, new Move(D4, C3));
+        this.checkAndDeleteMove(moves, new Move(D4, B2));
+        this.checkAndDeleteMove(moves, new Move(D4, E3));
+        this.checkAndDeleteMove(moves, new Move(D4, F2));
+        this.checkAndDeleteMove(moves, new Move(D4, E5));
+        this.checkAndDeleteMove(moves, new Move(D4, F6));
 
         this.checkRemainingMoves(moves);
 
@@ -67,10 +69,10 @@ public class BishopTest extends TestHelper {
         List<Move> moves = new ArrayList<Move>();
         Piece.BISHOP.addPseudoLegalMoves(board, moves, 54, GameColor.WHITE);
 
-        this.checkAndDeleteMove(moves, new Move("D4", "C5"));
-        this.checkAndDeleteMove(moves, new Move("D4", "C3"));
-        this.checkAndDeleteMove(moves, new Move("D4", "E3"));
-        this.checkAndDeleteMove(moves, new Move("D4", "E5"));
+        this.checkAndDeleteMove(moves, new Move(D4, C5));
+        this.checkAndDeleteMove(moves, new Move(D4, C3));
+        this.checkAndDeleteMove(moves, new Move(D4, E3));
+        this.checkAndDeleteMove(moves, new Move(D4, E5));
 
         this.checkRemainingMoves(moves);
 

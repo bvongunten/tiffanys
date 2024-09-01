@@ -11,6 +11,22 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.A4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.B4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D1;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D2;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D5;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D6;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D7;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D8;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.G4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.H4;
+
 public class RookTest extends TestHelper {
 
     @Test
@@ -21,20 +37,20 @@ public class RookTest extends TestHelper {
         List<Move> moves = new ArrayList<Move>();
         Piece.ROOK.addPseudoLegalMoves(board, moves, 54, GameColor.WHITE);
 
-        this.checkAndDeleteMove(moves, new Move("D4", "D3"));
-        this.checkAndDeleteMove(moves, new Move("D4", "D2"));
-        this.checkAndDeleteMove(moves, new Move("D4", "D1"));
-        this.checkAndDeleteMove(moves, new Move("D4", "D5"));
-        this.checkAndDeleteMove(moves, new Move("D4", "D6"));
-        this.checkAndDeleteMove(moves, new Move("D4", "D7"));
-        this.checkAndDeleteMove(moves, new Move("D4", "D8"));
-        this.checkAndDeleteMove(moves, new Move("D4", "C4"));
-        this.checkAndDeleteMove(moves, new Move("D4", "B4"));
-        this.checkAndDeleteMove(moves, new Move("D4", "A4"));
-        this.checkAndDeleteMove(moves, new Move("D4", "E4"));
-        this.checkAndDeleteMove(moves, new Move("D4", "F4"));
-        this.checkAndDeleteMove(moves, new Move("D4", "G4"));
-        this.checkAndDeleteMove(moves, new Move("D4", "H4"));
+        this.checkAndDeleteMove(moves, new Move(D4, D3));
+        this.checkAndDeleteMove(moves, new Move(D4, D2));
+        this.checkAndDeleteMove(moves, new Move(D4, D1));
+        this.checkAndDeleteMove(moves, new Move(D4, D5));
+        this.checkAndDeleteMove(moves, new Move(D4, D6));
+        this.checkAndDeleteMove(moves, new Move(D4, D7));
+        this.checkAndDeleteMove(moves, new Move(D4, D8));
+        this.checkAndDeleteMove(moves, new Move(D4, C4));
+        this.checkAndDeleteMove(moves, new Move(D4, B4));
+        this.checkAndDeleteMove(moves, new Move(D4, A4));
+        this.checkAndDeleteMove(moves, new Move(D4, E4));
+        this.checkAndDeleteMove(moves, new Move(D4, F4));
+        this.checkAndDeleteMove(moves, new Move(D4, G4));
+        this.checkAndDeleteMove(moves, new Move(D4, H4));
 
         this.checkRemainingMoves(moves);
     }
@@ -47,14 +63,14 @@ public class RookTest extends TestHelper {
         List<Move> moves = new ArrayList<Move>();
         Piece.ROOK.addPseudoLegalMoves(board, moves, 54, GameColor.WHITE);
 
-        this.checkAndDeleteMove(moves, new Move("D4", "D3"));
-        this.checkAndDeleteMove(moves, new Move("D4", "D2"));
-        this.checkAndDeleteMove(moves, new Move("D4", "D5"));
-        this.checkAndDeleteMove(moves, new Move("D4", "D6"));
-        this.checkAndDeleteMove(moves, new Move("D4", "C4"));
-        this.checkAndDeleteMove(moves, new Move("D4", "B4"));
-        this.checkAndDeleteMove(moves, new Move("D4", "E4"));
-        this.checkAndDeleteMove(moves, new Move("D4", "F4"));
+        this.checkAndDeleteMove(moves, new Move(D4, D3));
+        this.checkAndDeleteMove(moves, new Move(D4, D2));
+        this.checkAndDeleteMove(moves, new Move(D4, D5));
+        this.checkAndDeleteMove(moves, new Move(D4, D6));
+        this.checkAndDeleteMove(moves, new Move(D4, C4));
+        this.checkAndDeleteMove(moves, new Move(D4, B4));
+        this.checkAndDeleteMove(moves, new Move(D4, E4));
+        this.checkAndDeleteMove(moves, new Move(D4, F4));
 
         this.checkRemainingMoves(moves);
 
@@ -68,10 +84,10 @@ public class RookTest extends TestHelper {
         List<Move> moves = new ArrayList<Move>();
         Piece.ROOK.addPseudoLegalMoves(board, moves, 54, GameColor.WHITE);
 
-        this.checkAndDeleteMove(moves, new Move("D4", "D3"));
-        this.checkAndDeleteMove(moves, new Move("D4", "D5"));
-        this.checkAndDeleteMove(moves, new Move("D4", "C4"));
-        this.checkAndDeleteMove(moves, new Move("D4", "E4"));
+        this.checkAndDeleteMove(moves, new Move(D4, D3));
+        this.checkAndDeleteMove(moves, new Move(D4, D5));
+        this.checkAndDeleteMove(moves, new Move(D4, C4));
+        this.checkAndDeleteMove(moves, new Move(D4, E4));
 
         this.checkRemainingMoves(moves);
 

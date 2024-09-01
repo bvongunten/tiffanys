@@ -40,8 +40,8 @@ public class SanUtil {
             List<Move> legalMoves = RulesUtil.getLegalMoves(board, colorToMove);
             Piece movedPiece = board.getFields()[move.getFrom().getIdx()].getPiece();
 
-            String row = move.getFromCoord().substring(1, 2);
-            String col = move.getFromCoord().substring(0, 1);
+            String row = move.getFrom().name().toLowerCase().substring(1, 2);
+            String col = move.getFrom().name().toLowerCase().substring(0, 1);
 
             boolean onSameRow = false;
             boolean onSameCol = false;
@@ -50,10 +50,10 @@ public class SanUtil {
             for (Move legalMove : legalMoves) {
                 if (!legalMove.isCastling() && board.getFields()[legalMove.getFrom().getIdx()].getPiece() == movedPiece
                         && legalMove.getFrom() != move.getFrom() && legalMove.getTo() == move.getTo()) {
-                    if (legalMove.getFromCoord().endsWith(row)) {
+                    if (legalMove.getFrom().name().toLowerCase().endsWith(row)) {
                         onSameRow = true;
                     }
-                    if (legalMove.getFromCoord().startsWith(col)) {
+                    if (legalMove.getFrom().name().toLowerCase().startsWith(col)) {
                         onSameCol = true;
                     }
                     same = true;
@@ -64,7 +64,7 @@ public class SanUtil {
 
                 if (onSameRow || board.getFields()[move.getTo().getIdx()].getPiece() != null
                         || (board.getEnPassantField() != null && board.getEnPassantField().getIdx() == move.getTo().getIdx())) {
-                    result += move.getFromCoord().substring(0, 1);
+                    result += move.getFrom().name().toLowerCase().substring(0, 1);
                 }
 
                 if (board.getFields()[move.getTo().getIdx()].getPiece() != null || (board.getEnPassantField() != null && board.getEnPassantField().getIdx() == move.getTo().getIdx())) {
@@ -79,11 +79,11 @@ public class SanUtil {
                 if (none) {
                     result += movedPiece.getCharCode();
                 } else if (both) {
-                    result += movedPiece.getCharCode() + move.getFromCoord();
+                    result += movedPiece.getCharCode() + move.getFrom().name().toLowerCase();
                 } else if (onSameCol) {
-                    result += movedPiece.getCharCode() + move.getFromCoord().substring(1, 2);
+                    result += movedPiece.getCharCode() + move.getFrom().name().toLowerCase().substring(1, 2);
                 } else if (onSameRow || same) {
-                    result += movedPiece.getCharCode() + move.getFromCoord().substring(0, 1);
+                    result += movedPiece.getCharCode() + move.getFrom().name().toLowerCase().substring(0, 1);
                 }
 
                 if (board.getFields()[move.getTo().getIdx()].getPiece() != null) {
@@ -92,7 +92,7 @@ public class SanUtil {
 
             }
 
-            result += move.getToCoord();
+            result += move.getTo().name().toLowerCase();
 
             if (move.isPromotion()) {
                 result += "=" + move.getPromotion().getCharCode();
@@ -194,14 +194,14 @@ public class SanUtil {
             int filteredMovesCount = 0;
             for (Move legalMove : legalMoves) {
                 if (!legalMove.isCastling() && board.getFields()[legalMove.getFrom().getIdx()].getPiece() == movedPiece
-                        && legalMove.getToCoord().equals(to)) {
+                        && legalMove.getTo().name().equalsIgnoreCase(to)) {
                     // @formatter:off
                     if ((disambiguatePart.length() == 0
-                            || disambiguatePart.length() == 2 && legalMove.getFromCoord().equals(disambiguatePart)
+                            || disambiguatePart.length() == 2 && legalMove.getFrom().name().equalsIgnoreCase(disambiguatePart)
                             || disambiguatePart.length() == 1 && Character.isDigit(disambiguatePart.charAt(0))
-                                    && legalMove.getFromCoord().endsWith(disambiguatePart)
+                                    && legalMove.getFrom().name().toLowerCase().endsWith(disambiguatePart)
                             || disambiguatePart.length() == 1 && Character.isLetter(disambiguatePart.charAt(0))
-                                    && legalMove.getFromCoord().startsWith(disambiguatePart))
+                                    && legalMove.getFrom().name().toLowerCase().startsWith(disambiguatePart))
                             && ((isPromotion && legalMove.getPromotion() == promotedPiece) || !isPromotion)) {
                         legalMoveFound = legalMove;
                         filteredMovesCount++;

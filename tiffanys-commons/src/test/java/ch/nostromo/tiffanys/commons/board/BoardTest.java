@@ -8,6 +8,26 @@ import ch.nostromo.tiffanys.commons.fen.FenFormat;
 import ch.nostromo.tiffanys.commons.move.Move;
 import org.junit.Test;
 
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.A1;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.A8;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.B1;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.B4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.B6;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.B8;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C5;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E1;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E2;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E7;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E8;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.G1;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.G7;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.G8;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.H1;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.H8;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -95,7 +115,7 @@ public class BoardTest extends TestHelper {
         Board board = new Board(fen);
 
         // move queen 1 field
-        board.applyMove(new Move("D4", "D3"), GameColor.WHITE);
+        board.applyMove(new Move(D4, D3), GameColor.WHITE);
 
         assertEquals(board.getFields()[54].getPiece(), null);
         assertEquals(board.getFields()[54].getPieceColor(), null);
@@ -115,7 +135,7 @@ public class BoardTest extends TestHelper {
         Board board = new Board(INITIAL_FEN);
 
         // move queen 1 field
-        board.applyMove(new Move("E2", "E4"), GameColor.WHITE);
+        board.applyMove(new Move(E2, E4), GameColor.WHITE);
 
         assertEquals(board.getFields()[35].getPiece(), null);
         assertEquals(board.getFields()[35].getPieceColor(), null);
@@ -135,7 +155,7 @@ public class BoardTest extends TestHelper {
         FenFormat fen = new FenFormat("3k4/8/8/8/1pP5/8/8/3K4 b - c3 0 1");
         Board board = new Board(fen);
 
-        board.applyMove(new Move("B4", "C3"), GameColor.BLACK);
+        board.applyMove(new Move(B4, C3), GameColor.BLACK);
 
         assertEquals(board.getFields()[52].getPiece(), null);
         assertEquals(board.getFields()[52].getPieceColor(), null);
@@ -159,7 +179,7 @@ public class BoardTest extends TestHelper {
         FenFormat fen = new FenFormat("3k4/8/8/1pP5/8/8/8/3K4 w KQkq b6 0 1");
         Board board = new Board(fen);
 
-        board.applyMove(new Move("C5", "B6"), GameColor.WHITE);
+        board.applyMove(new Move(C5, B6), GameColor.WHITE);
 
         assertEquals(board.getFields()[63].getPiece(), null);
         assertEquals(board.getFields()[63].getPieceColor(), null);
@@ -283,21 +303,21 @@ public class BoardTest extends TestHelper {
         FenFormat fen = new FenFormat("r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1");
 
         Board board = new Board(fen);
-        board.applyMove(new Move("A1", "B1"), GameColor.WHITE);
+        board.applyMove(new Move(A1,B1), GameColor.WHITE);
         assertTrue(board.castlingBlackLongAllowed);
         assertTrue(board.castlingBlackShortAllowed);
         assertFalse(board.castlingWhiteLongAllowed);
         assertTrue(board.castlingWhiteShortAllowed);
 
         board = new Board(fen);
-        board.applyMove(new Move("H1", "G1"), GameColor.WHITE);
+        board.applyMove(new Move(H1, G1), GameColor.WHITE);
         assertTrue(board.castlingBlackLongAllowed);
         assertTrue(board.castlingBlackShortAllowed);
         assertTrue(board.castlingWhiteLongAllowed);
         assertFalse(board.castlingWhiteShortAllowed);
 
         board = new Board(fen);
-        board.applyMove(new Move("E1", "E2"), GameColor.WHITE);
+        board.applyMove(new Move(E1, E2), GameColor.WHITE);
         assertTrue(board.castlingBlackLongAllowed);
         assertTrue(board.castlingBlackShortAllowed);
         assertFalse(board.castlingWhiteLongAllowed);
@@ -310,21 +330,21 @@ public class BoardTest extends TestHelper {
         FenFormat fen = new FenFormat("r3k2r/8/8/8/8/8/8/R3K2R b KQkq - 0 1");
 
         Board board = new Board(fen);
-        board.applyMove(new Move("A8", "B8"), GameColor.BLACK);
+        board.applyMove(new Move(A8, B8), GameColor.BLACK);
         assertFalse(board.castlingBlackLongAllowed);
         assertTrue(board.castlingBlackShortAllowed);
         assertTrue(board.castlingWhiteLongAllowed);
         assertTrue(board.castlingWhiteShortAllowed);
 
         board = new Board(fen);
-        board.applyMove(new Move("H8", "G8"), GameColor.BLACK);
+        board.applyMove(new Move(H8, G8), GameColor.BLACK);
         assertTrue(board.castlingBlackLongAllowed);
         assertFalse(board.castlingBlackShortAllowed);
         assertTrue(board.castlingWhiteLongAllowed);
         assertTrue(board.castlingWhiteShortAllowed);
 
         board = new Board(fen);
-        board.applyMove(new Move("E8", "E7"), GameColor.BLACK);
+        board.applyMove(new Move(E8, E7), GameColor.BLACK);
         assertFalse(board.castlingBlackLongAllowed);
         assertFalse(board.castlingBlackShortAllowed);
         assertTrue(board.castlingWhiteLongAllowed);
@@ -337,7 +357,7 @@ public class BoardTest extends TestHelper {
         FenFormat fen = new FenFormat("3k1q2/6P1/8/8/8/8/6p1/3K1Q2 w - - 0 1");
         Board board = new Board(fen);
 
-        board.applyMove(new Move("G7", "G8", Piece.QUEEN), GameColor.WHITE);
+        board.applyMove(new Move(G7, G8, Piece.QUEEN), GameColor.WHITE);
         assertEquals(board.getFields()[87].getPiece(), null);
         assertEquals(board.getFields()[87].getPieceColor(), null);
         assertEquals(board.getFields()[97].getPiece(), Piece.QUEEN);

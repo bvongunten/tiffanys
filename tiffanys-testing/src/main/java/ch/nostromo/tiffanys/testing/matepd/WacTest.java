@@ -68,7 +68,7 @@ public class WacTest {
 
     }
 
-    public String wacTests(String file, int maxTime) throws EngineException, URISyntaxException, IOException {
+    public String wacTests(String file, int maxTests, int maxTime) throws EngineException, URISyntaxException, IOException {
 
 
         List<String> lines = Files.readAllLines(Paths.get(WacTest.class.getClassLoader().getResource(file).toURI()), Charset.defaultCharset());
@@ -88,6 +88,10 @@ public class WacTest {
                 failed++;
             }
             count++;
+
+            if (count == maxTests) {
+                break;
+            }
         }
 
         long totalMs = System.currentTimeMillis() - startMs;
@@ -116,7 +120,7 @@ public class WacTest {
     public static void main(String... args) throws EngineException, URISyntaxException, IOException {
         WacTest testee = new WacTest();
 
-        testee.wacTests("wac.epd", 1000);
+        testee.wacTests("wac.epd", 3,1000);
 
     }
 

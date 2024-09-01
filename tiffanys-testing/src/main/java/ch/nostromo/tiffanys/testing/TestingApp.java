@@ -49,7 +49,7 @@ public class TestingApp {
 
         // Run wac tests
         WacTest wacTest = new WacTest();
-        results.add(wacTest.wacTests("wac.epd", MAX_TIME_WAC));
+        results.add(wacTest.wacTests("wac.epd", limitedMateTests, MAX_TIME_WAC));
 
         // Pseude Move Gen
         PseudoMoveGen pseudoMoveGen = new PseudoMoveGen();

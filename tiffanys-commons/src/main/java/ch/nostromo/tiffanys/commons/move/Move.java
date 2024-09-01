@@ -23,6 +23,12 @@ public class Move {
     }
 
 
+    public Move(BoardCoordinates from, BoardCoordinates to, Piece promotion) {
+        this(from, to);
+        this.promotion = promotion;
+    }
+
+
     public Move(int from, int to) {
         this(BoardCoordinates.getBoardCoordinatesByIdx(from), BoardCoordinates.getBoardCoordinatesByIdx(to));
     }
@@ -31,26 +37,18 @@ public class Move {
         this(from, to);
         this.promotion = promotion;
     }
-
-    public Move(String from, String to) {
-        this(BoardUtil.coordToField(from), BoardUtil.coordToField(to));
-    }
-
-    public Move(String from, String to, Piece promotion) {
-        this(BoardUtil.coordToField(from), BoardUtil.coordToField(to));
-        this.promotion = promotion;
-    }
+//
+//    public Move(String from, String to) {
+//        this(BoardUtil.coordToField(from), BoardUtil.coordToField(to));
+//    }
+//
+//    public Move(String from, String to, Piece promotion) {
+//        this(BoardUtil.coordToField(from), BoardUtil.coordToField(to));
+//        this.promotion = promotion;
+//    }
 
     public Move(Castling castling) {
         this.castling = castling;
-    }
-
-    public String getFromCoord() {
-        return from.name().toLowerCase();
-    }
-
-    public String getToCoord() {
-        return to.name().toLowerCase();
     }
 
     public boolean isPromotion() {

@@ -9,6 +9,33 @@ import org.junit.Test;
 
 import java.util.List;
 
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.A2;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.A3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.A4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.B1;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.B2;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.B3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.B4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C2;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D2;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E1;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E2;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F2;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.G1;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.G2;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.G3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.G4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.H2;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.H3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.H4;
 import static org.junit.Assert.assertTrue;
 
 public class RulesUtilTest extends TestHelper {
@@ -19,27 +46,27 @@ public class RulesUtilTest extends TestHelper {
         Board board = new Board(fen);
         List<Move> moves = RulesUtil.getLegalMoves(board, GameColor.WHITE);
 
-        this.checkAndDeleteMove(moves, new Move("A2", "A3"));
-        this.checkAndDeleteMove(moves, new Move("A2", "A4"));
-        this.checkAndDeleteMove(moves, new Move("B2", "B3"));
-        this.checkAndDeleteMove(moves, new Move("B2", "B4"));
-        this.checkAndDeleteMove(moves, new Move("C2", "C3"));
-        this.checkAndDeleteMove(moves, new Move("C2", "C4"));
-        this.checkAndDeleteMove(moves, new Move("D2", "D3"));
-        this.checkAndDeleteMove(moves, new Move("D2", "D4"));
-        this.checkAndDeleteMove(moves, new Move("E2", "E3"));
-        this.checkAndDeleteMove(moves, new Move("E2", "E4"));
-        this.checkAndDeleteMove(moves, new Move("F2", "F3"));
-        this.checkAndDeleteMove(moves, new Move("F2", "F4"));
-        this.checkAndDeleteMove(moves, new Move("G2", "G3"));
-        this.checkAndDeleteMove(moves, new Move("G2", "G4"));
-        this.checkAndDeleteMove(moves, new Move("H2", "H3"));
-        this.checkAndDeleteMove(moves, new Move("H2", "H4"));
+        this.checkAndDeleteMove(moves, new Move(A2, A3));
+        this.checkAndDeleteMove(moves, new Move(A2, A4));
+        this.checkAndDeleteMove(moves, new Move(B2, B3));
+        this.checkAndDeleteMove(moves, new Move(B2, B4));
+        this.checkAndDeleteMove(moves, new Move(C2, C3));
+        this.checkAndDeleteMove(moves, new Move(C2, C4));
+        this.checkAndDeleteMove(moves, new Move(D2, D3));
+        this.checkAndDeleteMove(moves, new Move(D2, D4));
+        this.checkAndDeleteMove(moves, new Move(E2, E3));
+        this.checkAndDeleteMove(moves, new Move(E2, E4));
+        this.checkAndDeleteMove(moves, new Move(F2, F3));
+        this.checkAndDeleteMove(moves, new Move(F2, F4));
+        this.checkAndDeleteMove(moves, new Move(G2, G3));
+        this.checkAndDeleteMove(moves, new Move(G2, G4));
+        this.checkAndDeleteMove(moves, new Move(H2, H3));
+        this.checkAndDeleteMove(moves, new Move(H2, H4));
 
-        this.checkAndDeleteMove(moves, new Move("B1", "A3"));
-        this.checkAndDeleteMove(moves, new Move("B1", "C3"));
-        this.checkAndDeleteMove(moves, new Move("G1", "H3"));
-        this.checkAndDeleteMove(moves, new Move("G1", "F3"));
+        this.checkAndDeleteMove(moves, new Move(B1, A3));
+        this.checkAndDeleteMove(moves, new Move(B1, C3));
+        this.checkAndDeleteMove(moves, new Move(G1, H3));
+        this.checkAndDeleteMove(moves, new Move(G1, F3));
 
         this.checkRemainingMoves(moves);
     }
@@ -50,7 +77,7 @@ public class RulesUtilTest extends TestHelper {
         Board board = new Board(fen);
         List<Move> moves = RulesUtil.getLegalMoves(board, GameColor.WHITE);
 
-        this.checkAndDeleteMove(moves, new Move("E1", "E2"));
+        this.checkAndDeleteMove(moves, new Move(E1, E2));
 
         this.checkRemainingMoves(moves);
     }
@@ -84,7 +111,7 @@ public class RulesUtilTest extends TestHelper {
         FenFormat fen = new FenFormat("5b2/1p1b1p2/5kp1/P1n1p3/3pP2p/P1pP1P2/3q2r1/B3RK2 b - - 0 38");
         Board board = new Board(fen);
 
-        Move move = new Move("D2", "E2");
+        Move move = new Move(D2, E2);
 
         assertTrue(RulesUtil.leadsToCheck(move, board, GameColor.BLACK));
     }
@@ -94,7 +121,7 @@ public class RulesUtilTest extends TestHelper {
         FenFormat fen = new FenFormat("5b2/1p1b1p2/5kp1/P1n1p3/3pP2p/P1pP1P2/3q2r1/B3RK2 b - - 0 38");
         Board board = new Board(fen);
 
-        Move move = new Move("D2", "F2");
+        Move move = new Move(D2, F2);
 
         assertTrue(RulesUtil.leadsToMate(move, board, GameColor.BLACK));
     }

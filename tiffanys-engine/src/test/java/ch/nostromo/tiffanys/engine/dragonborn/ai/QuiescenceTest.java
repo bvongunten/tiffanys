@@ -10,6 +10,8 @@ import org.junit.Test;
 
 import java.util.List;
 
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E5;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F4;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 
@@ -27,7 +29,7 @@ public class QuiescenceTest {
         Engine engine = EngineFactory.createEngine(engineSettings);
         EngineResult result = engine.syncScoreMoves(game);
 
-        assertFalse(bestMovesContains(result.getLegalMoves(), new Move("f4", "e5")));
+        assertFalse(bestMovesContains(result.getLegalMoves(), new Move(F4, E5)));
 
     }
 

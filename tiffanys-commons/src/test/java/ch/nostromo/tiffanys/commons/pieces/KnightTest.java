@@ -11,6 +11,16 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.B3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.B5;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C2;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C6;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E2;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E6;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F5;
+
 public class KnightTest extends TestHelper {
 
     @Test
@@ -21,14 +31,14 @@ public class KnightTest extends TestHelper {
         List<Move> moves = new ArrayList<Move>();
         Piece.KNIGHT.addPseudoLegalMoves(board, moves, 54, GameColor.WHITE);
 
-        this.checkAndDeleteMove(moves, new Move("D4", "B3"));
-        this.checkAndDeleteMove(moves, new Move("D4", "C2"));
-        this.checkAndDeleteMove(moves, new Move("D4", "B5"));
-        this.checkAndDeleteMove(moves, new Move("D4", "C6"));
-        this.checkAndDeleteMove(moves, new Move("D4", "E6"));
-        this.checkAndDeleteMove(moves, new Move("D4", "F5"));
-        this.checkAndDeleteMove(moves, new Move("D4", "F3"));
-        this.checkAndDeleteMove(moves, new Move("D4", "E2"));
+        this.checkAndDeleteMove(moves, new Move(D4, B3));
+        this.checkAndDeleteMove(moves, new Move(D4, C2));
+        this.checkAndDeleteMove(moves, new Move(D4, B5));
+        this.checkAndDeleteMove(moves, new Move(D4, C6));
+        this.checkAndDeleteMove(moves, new Move(D4, E6));
+        this.checkAndDeleteMove(moves, new Move(D4, F5));
+        this.checkAndDeleteMove(moves, new Move(D4, F3));
+        this.checkAndDeleteMove(moves, new Move(D4, E2));
 
         this.checkRemainingMoves(moves);
     }
@@ -41,14 +51,14 @@ public class KnightTest extends TestHelper {
         List<Move> moves = new ArrayList<Move>();
         Piece.KNIGHT.addPseudoLegalMoves(board, moves, 54, GameColor.WHITE);
 
-        this.checkAndDeleteMove(moves, new Move("D4", "B3"));
-        this.checkAndDeleteMove(moves, new Move("D4", "C2"));
-        this.checkAndDeleteMove(moves, new Move("D4", "B5"));
-        this.checkAndDeleteMove(moves, new Move("D4", "C6"));
-        this.checkAndDeleteMove(moves, new Move("D4", "E6"));
-        this.checkAndDeleteMove(moves, new Move("D4", "F5"));
-        this.checkAndDeleteMove(moves, new Move("D4", "F3"));
-        this.checkAndDeleteMove(moves, new Move("D4", "E2"));
+        this.checkAndDeleteMove(moves, new Move(D4, B3));
+        this.checkAndDeleteMove(moves, new Move(D4, C2));
+        this.checkAndDeleteMove(moves, new Move(D4, B5));
+        this.checkAndDeleteMove(moves, new Move(D4, C6));
+        this.checkAndDeleteMove(moves, new Move(D4, E6));
+        this.checkAndDeleteMove(moves, new Move(D4, F5));
+        this.checkAndDeleteMove(moves, new Move(D4, F3));
+        this.checkAndDeleteMove(moves, new Move(D4, E2));
 
         this.checkRemainingMoves(moves);
 

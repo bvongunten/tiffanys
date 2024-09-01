@@ -1,6 +1,7 @@
 package ch.nostromo.tiffanys.engine.dragonborn.board;
 
 import ch.nostromo.tiffanys.commons.board.Board;
+import ch.nostromo.tiffanys.commons.board.BoardCoordinates;
 import ch.nostromo.tiffanys.commons.enums.Castling;
 import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.enums.Piece;
@@ -13,6 +14,71 @@ import ch.nostromo.tiffanys.engine.dragonborn.move.api.MoveGenerator;
 import ch.nostromo.tiffanys.engine.dragonborn.move.impl.MoveGeneratorImpl;
 
 import java.util.ArrayList;
+
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.A1;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.A2;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.A3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.A4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.A5;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.A6;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.A7;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.A8;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.B1;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.B2;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.B3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.B4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.B5;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.B6;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.B7;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.B8;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C1;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C2;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C5;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C6;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C7;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C8;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D1;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D2;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D5;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D6;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D7;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D8;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E1;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E2;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E5;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E6;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E7;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E8;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F1;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F2;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F5;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F6;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F7;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F8;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.G1;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.G2;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.G3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.G4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.G5;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.G6;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.G7;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.G8;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.H1;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.H2;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.H3;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.H4;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.H5;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.H6;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.H7;
+import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.H8;
 
 public class RobustBoard implements DragonbornConstants, Cloneable {
 
@@ -49,8 +115,8 @@ public class RobustBoard implements DragonbornConstants, Cloneable {
     private static final int[] BOARD64 = {21, 22, 23, 24, 25, 26, 27, 28, 31, 32, 33, 34, 35, 36, 37, 38, 41, 42, 43, 44, 45, 46, 47, 48, 51, 52, 53, 54, 55, 56, 57, 58, 61, 62, 63, 64, 65, 66, 67, 68, 71, 72, 73, 74, 75, 76, 77, 78, 81, 82, 83,
             84, 85, 86, 87, 88, 91, 92, 93, 94, 95, 96, 97, 98};
 
-    public static final String[] BOARD64_COORDS = {"a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1", "a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2", "a3", "b3", "c3", "d3", "e3", "f3", "g3", "h3", "a4", "b4", "c4", "d4", "e4", "f4", "g4", "h4", "a5",
-            "b5", "c5", "d5", "e5", "f5", "g5", "h5", "a6", "b6", "c6", "d6", "e6", "f6", "g6", "h6", "a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7", "a8", "b8", "c8", "d8", "e8", "f8", "g8", "h8"};
+    public static final BoardCoordinates[] BOARD64_COORDS = {A1, B1, C1, D1, E1, F1, G1, H1, A2, B2, C2, D2, E2, F2, G2, H2, A3, B3, C3, D3, E3, F3, G3, H3, A4, B4, C4, D4, E4, F4, G4, H4, A5,
+            B5, C5, D5, E5, F5, G5, H5, A6, B6, C6, D6, E6, F6, G6, H6, A7, B7, C7, D7, E7, F7, G7, H7, A8, B8, C8, D8, E8, F8, G8, H8};
 
     MoveGenerator moveGenerator = new MoveGeneratorImpl();
     BoardInteraction boardInteraction = new BoardInteractionImpl();

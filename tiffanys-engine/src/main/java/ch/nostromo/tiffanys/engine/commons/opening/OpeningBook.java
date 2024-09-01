@@ -1,6 +1,7 @@
 package ch.nostromo.tiffanys.engine.commons.opening;
 
 import ch.nostromo.tiffanys.commons.ChessGame;
+import ch.nostromo.tiffanys.commons.board.BoardCoordinates;
 import ch.nostromo.tiffanys.commons.enums.Castling;
 import ch.nostromo.tiffanys.commons.enums.Piece;
 import ch.nostromo.tiffanys.commons.move.Move;
@@ -62,10 +63,10 @@ public class OpeningBook {
                     Castling castling = Castling.valueOf(nextMove);
                     return new Move(castling);
                 } else if (tokenz.length == 2) {
-                    return new Move(tokenz[0], tokenz[1]);
+                    return new Move(BoardCoordinates.getBoardCoordinatesByName(tokenz[0]), BoardCoordinates.getBoardCoordinatesByName(tokenz[1]));
                 } else if (tokenz.length == 3) {
                     Piece p = Piece.valueOf(tokenz[2]);
-                    return new Move(tokenz[1], tokenz[2], p);
+                    return new Move(BoardCoordinates.getBoardCoordinatesByName(tokenz[1]), BoardCoordinates.getBoardCoordinatesByName(tokenz[2]), p);
                 }
             }
         }
