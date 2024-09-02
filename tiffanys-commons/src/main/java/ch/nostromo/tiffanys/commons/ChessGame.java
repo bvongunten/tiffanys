@@ -5,13 +5,11 @@ import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.enums.GameState;
 import ch.nostromo.tiffanys.commons.enums.Piece;
 import ch.nostromo.tiffanys.commons.fen.FenFormat;
-import ch.nostromo.tiffanys.commons.fields.Field;
+import ch.nostromo.tiffanys.commons.board.BoardField;
 import ch.nostromo.tiffanys.commons.move.Move;
 import ch.nostromo.tiffanys.commons.pieces.King;
 import ch.nostromo.tiffanys.commons.rules.RulesUtil;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +43,7 @@ public class ChessGame {
     }
 
     public ChessGame(ChessGameInfo gameInfo) {
-        this(gameInfo, FenFormat.START_FEN);
+        this(gameInfo, FenFormat.INITIAL_FEN);
     }
 
     public ChessGame(ChessGameInfo gameInfo, FenFormat fenFormat) {
@@ -148,10 +146,10 @@ public class ChessGame {
         boardClone = historyBoards.get(historyBoards.size() - 1).clone();
 
         boardClone.applyMove(moveInput, colorToMove);
-        Field[] playedFields = boardClone.getFields();
+        BoardField[] playedBoardFields = boardClone.getBoardFields();
         boolean isCheck = false;
-        for (int x = 0; x < playedFields.length; x++) {
-            if (playedFields[x].getPiece() == Piece.KING && playedFields[x].getPieceColor() == colorToMove) {
+        for (int x = 0; x < playedBoardFields.length; x++) {
+            if (playedBoardFields[x].getPiece() == Piece.KING && playedBoardFields[x].getPieceColor() == colorToMove) {
                 isCheck = (King.isKingAttacked(boardClone, x, colorToMove));
             }
         }

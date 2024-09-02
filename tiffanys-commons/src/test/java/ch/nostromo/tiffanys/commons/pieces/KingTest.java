@@ -12,27 +12,27 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C3;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C4;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C5;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D1;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D2;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D3;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D4;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D5;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D7;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D8;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E1;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E2;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E3;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E4;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E5;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E7;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E8;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F1;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F2;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F7;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F8;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.C3;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.C4;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.C5;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.D1;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.D2;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.D3;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.D4;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.D5;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.D7;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.D8;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.E1;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.E2;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.E3;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.E4;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.E5;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.E7;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.E8;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.F1;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.F2;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.F7;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.F8;
 
 public class KingTest extends TestHelper {
 

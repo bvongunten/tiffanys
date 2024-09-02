@@ -1,11 +1,11 @@
-package ch.nostromo.tiffanys.commons.board;
+package ch.nostromo.tiffanys.commons.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum BoardCoordinates {
+public enum Coordinates {
 
     // @formatter:off
     A8(91),  B8(92),  C8(93),  D8(94),  E8(95),  F8(96),  G8(97),  H8(98),
@@ -20,8 +20,8 @@ public enum BoardCoordinates {
 
     private final int idx;
 
-    public static BoardCoordinates byIdx(int idx) {
-        for (BoardCoordinates coordinates : BoardCoordinates.values()) {
+    public static Coordinates byIdx(int idx) {
+        for (Coordinates coordinates : Coordinates.values()) {
             if (coordinates.idx == idx) {
                 return coordinates;
             }
@@ -30,8 +30,8 @@ public enum BoardCoordinates {
 
     }
 
-    public static BoardCoordinates byName(String name) {
-        for (BoardCoordinates coordinates : BoardCoordinates.values()) {
+    public static Coordinates byName(String name) {
+        for (Coordinates coordinates : Coordinates.values()) {
             if (coordinates.name().equalsIgnoreCase(name)) {
                 return coordinates;
             }
@@ -40,7 +40,9 @@ public enum BoardCoordinates {
 
     }
 
-
+    public String nameLowerCase() {
+        return name().toLowerCase();
+    }
 
 
 }

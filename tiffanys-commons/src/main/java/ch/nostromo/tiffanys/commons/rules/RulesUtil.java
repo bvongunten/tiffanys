@@ -3,8 +3,7 @@ package ch.nostromo.tiffanys.commons.rules;
 import ch.nostromo.tiffanys.commons.board.Board;
 import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.enums.Piece;
-import ch.nostromo.tiffanys.commons.fen.FenFormat;
-import ch.nostromo.tiffanys.commons.fields.Field;
+import ch.nostromo.tiffanys.commons.board.BoardField;
 import ch.nostromo.tiffanys.commons.move.Move;
 import ch.nostromo.tiffanys.commons.pieces.King;
 import lombok.experimental.UtilityClass;
@@ -18,12 +17,12 @@ public class RulesUtil {
     public static List<Move> getLegalMoves(Board board, GameColor colorToMove) {
         List<Move> moves = new ArrayList<Move>();
 
-        Field[] fields = board.getFields();
+        BoardField[] boardFields = board.getBoardFields();
         List<Move> pseudoLegalMoves = new ArrayList<Move>();
 
-        for (int i = 0; i < fields.length; i++) {
-            if (fields[i].getPiece() != null && fields[i].getPieceColor() == colorToMove) {
-                fields[i].getPiece().addPseudoLegalMoves(board, pseudoLegalMoves, i, colorToMove);
+        for (int i = 0; i < boardFields.length; i++) {
+            if (boardFields[i].getPiece() != null && boardFields[i].getPieceColor() == colorToMove) {
+                boardFields[i].getPiece().addPseudoLegalMoves(board, pseudoLegalMoves, i, colorToMove);
             }
         }
 
@@ -54,10 +53,10 @@ public class RulesUtil {
 
     public static boolean isInCheck(Board board, GameColor colorToMove) {
 
-        Field[] playedFields = board.getFields();
+        BoardField[] playedBoardFields = board.getBoardFields();
         boolean isCheck = false;
-        for (int x = 0; x < playedFields.length; x++) {
-            if (playedFields[x].getPiece() == Piece.KING && playedFields[x].getPieceColor() == colorToMove) {
+        for (int x = 0; x < playedBoardFields.length; x++) {
+            if (playedBoardFields[x].getPiece() == Piece.KING && playedBoardFields[x].getPieceColor() == colorToMove) {
                 isCheck = (King.isKingAttacked(board, x, colorToMove));
             }
         }
@@ -112,9 +111,9 @@ public class RulesUtil {
             for (int i = moveHistory.size() - 1; i > moveHistory.size() - 50; i--) {
                 Move move = moveHistory.get(i);
                 Board board = boardHistory.get(i);
-                Field[] fields = board.getFields();
+                BoardField[] boardFields = board.getBoardFields();
 
-                if (fields[move.getTo().getIdx()].getPiece() == Piece.PAWN) {
+                if (boardFields[move.getTo().getIdx()].getPiece() == Piece.PAWN) {
                     return false;
                 }
 

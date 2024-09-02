@@ -1,12 +1,11 @@
 package ch.nostromo.tiffanys.commons.move;
 
-import ch.nostromo.tiffanys.commons.board.BoardCoordinates;
 import ch.nostromo.tiffanys.commons.enums.Castling;
 import ch.nostromo.tiffanys.commons.enums.Piece;
 import org.junit.Test;
 
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.A1;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.B1;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.A1;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.B1;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;

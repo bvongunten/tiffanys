@@ -1,6 +1,6 @@
 package ch.nostromo.tiffanys.commons.move;
 
-import ch.nostromo.tiffanys.commons.board.BoardCoordinates;
+import ch.nostromo.tiffanys.commons.enums.Coordinates;
 import ch.nostromo.tiffanys.commons.enums.Castling;
 import ch.nostromo.tiffanys.commons.enums.Piece;
 import lombok.Data;
@@ -8,20 +8,20 @@ import lombok.Data;
 @Data
 public class Move {
 
-    private BoardCoordinates from = null;
-    private BoardCoordinates to = null;
+    private Coordinates from = null;
+    private Coordinates to = null;
 
     private Piece promotion = null;
     private Castling castling = null;
 
     MoveAttributes moveAttributes = null;
 
-    public Move(BoardCoordinates from, BoardCoordinates to) {
+    public Move(Coordinates from, Coordinates to) {
         this.from = from;
         this.to = to;
     }
 
-    public Move(BoardCoordinates from, BoardCoordinates to, Piece promotion) {
+    public Move(Coordinates from, Coordinates to, Piece promotion) {
         this(from, to);
         this.promotion = promotion;
     }
@@ -40,7 +40,7 @@ public class Move {
 
     @Override
     public String toString() {
-        String result = "Move [" + MoveTranslator.moveToString(this) + "]";
+        String result = "Move [" + generateMoveDetailString() + "]";
 
         if (this.moveAttributes != null) {
             result += " " + moveAttributes.toString();
@@ -48,6 +48,27 @@ public class Move {
 
         return result;
     }
+
+
+    public String generateMoveDetailString() {
+
+        String result;
+        if (Castling.WHITE_LONG.equals(getCastling()) || Castling.BLACK_LONG.equals(getCastling())) {
+            result = "O-O-O";
+        } else if (Castling.WHITE_SHORT.equals(getCastling()) || Castling.BLACK_SHORT.equals(getCastling())) {
+            result = "O-O";
+        } else {
+            result = getFrom().nameLowerCase();
+            result += "-";
+            result += getTo().nameLowerCase();
+            if (isPromotion()) {
+                result += getPromotion().getCharCode();
+            }
+        }
+
+        return result;
+    }
+
 
     @Override
     public int hashCode() {

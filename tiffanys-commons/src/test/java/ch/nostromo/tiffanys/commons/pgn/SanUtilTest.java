@@ -9,18 +9,18 @@ import ch.nostromo.tiffanys.commons.fen.FenFormat;
 import ch.nostromo.tiffanys.commons.move.Move;
 import org.junit.Test;
 
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.A3;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.B1;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C3;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D2;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D3;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D5;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D7;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D8;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E2;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E4;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F7;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F8;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.A3;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.B1;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.C3;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.D2;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.D3;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.D5;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.D7;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.D8;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.E2;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.E4;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.F7;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.F8;
 import static org.junit.Assert.assertEquals;
 
 public class SanUtilTest extends TestHelper {

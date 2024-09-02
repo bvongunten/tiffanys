@@ -13,9 +13,9 @@ public class OpeningBookUtil {
             if (move.getCastling() != null) {
                 result.append(move.getCastling());
             } else {
-                result.append(BoardUtil.fieldToCoord(move.getFrom().getIdx()));
+                result.append(move.getFrom().nameLowerCase());
                 result.append(";");
-                result.append(BoardUtil.fieldToCoord(move.getTo().getIdx()));
+                result.append(move.getTo().nameLowerCase());
                 if (move.getPromotion() != null) {
                     result.append(";");
                     result.append(move.getPromotion());

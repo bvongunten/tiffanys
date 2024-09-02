@@ -1,34 +1,27 @@
-package ch.nostromo.tiffanys.commons.fields;
+package ch.nostromo.tiffanys.commons.board;
 
 import ch.nostromo.tiffanys.commons.enums.FieldType;
 import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.enums.Piece;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
-public class Field implements Cloneable {
+public class BoardField implements Cloneable {
 
     FieldType type;
     Piece piece = null;
     GameColor pieceColor = null;
 
-    public Field(FieldType type) {
+    public BoardField(FieldType type) {
         this.type = type;
     }
 
     @Override
-    public Field clone() {
-
-        Field clone;
+    public BoardField clone() {
         try {
-            clone = (Field) super.clone();
+            return (BoardField) super.clone();
         } catch (CloneNotSupportedException e) {
             throw new IllegalStateException("Unable to clone field", e);
         }
-
-        return clone;
-
     }
 }

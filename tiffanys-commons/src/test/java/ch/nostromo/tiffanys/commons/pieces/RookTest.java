@@ -11,21 +11,21 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.A4;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.B4;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C4;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D1;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D2;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D3;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D4;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D5;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D6;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D7;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D8;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E4;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F4;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.G4;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.H4;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.A4;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.B4;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.C4;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.D1;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.D2;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.D3;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.D4;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.D5;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.D6;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.D7;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.D8;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.E4;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.F4;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.G4;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.H4;
 
 public class RookTest extends TestHelper {
 

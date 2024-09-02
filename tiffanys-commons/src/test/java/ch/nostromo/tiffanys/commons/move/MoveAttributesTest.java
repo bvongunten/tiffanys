@@ -6,10 +6,10 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E2;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E4;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E5;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E7;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.E2;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.E4;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.E5;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.E7;
 import static org.junit.Assert.assertEquals;
 
 public class MoveAttributesTest {

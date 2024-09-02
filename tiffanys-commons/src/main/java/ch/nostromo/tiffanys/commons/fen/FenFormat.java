@@ -1,18 +1,14 @@
 package ch.nostromo.tiffanys.commons.fen;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Objects;
 import java.util.StringTokenizer;
 
 @Data
 public class FenFormat {
-    public static final String INITIAL_BOARD = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
-    public static final FenFormat START_FEN = new FenFormat(INITIAL_BOARD);
-
+    public static final FenFormat INITIAL_FEN = new FenFormat("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 
     protected String position;
     protected String colorToMove;

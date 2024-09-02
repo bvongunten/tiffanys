@@ -3,7 +3,7 @@ package ch.nostromo.tiffanys.commons.app;
 public class Application {
 
 
-    public static final String VERSION = "0.9.0";
+    public static final String VERSION = "0.10.0";
 
     public static final String APPLICATION = "Tiffanys";
 

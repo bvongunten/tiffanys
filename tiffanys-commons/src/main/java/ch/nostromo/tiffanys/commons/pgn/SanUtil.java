@@ -38,22 +38,22 @@ public class SanUtil {
             String result = "";
 
             List<Move> legalMoves = RulesUtil.getLegalMoves(board, colorToMove);
-            Piece movedPiece = board.getFields()[move.getFrom().getIdx()].getPiece();
+            Piece movedPiece = board.getBoardFields()[move.getFrom().getIdx()].getPiece();
 
-            String row = move.getFrom().name().toLowerCase().substring(1, 2);
-            String col = move.getFrom().name().toLowerCase().substring(0, 1);
+            String row = move.getFrom().nameLowerCase().substring(1, 2);
+            String col = move.getFrom().nameLowerCase().substring(0, 1);
 
             boolean onSameRow = false;
             boolean onSameCol = false;
             boolean same = false;
 
             for (Move legalMove : legalMoves) {
-                if (!legalMove.isCastling() && board.getFields()[legalMove.getFrom().getIdx()].getPiece() == movedPiece
+                if (!legalMove.isCastling() && board.getBoardFields()[legalMove.getFrom().getIdx()].getPiece() == movedPiece
                         && legalMove.getFrom() != move.getFrom() && legalMove.getTo() == move.getTo()) {
-                    if (legalMove.getFrom().name().toLowerCase().endsWith(row)) {
+                    if (legalMove.getFrom().nameLowerCase().endsWith(row)) {
                         onSameRow = true;
                     }
-                    if (legalMove.getFrom().name().toLowerCase().startsWith(col)) {
+                    if (legalMove.getFrom().nameLowerCase().startsWith(col)) {
                         onSameCol = true;
                     }
                     same = true;
@@ -62,12 +62,12 @@ public class SanUtil {
 
             if (movedPiece == Piece.PAWN) {
 
-                if (onSameRow || board.getFields()[move.getTo().getIdx()].getPiece() != null
+                if (onSameRow || board.getBoardFields()[move.getTo().getIdx()].getPiece() != null
                         || (board.getEnPassantField() != null && board.getEnPassantField().getIdx() == move.getTo().getIdx())) {
-                    result += move.getFrom().name().toLowerCase().substring(0, 1);
+                    result += move.getFrom().nameLowerCase().substring(0, 1);
                 }
 
-                if (board.getFields()[move.getTo().getIdx()].getPiece() != null || (board.getEnPassantField() != null && board.getEnPassantField().getIdx() == move.getTo().getIdx())) {
+                if (board.getBoardFields()[move.getTo().getIdx()].getPiece() != null || (board.getEnPassantField() != null && board.getEnPassantField().getIdx() == move.getTo().getIdx())) {
                     result += "x";
                 }
 
@@ -79,20 +79,20 @@ public class SanUtil {
                 if (none) {
                     result += movedPiece.getCharCode();
                 } else if (both) {
-                    result += movedPiece.getCharCode() + move.getFrom().name().toLowerCase();
+                    result += movedPiece.getCharCode() + move.getFrom().nameLowerCase();
                 } else if (onSameCol) {
-                    result += movedPiece.getCharCode() + move.getFrom().name().toLowerCase().substring(1, 2);
+                    result += movedPiece.getCharCode() + move.getFrom().nameLowerCase().substring(1, 2);
                 } else if (onSameRow || same) {
-                    result += movedPiece.getCharCode() + move.getFrom().name().toLowerCase().substring(0, 1);
+                    result += movedPiece.getCharCode() + move.getFrom().nameLowerCase().substring(0, 1);
                 }
 
-                if (board.getFields()[move.getTo().getIdx()].getPiece() != null) {
+                if (board.getBoardFields()[move.getTo().getIdx()].getPiece() != null) {
                     result += "x";
                 }
 
             }
 
-            result += move.getTo().name().toLowerCase();
+            result += move.getTo().nameLowerCase();
 
             if (move.isPromotion()) {
                 result += "=" + move.getPromotion().getCharCode();
@@ -193,15 +193,15 @@ public class SanUtil {
             // Get legal move by remaining moveDescription
             int filteredMovesCount = 0;
             for (Move legalMove : legalMoves) {
-                if (!legalMove.isCastling() && board.getFields()[legalMove.getFrom().getIdx()].getPiece() == movedPiece
+                if (!legalMove.isCastling() && board.getBoardFields()[legalMove.getFrom().getIdx()].getPiece() == movedPiece
                         && legalMove.getTo().name().equalsIgnoreCase(to)) {
                     // @formatter:off
                     if ((disambiguatePart.length() == 0
                             || disambiguatePart.length() == 2 && legalMove.getFrom().name().equalsIgnoreCase(disambiguatePart)
                             || disambiguatePart.length() == 1 && Character.isDigit(disambiguatePart.charAt(0))
-                                    && legalMove.getFrom().name().toLowerCase().endsWith(disambiguatePart)
+                                    && legalMove.getFrom().nameLowerCase().endsWith(disambiguatePart)
                             || disambiguatePart.length() == 1 && Character.isLetter(disambiguatePart.charAt(0))
-                                    && legalMove.getFrom().name().toLowerCase().startsWith(disambiguatePart))
+                                    && legalMove.getFrom().nameLowerCase().startsWith(disambiguatePart))
                             && ((isPromotion && legalMove.getPromotion() == promotedPiece) || !isPromotion)) {
                         legalMoveFound = legalMove;
                         filteredMovesCount++;

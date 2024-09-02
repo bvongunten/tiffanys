@@ -1,7 +1,7 @@
 package ch.nostromo.tiffanys.commons.pieces;
 
 import ch.nostromo.tiffanys.commons.board.Board;
-import ch.nostromo.tiffanys.commons.board.BoardCoordinates;
+import ch.nostromo.tiffanys.commons.enums.Coordinates;
 import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.enums.Piece;
 import ch.nostromo.tiffanys.commons.move.Move;
@@ -12,12 +12,12 @@ public class Pawn extends AbstractPiece {
 
     private void createMoves(List<Move> moves, int from, int to) {
         if (to > 90 || to < 29) {
-            moves.add(new Move(BoardCoordinates.byIdx(from), BoardCoordinates.byIdx(to), Piece.KNIGHT));
-            moves.add(new Move(BoardCoordinates.byIdx(from), BoardCoordinates.byIdx(to), Piece.QUEEN));
-            moves.add(new Move(BoardCoordinates.byIdx(from), BoardCoordinates.byIdx(to), Piece.ROOK));
-            moves.add(new Move(BoardCoordinates.byIdx(from), BoardCoordinates.byIdx(to), Piece.BISHOP));
+            moves.add(new Move(Coordinates.byIdx(from), Coordinates.byIdx(to), Piece.KNIGHT));
+            moves.add(new Move(Coordinates.byIdx(from), Coordinates.byIdx(to), Piece.QUEEN));
+            moves.add(new Move(Coordinates.byIdx(from), Coordinates.byIdx(to), Piece.ROOK));
+            moves.add(new Move(Coordinates.byIdx(from), Coordinates.byIdx(to), Piece.BISHOP));
         } else {
-            moves.add(new Move(BoardCoordinates.byIdx(from), BoardCoordinates.byIdx(to)));
+            moves.add(new Move(Coordinates.byIdx(from), Coordinates.byIdx(to)));
         }
     }
 
@@ -37,11 +37,11 @@ public class Pawn extends AbstractPiece {
         toField = startPos + (20 * colorToMove.getCalculationModificator());
         if (colorToMove == GameColor.WHITE) {
             if (startPos < 39 && !board.containsPiece(toField1) && !board.containsPiece(toField)) {
-                moves.add(new Move(BoardCoordinates.byIdx(startPos), BoardCoordinates.byIdx(toField)));
+                moves.add(new Move(Coordinates.byIdx(startPos), Coordinates.byIdx(toField)));
             }
         } else {
             if (startPos > 80 && !board.containsPiece(toField1) && !board.containsPiece(toField)) {
-                moves.add(new Move(BoardCoordinates.byIdx(startPos), BoardCoordinates.byIdx(toField)));
+                moves.add(new Move(Coordinates.byIdx(startPos), Coordinates.byIdx(toField)));
             }
         }
 
@@ -54,7 +54,7 @@ public class Pawn extends AbstractPiece {
         // also for enpassant
         if (board.getEnPassantField() != null) {
             if (toField == board.getEnPassantField().getIdx()) {
-                moves.add(new Move(BoardCoordinates.byIdx(startPos), BoardCoordinates.byIdx(toField)));
+                moves.add(new Move(Coordinates.byIdx(startPos), Coordinates.byIdx(toField)));
             }
         }
 
@@ -67,7 +67,7 @@ public class Pawn extends AbstractPiece {
         // also for enpassant
         if (board.getEnPassantField() != null) {
             if (toField == board.getEnPassantField().getIdx()) {
-                moves.add(new Move(BoardCoordinates.byIdx(startPos), BoardCoordinates.byIdx(toField)));
+                moves.add(new Move(Coordinates.byIdx(startPos), Coordinates.byIdx(toField)));
             }
         }
     }

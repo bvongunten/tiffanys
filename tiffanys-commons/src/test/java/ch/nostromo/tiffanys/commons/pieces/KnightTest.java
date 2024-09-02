@@ -11,15 +11,15 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.B3;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.B5;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C2;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.C6;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.D4;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E2;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E6;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F3;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F5;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.B3;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.B5;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.C2;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.C6;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.D4;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.E2;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.E6;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.F3;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.F5;
 
 public class KnightTest extends TestHelper {
 

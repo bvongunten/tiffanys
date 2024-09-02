@@ -113,9 +113,9 @@ public class EpdMateTest {
         }
 
         if (move.isPromotion()) {
-            return move.getFrom().name().toLowerCase() + "-" + move.getTo().name().toLowerCase() + move.getPromotion().getCharCode();
+            return move.getFrom().nameLowerCase() + "-" + move.getTo().nameLowerCase() + move.getPromotion().getCharCode();
         } else {
-            return move.getFrom().name().toLowerCase() + "-" + move.getTo().name().toLowerCase();
+            return move.getFrom().nameLowerCase() + "-" + move.getTo().nameLowerCase();
         }
     }
 

@@ -1,7 +1,7 @@
 package ch.nostromo.tiffanys.commons.pieces;
 
 import ch.nostromo.tiffanys.commons.board.Board;
-import ch.nostromo.tiffanys.commons.board.BoardCoordinates;
+import ch.nostromo.tiffanys.commons.enums.Coordinates;
 import ch.nostromo.tiffanys.commons.enums.Castling;
 import ch.nostromo.tiffanys.commons.enums.Direction;
 import ch.nostromo.tiffanys.commons.enums.GameColor;
@@ -41,14 +41,14 @@ public class King extends AbstractPiece {
 
     private void checkAndAddPossibleCasting(List<Move> moves, Board board, Castling castling) {
         // check empty
-        for (BoardCoordinates boardCoordinates : castling.getMustBeEmpty()) {
-            if (board.containsPiece(boardCoordinates.getIdx())) {
+        for (Coordinates coordinates : castling.getMustBeEmpty()) {
+            if (board.containsPiece(coordinates.getIdx())) {
                 return;
             }
         }
         // check against check ;-)
-        for (BoardCoordinates boardCoordinates : castling.getMustNotBeCheck()) {
-            if (isKingAttacked(board, boardCoordinates.getIdx(), castling.getColorToMove())) {
+        for (Coordinates coordinates : castling.getMustNotBeCheck()) {
+            if (isKingAttacked(board, coordinates.getIdx(), castling.getColorToMove())) {
                 return;
             }
         }

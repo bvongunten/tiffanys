@@ -1,8 +1,7 @@
 package ch.nostromo.tiffanys.uci.utils;
 
 import ch.nostromo.tiffanys.commons.board.Board;
-import ch.nostromo.tiffanys.commons.board.BoardCoordinates;
-import ch.nostromo.tiffanys.commons.board.BoardUtil;
+import ch.nostromo.tiffanys.commons.enums.Coordinates;
 import ch.nostromo.tiffanys.commons.enums.Castling;
 import ch.nostromo.tiffanys.commons.enums.Piece;
 import ch.nostromo.tiffanys.commons.move.Move;
@@ -14,11 +13,11 @@ public class UciMoveTranslator {
 
         String result;
         if (move.getCastling() != null) {
-            result = BoardUtil.fieldToCoord(move.getCastling().getFromKing().getIdx());
-            result += BoardUtil.fieldToCoord(move.getCastling().getToKing().getIdx());
+            result = move.getCastling().getFromKing().nameLowerCase();
+            result += move.getCastling().getToKing().nameLowerCase();
         } else {
-            result = move.getFrom().name().toLowerCase();
-            result += move.getTo().name().toLowerCase();
+            result = move.getFrom().nameLowerCase();
+            result += move.getTo().nameLowerCase();
             if (move.isPromotion()) {
                 result += move.getPromotion().getCharCode();
             }
@@ -31,8 +30,8 @@ public class UciMoveTranslator {
         String froms = move.substring(0, 2);
         String tos = move.substring(2, 4);
 
-        BoardCoordinates from = BoardCoordinates.byName(froms);
-        BoardCoordinates to = BoardCoordinates.byName(tos);
+        Coordinates from = Coordinates.byName(froms);
+        Coordinates to = Coordinates.byName(tos);
 
 
 

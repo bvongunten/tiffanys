@@ -28,4 +28,6 @@ public enum GameColor implements ColorInvertor {
         this.calculationModificator = calculationModificator;
     }
 
+
+
 }

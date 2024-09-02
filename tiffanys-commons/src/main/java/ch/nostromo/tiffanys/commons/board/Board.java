@@ -1,11 +1,11 @@
 package ch.nostromo.tiffanys.commons.board;
 
+import ch.nostromo.tiffanys.commons.enums.Coordinates;
 import ch.nostromo.tiffanys.commons.enums.Castling;
 import ch.nostromo.tiffanys.commons.enums.FieldType;
 import ch.nostromo.tiffanys.commons.enums.GameColor;
 import ch.nostromo.tiffanys.commons.enums.Piece;
 import ch.nostromo.tiffanys.commons.fen.FenFormat;
-import ch.nostromo.tiffanys.commons.fields.Field;
 import ch.nostromo.tiffanys.commons.move.Move;
 import lombok.Data;
 
@@ -17,9 +17,9 @@ public class Board implements Cloneable {
 
     Logger logger = Logger.getLogger(getClass().getName());
 
-    Field[] fields = new Field[120];
+    BoardField[] boardFields = new BoardField[120];
 
-    BoardCoordinates enPassantField;
+    Coordinates enPassantField;
 
     boolean castlingWhiteShortAllowed;
     boolean castlingBlackShortAllowed;
@@ -27,7 +27,7 @@ public class Board implements Cloneable {
     boolean castlingBlackLongAllowed;
 
     public Board() {
-        this(FenFormat.START_FEN);
+        this(FenFormat.INITIAL_FEN);
     }
 
     public Board(FenFormat fenFormat) {
@@ -42,13 +42,13 @@ public class Board implements Cloneable {
 
     private void initializeFields() {
         // Reset
-        for (int i = 0; i < fields.length; i++) {
-            fields[i] = new Field(FieldType.VOID);
+        for (int i = 0; i < boardFields.length; i++) {
+            boardFields[i] = new BoardField(FieldType.VOID);
         }
 
         // Add legal fields
-        for (BoardCoordinates coordinates : BoardCoordinates.values()) {
-            fields[coordinates.getIdx()] = new Field(FieldType.LEGAL);
+        for (Coordinates coordinates : Coordinates.values()) {
+            boardFields[coordinates.getIdx()] = new BoardField(FieldType.LEGAL);
         }
     }
 
@@ -56,7 +56,9 @@ public class Board implements Cloneable {
 
         // Set position
         String position = fenFormat.getPosition();
+
         StringTokenizer positionTokenizer = new StringTokenizer(position, "/");
+
         int currLineIdx = 9;
         while (positionTokenizer.hasMoreTokens()) {
             String line = positionTokenizer.nextToken();
@@ -68,34 +70,12 @@ public class Board implements Cloneable {
                 } else {
 
                     int toBePlacedId = currLineIdx * 10 + fieldIdx;
-                    if (c == 'K') {
-                        setPieceAndColor(toBePlacedId, Piece.KING, GameColor.WHITE);
-                    } else if (c == 'Q') {
-                        setPieceAndColor(toBePlacedId, Piece.QUEEN, GameColor.WHITE);
-                    } else if (c == 'R') {
-                        setPieceAndColor(toBePlacedId, Piece.ROOK, GameColor.WHITE);
-                    } else if (c == 'B') {
-                        setPieceAndColor(toBePlacedId, Piece.BISHOP, GameColor.WHITE);
-                    } else if (c == 'N') {
-                        setPieceAndColor(toBePlacedId, Piece.KNIGHT, GameColor.WHITE);
-                    } else if (c == 'P') {
-                        setPieceAndColor(toBePlacedId, Piece.PAWN, GameColor.WHITE);
-                    } else if (c == 'k') {
-                        setPieceAndColor(toBePlacedId, Piece.KING, GameColor.BLACK);
-                    } else if (c == 'q') {
-                        setPieceAndColor(toBePlacedId, Piece.QUEEN, GameColor.BLACK);
-                    } else if (c == 'r') {
-                        setPieceAndColor(toBePlacedId, Piece.ROOK, GameColor.BLACK);
-                    } else if (c == 'b') {
-                        setPieceAndColor(toBePlacedId, Piece.BISHOP, GameColor.BLACK);
-                    } else if (c == 'n') {
-                        setPieceAndColor(toBePlacedId, Piece.KNIGHT, GameColor.BLACK);
-                    } else if (c == 'p') {
-                        setPieceAndColor(toBePlacedId, Piece.PAWN, GameColor.BLACK);
-                    } else {
-                        throw new IllegalArgumentException(
-                                "Unknown piece code: " + c + " on fen position: " + position);
-                    }
+
+                    Piece piece = Piece.getPieceByCharCode(Character.toString(c));
+                    GameColor color = Character.isUpperCase(c) ? GameColor.WHITE : GameColor.BLACK;
+
+                    setPieceAndColor(toBePlacedId, piece, color);
+
                     fieldIdx++;
                 }
             }
@@ -113,13 +93,12 @@ public class Board implements Cloneable {
         // Ep field
         String epField = fenFormat.getEnPassant();
         if (!epField.equals("-")) {
-            this.enPassantField = BoardCoordinates.byIdx(BoardUtil.coordToField(epField));
+            this.enPassantField = Coordinates.byIdx(BoardUtil.coordToField(epField));
         } else {
             this.enPassantField = null;
         }
 
     }
-
 
 
     public String getFenPosition() {
@@ -128,17 +107,17 @@ public class Board implements Cloneable {
             String line = "";
             int sinceLast = 0;
             for (int i = n * 10 + 1; i <= n * 10 + 8; i++) {
-                if (fields[i].getPiece() == null) {
+                if (boardFields[i].getPiece() == null) {
                     sinceLast++;
                 } else {
                     if (sinceLast > 0) {
                         line += sinceLast;
                         sinceLast = 0;
                     }
-                    if (fields[i].getPieceColor() == GameColor.WHITE) {
-                        line += fields[i].getPiece().getCharCode().toUpperCase();
+                    if (boardFields[i].getPieceColor() == GameColor.WHITE) {
+                        line += boardFields[i].getPiece().getCharCode().toUpperCase();
                     } else {
-                        line += fields[i].getPiece().getCharCode().toLowerCase();
+                        line += boardFields[i].getPiece().getCharCode().toLowerCase();
                     }
                 }
             }
@@ -180,7 +159,7 @@ public class Board implements Cloneable {
     public String getFenEnpassant() {
         String enPassant = "";
         if (enPassantField != null) {
-            enPassant = BoardUtil.fieldToCoord(enPassantField.getIdx());
+            enPassant = enPassantField.nameLowerCase();
         } else {
             enPassant = "-";
         }
@@ -191,8 +170,8 @@ public class Board implements Cloneable {
 
     public int getPieceCount() {
         int pieceCount = 0;
-        for (Field field : fields) {
-            if (field.getPiece() != null) {
+        for (BoardField boardField : boardFields) {
+            if (boardField.getPiece() != null) {
                 pieceCount++;
             }
         }
@@ -241,35 +220,35 @@ public class Board implements Cloneable {
     }
 
     public GameColor getPieceColor(int idx) {
-        if (fields[idx].getPiece() == null) {
+        if (boardFields[idx].getPiece() == null) {
             throw new IllegalArgumentException("No piece at idx: " + idx);
         }
-        return fields[idx].getPieceColor();
+        return boardFields[idx].getPieceColor();
     }
 
     public boolean containsPiece(int idx) {
-        return fields[idx].getPiece() != null;
+        return boardFields[idx].getPiece() != null;
     }
 
     public boolean isVoid(int idx) {
-        return fields[idx].getType() == FieldType.VOID;
+        return boardFields[idx].getType() == FieldType.VOID;
     }
 
     public boolean isPieceAndColor(int idx, Piece piece, GameColor color) {
-        return fields[idx].getPieceColor() == color && fields[idx].getPiece() == piece;
+        return boardFields[idx].getPieceColor() == color && boardFields[idx].getPiece() == piece;
     }
 
     private void setPieceAndColor(int idx, Piece piece, GameColor color) {
-        fields[idx].setPiece(piece);
-        fields[idx].setPieceColor(color);
+        boardFields[idx].setPiece(piece);
+        boardFields[idx].setPieceColor(color);
     }
 
     private void movePiece(int from, int to) {
-        fields[to].setPiece(fields[from].getPiece());
-        fields[to].setPieceColor(fields[from].getPieceColor());
+        boardFields[to].setPiece(boardFields[from].getPiece());
+        boardFields[to].setPieceColor(boardFields[from].getPieceColor());
 
-        fields[from].setPiece(null);
-        fields[from].setPieceColor(null);
+        boardFields[from].setPiece(null);
+        boardFields[from].setPieceColor(null);
     }
 
     public void applyMove(Move move, GameColor colorToMove) {
@@ -282,8 +261,8 @@ public class Board implements Cloneable {
             // promotion
 
             setPieceAndColor(move.getTo().getIdx(), move.getPromotion(), colorToMove);
-            fields[move.getFrom().getIdx()].setPiece(null);
-            fields[move.getFrom().getIdx()].setPieceColor(null);
+            boardFields[move.getFrom().getIdx()].setPiece(null);
+            boardFields[move.getFrom().getIdx()].setPieceColor(null);
 
             this.enPassantField = null;
 
@@ -310,13 +289,13 @@ public class Board implements Cloneable {
 
             this.enPassantField = null;
 
-        } else if (fields[move.getFrom().getIdx()].getPiece() == Piece.PAWN && enPassantField != null && move.getTo().getIdx() == enPassantField.getIdx()) {
+        } else if (boardFields[move.getFrom().getIdx()].getPiece() == Piece.PAWN && enPassantField != null && move.getTo().getIdx() == enPassantField.getIdx()) {
             // en passant
 
             movePiece(move.getFrom().getIdx(), move.getTo().getIdx());
             int epIdx = move.getTo().getIdx() + (colorToMove.getCalculationModificator() * 10) * -1;
-            fields[epIdx].setPiece(null);
-            fields[epIdx].setPieceColor(null);
+            boardFields[epIdx].setPiece(null);
+            boardFields[epIdx].setPieceColor(null);
 
             this.enPassantField = null;
 
@@ -347,8 +326,8 @@ public class Board implements Cloneable {
             }
 
             // En Passant field to be set?
-            if (fields[move.getFrom().getIdx()].getPiece() == Piece.PAWN && Math.abs(move.getFrom().getIdx() - move.getTo().getIdx()) == 20) {
-                this.enPassantField = BoardCoordinates.byIdx(move.getTo().getIdx() + (colorToMove.getCalculationModificator() * 10) * -1);
+            if (boardFields[move.getFrom().getIdx()].getPiece() == Piece.PAWN && Math.abs(move.getFrom().getIdx() - move.getTo().getIdx()) == 20) {
+                this.enPassantField = Coordinates.byIdx(move.getTo().getIdx() + (colorToMove.getCalculationModificator() * 10) * -1);
             } else {
                 this.enPassantField = null;
             }
@@ -370,10 +349,10 @@ public class Board implements Cloneable {
         }
 
         // Clone fields
-        clone.fields = new Field[fields.length];
+        clone.boardFields = new BoardField[boardFields.length];
 
-        for (int i = 0; i < fields.length; i++) {
-            clone.fields[i] = fields[i].clone();
+        for (int i = 0; i < boardFields.length; i++) {
+            clone.boardFields[i] = boardFields[i].clone();
         }
 
         return clone;

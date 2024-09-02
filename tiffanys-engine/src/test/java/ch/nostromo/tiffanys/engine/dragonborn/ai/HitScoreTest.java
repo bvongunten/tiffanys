@@ -9,8 +9,8 @@ import ch.nostromo.tiffanys.engine.dragonborn.board.RobustBoard;
 import ch.nostromo.tiffanys.engine.dragonborn.move.EngineMove;
 import org.junit.Test;
 
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E6;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F7;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.E6;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.F7;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 

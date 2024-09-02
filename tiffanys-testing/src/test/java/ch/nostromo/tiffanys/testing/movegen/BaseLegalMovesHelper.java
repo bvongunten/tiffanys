@@ -66,11 +66,11 @@ public class BaseLegalMovesHelper {
         boolean isNormalHit = false;
 
         if (board.getEnPassantField() != null) {
-            isEPHit = board.getFields()[move.getFrom().getIdx()].getPiece() == Piece.PAWN && move.getTo().getIdx() == board.getEnPassantField().getIdx();
+            isEPHit = board.getBoardFields()[move.getFrom().getIdx()].getPiece() == Piece.PAWN && move.getTo().getIdx() == board.getEnPassantField().getIdx();
         }
 
         if (move.getTo()!= null) {
-           isNormalHit = board.getFields()[move.getTo().getIdx()].getPiece() != null;
+           isNormalHit = board.getBoardFields()[move.getTo().getIdx()].getPiece() != null;
         }
 
         return isEPHit || isNormalHit;

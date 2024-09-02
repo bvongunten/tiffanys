@@ -10,8 +10,8 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.E5;
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.F4;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.E5;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.F4;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 

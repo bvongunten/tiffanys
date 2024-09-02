@@ -1,7 +1,6 @@
 package ch.nostromo.tiffanys.commons.board;
 
 import ch.nostromo.tiffanys.commons.enums.GameColor;
-import ch.nostromo.tiffanys.commons.fields.Field;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -27,17 +26,17 @@ public class BoardUtil {
         String result = ((beg - 11) / 10) + " ";
         for (int i = beg; i <= end; i++) {
 
-            Field field = board.getFields()[i];
+            BoardField boardField = board.getBoardFields()[i];
 
-            if (field.getPiece() == null) {
+            if (boardField.getPiece() == null) {
                 result += "[] ";
             } else {
-                if (field.getPieceColor() == GameColor.WHITE) {
+                if (boardField.getPieceColor() == GameColor.WHITE) {
                     result += "W";
                 } else {
                     result += "B";
                 }
-                result += field.getPiece().getCharCode();
+                result += boardField.getPiece().getCharCode();
                 result += " ";
             }
 
@@ -79,7 +78,7 @@ public class BoardUtil {
 
     }
 
-    public static String fieldToCoord(int field) {
+    private static String fieldToCoord(int field) {
         String result = "";
 
         int tmp = (field / 10);

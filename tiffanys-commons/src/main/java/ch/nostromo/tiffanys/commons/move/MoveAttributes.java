@@ -3,8 +3,6 @@ package ch.nostromo.tiffanys.commons.move;
 import ch.nostromo.tiffanys.commons.enums.GameColor;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 
@@ -33,7 +31,7 @@ public class MoveAttributes {
             result += ", pv=";
 
             for (Move pvMove : principalVariations) {
-                result += MoveTranslator.moveToString(pvMove) + " ";
+                result += pvMove.generateMoveDetailString() + " ";
             }
 
         }

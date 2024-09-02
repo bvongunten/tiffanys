@@ -11,7 +11,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ch.nostromo.tiffanys.commons.board.BoardCoordinates.*;
+import static ch.nostromo.tiffanys.commons.enums.Coordinates.*;
 
 public class BishopTest extends TestHelper {
 

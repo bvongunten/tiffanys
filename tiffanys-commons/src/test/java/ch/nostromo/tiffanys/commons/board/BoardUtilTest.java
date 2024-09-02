@@ -11,8 +11,8 @@ public class BoardUtilTest extends TestHelper {
     @Test
     public void testDump() {
 
-        // @formatter:off    
-        String baseBoard = 
+        // @formatter:off
+        String baseBoard =
         "8 BR BN BB BQ BK BB BN BR \n" +
         "7 BP BP BP BP BP BP BP BP \n" +
         "6 [] [] [] [] [] [] [] [] \n" +
@@ -57,29 +57,5 @@ public class BoardUtilTest extends TestHelper {
         BoardUtil.coordToField("A9");
     }
 
-    @Test
-    public void testFieldToCoord() {
-        assertEquals("a1", BoardUtil.fieldToCoord(21));
-        assertEquals("a8", BoardUtil.fieldToCoord(91));
-        assertEquals("h1", BoardUtil.fieldToCoord(28));
-        assertEquals("h8", BoardUtil.fieldToCoord(98));
-
-        assertEquals("b2", BoardUtil.fieldToCoord(32));
-        assertEquals("c3", BoardUtil.fieldToCoord(43));
-        assertEquals("d4", BoardUtil.fieldToCoord(54));
-        assertEquals("e5", BoardUtil.fieldToCoord(65));
-        assertEquals("f6", BoardUtil.fieldToCoord(76));
-        assertEquals("g7", BoardUtil.fieldToCoord(87));
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testFieldToCoordInvaildCol() {
-        BoardUtil.fieldToCoord(29);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testFieldToCoordInvaildRow() {
-        BoardUtil.fieldToCoord(11);
-    }
 
 }
