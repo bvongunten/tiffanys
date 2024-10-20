@@ -93,7 +93,7 @@ public class Board implements Cloneable {
         // Ep field
         String epField = fenFormat.getEnPassant();
         if (!epField.equals("-")) {
-            this.enPassantField = Coordinates.byIdx(BoardUtil.coordToField(epField));
+            this.enPassantField = Coordinates.byName(epField);
         } else {
             this.enPassantField = null;
         }
@@ -360,7 +360,40 @@ public class Board implements Cloneable {
 
     @Override
     public String toString() {
-        return BoardUtil.dumpBoard(this);
+        String result = "";
+        result += dumpRow(91, 98);
+        result += dumpRow(81, 88);
+        result += dumpRow(71, 78);
+        result += dumpRow(61, 68);
+        result += dumpRow(51, 58);
+        result += dumpRow(41, 48);
+        result += dumpRow(31, 38);
+        result += dumpRow(21, 28);
+        result += "  A  B  C  D  E  F  G  H  ";
+
+        return result;
+    }
+
+    private String dumpRow(int beg, int end) {
+        String result = ((beg - 11) / 10) + " ";
+        for (int i = beg; i <= end; i++) {
+
+            BoardField boardField = getBoardFields()[i];
+
+            if (boardField.getPiece() == null) {
+                result += "[] ";
+            } else {
+                if (boardField.getPieceColor() == GameColor.WHITE) {
+                    result += "W";
+                } else {
+                    result += "B";
+                }
+                result += boardField.getPiece().getCharCode();
+                result += " ";
+            }
+
+        }
+        return result + "\n";
     }
 
 }

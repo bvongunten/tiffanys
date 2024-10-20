@@ -304,7 +304,7 @@ public class BoardTest extends TestHelper {
         FenFormat fen = new FenFormat("r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1");
 
         Board board = new Board(fen);
-        board.applyMove(new Move(A1,B1), GameColor.WHITE);
+        board.applyMove(new Move(A1, B1), GameColor.WHITE);
         assertTrue(board.castlingBlackLongAllowed);
         assertTrue(board.castlingBlackShortAllowed);
         assertFalse(board.castlingWhiteLongAllowed);
@@ -384,4 +384,22 @@ public class BoardTest extends TestHelper {
 
     }
 
+
+    @Test
+    public void testDump() {
+
+        // @formatter:off
+        String baseBoard = "8 BR BN BB BQ BK BB BN BR \n" +
+                           "7 BP BP BP BP BP BP BP BP \n" +
+                           "6 [] [] [] [] [] [] [] [] \n" +
+                           "5 [] [] [] [] [] [] [] [] \n" +
+                           "4 [] [] [] [] [] [] [] [] \n" +
+                           "3 [] [] [] [] [] [] [] [] \n" +
+                           "2 WP WP WP WP WP WP WP WP \n" +
+                           "1 WR WN WB WQ WK WB WN WR \n" +
+                           "  A  B  C  D  E  F  G  H  ";
+        //@formatter:on
+
+        assertEquals("Board Dump", baseBoard, new Board().toString());
+    }
 }

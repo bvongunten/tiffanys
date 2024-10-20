@@ -1,7 +1,6 @@
 package ch.nostromo.tiffanys.engine.commons.opening;
 
 import ch.nostromo.tiffanys.commons.ChessGame;
-import ch.nostromo.tiffanys.commons.board.BoardUtil;
 import ch.nostromo.tiffanys.commons.move.Move;
 
 public class OpeningBookUtil {
