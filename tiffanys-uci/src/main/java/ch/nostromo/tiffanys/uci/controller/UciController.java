@@ -1,20 +1,20 @@
 package ch.nostromo.tiffanys.uci.controller;
 
 import ch.nostromo.tiffanys.commons.ChessGame;
-import ch.nostromo.tiffanys.commons.ChessGameInfo;
-import ch.nostromo.tiffanys.commons.enums.GameColor;
-import ch.nostromo.tiffanys.commons.fen.FenFormat;
+import ch.nostromo.tiffanys.commons.utils.Constants;
+import ch.nostromo.tiffanys.commons.Side;
+import ch.nostromo.tiffanys.commons.formats.FenFormat;
+import ch.nostromo.tiffanys.commons.utils.LogUtils;
 import ch.nostromo.tiffanys.commons.move.Move;
-import ch.nostromo.tiffanys.commons.uci.UciMoveTranslator;
-import ch.nostromo.tiffanys.dragonborn.commons.Engine;
-import ch.nostromo.tiffanys.dragonborn.commons.EngineException;
-import ch.nostromo.tiffanys.dragonborn.commons.EngineSettings;
-import ch.nostromo.tiffanys.dragonborn.commons.events.EngineEvent;
-import ch.nostromo.tiffanys.dragonborn.commons.events.EngineEventListener;
-import ch.nostromo.tiffanys.dragonborn.commons.opening.OpeningBook;
-import ch.nostromo.tiffanys.dragonborn.engine.EngineFactory;
+import ch.nostromo.tiffanys.engine.commons.Engine;
+import ch.nostromo.tiffanys.engine.commons.EngineException;
+import ch.nostromo.tiffanys.engine.commons.EngineSettings;
+import ch.nostromo.tiffanys.engine.commons.events.EngineEvent;
+import ch.nostromo.tiffanys.engine.commons.events.EngineEventListener;
+import ch.nostromo.tiffanys.engine.commons.opening.OpeningBook;
+import ch.nostromo.tiffanys.engine.EngineFactory;
 import ch.nostromo.tiffanys.uci.UciApp;
-import ch.nostromo.tiffanys.uci.utils.logging.LogUtils;
+import ch.nostromo.tiffanys.uci.utils.UciMoveTranslator;
 import ch.nostromo.tiffanys.uci.utils.system.ConsoleScanner;
 import ch.nostromo.tiffanys.uci.utils.system.ConsoleScannerListener;
 
@@ -24,38 +24,38 @@ import java.util.logging.Logger;
 
 public class UciController implements ConsoleScannerListener, EngineEventListener {
 
-    private static Logger logger = Logger.getLogger(UciController.class.getName());
+    private static Logger LOG = Logger.getLogger(UciController.class.getName());
 
     private ConsoleScanner consoleScanner;
 
     // The currently running game
     private ChessGame game = null;
 
-    private UciOptions uciOptions = new UciOptions();
+    private final UciOptions uciOptions = new UciOptions();
     private Engine engine = null;
 
     private OpeningBook openingBook;
 
     /**
      * Initialize the application (read parameters, start logging etc.)
-     * 
+     *
      * @param args
      *            Command line arguments
      */
     public void init(String[] args) {
         try {
-            LogUtils.initializeLogging(Level.OFF, Level.ALL, UciApp.HOME_DIRECTORY, "tiffanys-uci.log");
+            LogUtils.initializeFileLogging(Level.INFO, UciApp.LOG_FILE);
 
             openingBook = new OpeningBook("/opening.txt");
 
-            logger.info("Creation of console scanner");
+            LOG.info("Creation of console scanner");
             consoleScanner = new ConsoleScanner(this);
             consoleScanner.start();
 
-            logger.info("Scanner started ...");
+            LOG.info("Scanner started ...");
 
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Shutting down, due to exception: " + e.getMessage(), e);
+            LOG.log(Level.SEVERE, "Shutting down, due to exception: " + e.getMessage(), e);
             doOutput("# Shutting down, due to exception: " + e.getMessage());
             handleCommandQuit();
         }
@@ -63,7 +63,7 @@ public class UciController implements ConsoleScannerListener, EngineEventListene
 
     private void handleCommandUci() {
         doOutput("id name " + UciApp.TITLE);
-        doOutput("id author " + UciApp.AUTHOR);
+        doOutput("id author " + Constants.AUTHOR);
 
         doOutput(uciOptions.getOptions());
 
@@ -73,7 +73,7 @@ public class UciController implements ConsoleScannerListener, EngineEventListene
     @Override
     public void handleInput(String cmd) {
         try {
-            logger.info("<==== From UCI: " + cmd);
+            LOG.info("<==== From UCI: " + cmd);
 
             // Filter commands
             if (cmd.equals("uci")) {
@@ -101,7 +101,7 @@ public class UciController implements ConsoleScannerListener, EngineEventListene
 
             } else if (cmd.startsWith("ucinewgame")) {
 
-                game = new ChessGame(new ChessGameInfo());
+                game = new ChessGame();
 
             } else if (cmd.startsWith("position startpos moves")) {
 
@@ -109,7 +109,7 @@ public class UciController implements ConsoleScannerListener, EngineEventListene
 
             } else if (cmd.startsWith("position startpos")) {
 
-                nandleCommandUciPositionStartPos();
+                handleCommandUciPositionStartPos();
 
                 // Do nothing
 
@@ -137,52 +137,54 @@ public class UciController implements ConsoleScannerListener, EngineEventListene
 
         } catch (Exception e) {
             doOutput("info Exception occured. Command: " + cmd + ", ErrorMessage: " + e.getMessage());
-            logger.log(Level.SEVERE, "Unexpected problem: " + e.getMessage(), e);
+            LOG.log(Level.SEVERE, "Unexpected problem: " + e.getMessage(), e);
         }
 
     }
 
-    private void nandleCommandUciPositionStartPos() {
-        game = new ChessGame(new ChessGameInfo());
+    private void handleCommandUciPositionStartPos() {
+        game = new ChessGame();
 
 
     }
 
     private void handleCommandUciStartposFen(String cmd) {
-        if (cmd.indexOf("moves") >= 0) {
+        if (cmd.contains("moves")) {
             String fen = cmd.substring(12, cmd.indexOf("moves"));
 
-            logger.fine("Fen received: " + fen);
-            
-            game = new ChessGame(new ChessGameInfo(), new FenFormat(fen));
+            LOG.fine("Fen received: " + fen);
+
+            game = new ChessGame(new FenFormat(fen));
 
             String moves = cmd.substring(cmd.indexOf("moves") + 6);
 
             StringTokenizer st = new StringTokenizer(moves);
             while (st.hasMoreTokens()) {
                 String move = st.nextToken();
-                logger.fine("Move received, entering move: " + move);
+                LOG.fine("Move received, entering move: " + move);
                 game.applyMove(UciMoveTranslator.uciStringToMove(move, game.getCurrentBoard()));
             }
 
         } else {
             String fen = cmd.substring(12);
-            game = new ChessGame(new ChessGameInfo(), new FenFormat(fen));
+            game = new ChessGame( new FenFormat(fen));
 
         }
 
     }
 
     private void handleCommandUciStartposMoves(String cmd) {
-        game = new ChessGame(new ChessGameInfo());
+        game = new ChessGame();
         String moves = cmd.substring(23);
 
         StringTokenizer st = new StringTokenizer(moves);
         while (st.hasMoreTokens()) {
             String move = st.nextToken();
-            logger.fine("Move received, entering move: " + move);
+            LOG.fine("Move received, entering move: " + move);
             game.applyMove(UciMoveTranslator.uciStringToMove(move, game.getCurrentBoard()));
         }
+
+        LOG.info("Board after entered moves:\n" + game.getCurrentBoard());
 
     }
 
@@ -190,13 +192,13 @@ public class UciController implements ConsoleScannerListener, EngineEventListene
 
         if (cmd.contains("depth")) {
 
-            int depth = Integer.valueOf(getCmdVal(cmd,"depth"));
+            int depth = Integer.parseInt(getCmdVal(cmd,"depth"));
 
             EngineSettings engineSettings = new EngineSettings();
             engineSettings.setMode(EngineSettings.EngineMode.DEPTH);
             engineSettings.setDepth(depth);
 
-            logger.info("Fixed depth, Enginesettings: " + engineSettings.toString());
+            LOG.info("Fixed depth, Enginesettings: " + engineSettings.toString());
 
 
             engine = EngineFactory.createEngine(engineSettings, openingBook);
@@ -207,20 +209,20 @@ public class UciController implements ConsoleScannerListener, EngineEventListene
 
             int remainingTime = 0;
 
-            if (game.getCurrentColorToMove() == GameColor.WHITE) {
-                remainingTime = Integer.valueOf(getCmdVal(cmd, "wtime"));
+            if (game.getCurrentSide() == Side.WHITE) {
+                remainingTime = Integer.parseInt(getCmdVal(cmd, "wtime"));
             } else {
-                remainingTime = Integer.valueOf(getCmdVal(cmd, "btime"));
+                remainingTime = Integer.parseInt(getCmdVal(cmd, "btime"));
             }
 
-            int movesToGo = Integer.valueOf(getCmdVal(cmd, "movestogo"));
+            int movesToGo = Integer.parseInt(getCmdVal(cmd, "movestogo"));
 
             EngineSettings engineSettings = new EngineSettings();
             engineSettings.setMode(EngineSettings.EngineMode.TIME_FOR_MOVE);
             engineSettings.setTime(remainingTime / movesToGo);
             engineSettings.setDepth(Integer.MAX_VALUE);
 
-            logger.info("Time for remaining moves (" + movesToGo +"), Enginesettings: " + engineSettings.toString());
+            LOG.info("Time for remaining moves (" + movesToGo +"), Enginesettings: " + engineSettings.toString());
 
             engine = EngineFactory.createEngine(engineSettings, openingBook);
             engine.addEventListener(this);
@@ -230,12 +232,12 @@ public class UciController implements ConsoleScannerListener, EngineEventListene
             int remainingTime = 0;
             int increase = 0;
 
-            if (game.getCurrentColorToMove() == GameColor.WHITE) {
-                remainingTime = Integer.valueOf(getCmdVal(cmd, "wtime"));
-                increase =  Integer.valueOf(getCmdVal(cmd, "winc"));
+            if (game.getCurrentSide() == Side.WHITE) {
+                remainingTime = Integer.parseInt(getCmdVal(cmd, "wtime"));
+                increase =  Integer.parseInt(getCmdVal(cmd, "winc"));
             } else {
-                remainingTime = Integer.valueOf(getCmdVal(cmd, "btime"));
-                increase =  Integer.valueOf(getCmdVal(cmd, "binc"));
+                remainingTime = Integer.parseInt(getCmdVal(cmd, "btime"));
+                increase =  Integer.parseInt(getCmdVal(cmd, "binc"));
             }
 
             // Always keep time for 30 moves
@@ -249,7 +251,7 @@ public class UciController implements ConsoleScannerListener, EngineEventListene
             engineSettings.setTime(time);
             engineSettings.setDepth(Integer.MAX_VALUE);
 
-            logger.info("Fix Time, Enginesettings: " + engineSettings.toString());
+            LOG.info("Fix Time, Enginesettings: " + engineSettings.toString());
 
             engine = EngineFactory.createEngine(engineSettings, openingBook);
             engine.addEventListener(this);
@@ -277,7 +279,7 @@ public class UciController implements ConsoleScannerListener, EngineEventListene
     }
 
     private void doOutput(String msg) {
-        logger.info("====> To UCI: " + msg);
+        LOG.info("====> To UCI: " + msg);
 
         System.out.println(msg);
     }
@@ -285,20 +287,20 @@ public class UciController implements ConsoleScannerListener, EngineEventListene
     private void handleCommandQuit() {
         consoleScanner.interrupt();
 
-        logger.info("Quitting UCI app");
+        LOG.info("Quitting UCI app");
 
         System.exit(0);
     }
 
     @Override
-    public void engineUpdateEventOccured(EngineEvent event) {
-        logger.fine("Update received from engine. Best move: " + event.getEngineResult().getSelectedMove());
+    public void handleEngineUpdate(EngineEvent event) {
+        LOG.info("Update received from engine. Best move: " + event.getEngineResult().getSelectedMove());
         sendInfoLine(event);
     }
 
     @Override
-    public void engineFinishedEventOccured(EngineEvent event) {
-        logger.fine("Finished received from engine: Best move: " + event.getEngineResult().getSelectedMove());
+    public void handleEngineFinished(EngineEvent event) {
+        LOG.info("Finished received from engine: Best move: " + event.getEngineResult().getSelectedMove());
         game.applyMove(event.getEngineResult().getSelectedMove());
 
         sendInfoLine(event);
@@ -314,15 +316,16 @@ public class UciController implements ConsoleScannerListener, EngineEventListene
 
             String currmove = " currmove " + UciMoveTranslator.moveToUciString(moveTomake);
 
-            int scoreVal = (int) moveTomake.getMoveAttributes().getScore();
-            String score = " score cp " + (int) moveTomake.getMoveAttributes().getScore();
+            double scoreVal = moveTomake.getMoveAttributes().getScore() * 100;
 
-            if (Math.abs(scoreVal) > 9000) {
-                int plys = 9999 - Math.abs(scoreVal);
-                int mateIn = plys / 2;
-                score = " score mate " + mateIn;
+            LOG.info("ScoreVal=" + scoreVal);
+
+            String score = "";
+
+            if (moveTomake.getMoveAttributes().getMateIn() > 0) {
+                score = " score mate " + moveTomake.getMoveAttributes().getMateIn();
             } else {
-                score = " score cp " + (int) moveTomake.getMoveAttributes().getScore();
+                score = " score cp " + (int) scoreVal;
             }
 
             String time = " time " + event.getEngineResult().getTotalTimeInMs();

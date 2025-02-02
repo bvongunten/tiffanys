@@ -9,12 +9,13 @@
 		<artifactId>tiffanys</artifactId>
 		<version>0.9.0-SNAPSHOT</version>
 	</parent>
-	
+
 	<groupId>ch.nostromo.tiffanys</groupId>
 	<artifactId>tiffanys-commons</artifactId>
 	<version>0.9.0-SNAPSHOT</version>
+
 	<packaging>jar</packaging>
 
-	<name>Tiffanys Chess Commons Library</name>
+	<name>Tiffanys Commons Library</name>
 
 </project>

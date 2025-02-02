@@ -1,206 +1,414 @@
 package ch.nostromo.tiffanys.commons;
 
 import ch.nostromo.tiffanys.commons.board.Board;
-import ch.nostromo.tiffanys.commons.enums.GameColor;
-import ch.nostromo.tiffanys.commons.enums.GameState;
-import ch.nostromo.tiffanys.commons.enums.Piece;
-import ch.nostromo.tiffanys.commons.fen.FenFormat;
-import ch.nostromo.tiffanys.commons.fields.Field;
+import ch.nostromo.tiffanys.commons.board.PieceType;
+import ch.nostromo.tiffanys.commons.formats.FenFormat;
+import ch.nostromo.tiffanys.commons.formats.PgnFormat;
 import ch.nostromo.tiffanys.commons.move.Move;
-import ch.nostromo.tiffanys.commons.pieces.King;
-import ch.nostromo.tiffanys.commons.rules.RulesUtil;
-import lombok.Getter;
-import lombok.Setter;
+import ch.nostromo.tiffanys.commons.move.MoveUtils;
+import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
+import java.util.StringTokenizer;
 
-@Getter
-@Setter
+/**
+ * ChessGame contains the games information, initial position, history and state of a game. Further it supports
+ * initialization by a PGN (moves are applied) or a FEN (game is set up at given position, including move offset).
+ * </p>
+ * Further provides a list of legal moves on the current position, the current board and game state.
+ * </p>
+ * Moves can be applied and taken back.
+ */
+@Data
 public class ChessGame {
 
-    protected Logger logger = Logger.getLogger(getClass().getName());
+    // Game info
+    ChessGameInformation gameInfo;
 
-    List<Board> historyBoards = null;
-    List<Move> historyMoves = null;
-
-    Double historyInitialBoardScore = null;
-
-    int offsetHalfMoveClock;
-    int offsetMoveCount;
-
-    GameColor colorToMove;
-    GameColor startingColor;
-
-    ChessGameInfo gameInfo;
-
-    GameState finishedGameState;
-
+    // First FEN during game creation
     FenFormat initialFen;
 
-    boolean eligibleForOB = false;
+    // Game decision generated after a move has been applied that leads to the game end or by given PGN
+    ChessGameState decidedGameState;
 
+    // History of all moves applied during the game
+    List<Move> moveHistory = new ArrayList<>();
+
+
+    /**
+     * Create a standard chess game
+     */
     public ChessGame() {
-        this(new ChessGameInfo(), new FenFormat(FenFormat.INITIAL_BOARD));
+        this(FenFormat.INITIAL_FEN);
     }
 
-    public ChessGame(ChessGameInfo gameInfo) {
-        this(gameInfo, new FenFormat(FenFormat.INITIAL_BOARD));
+    /**
+     * Create a game by a given FEN position
+     *
+     * @param initialFen
+     */
+    public ChessGame(FenFormat initialFen) {
+        this.initialFen = initialFen;
     }
 
-    public ChessGame(ChessGameInfo gameInfo, FenFormat fenFormat) {
-        this.gameInfo = gameInfo;
-        this.initialFen = fenFormat;
-        historyBoards = new ArrayList<Board>();
-        historyMoves = new ArrayList<Move>();
-        setGameByFen(initialFen);
+    /**
+     * Create a game by a given PGN game. Does apply all moves of the given PGN and does set game end state if given.
+     *
+     * @param pgn
+     */
+    public ChessGame(PgnFormat pgn) {
+        this(FenFormat.INITIAL_FEN);
+
+        loadFromPgn(pgn);
     }
 
-    public void resetToInitialFen() {
-        historyBoards = new ArrayList<Board>();
-        historyMoves = new ArrayList<Move>();
-        setGameByFen(initialFen);
-    }
 
-    private void setGameByFen(FenFormat fenFormat) {
-        if (fenFormat.generateFen().equalsIgnoreCase(FenFormat.INITIAL_BOARD)) {
-            this.eligibleForOB = true;
+    /**
+     * Load a given PGN. Adds moves & game state (if finished)
+     */
+    private void loadFromPgn(PgnFormat pgn) {
+
+        this.gameInfo = new ChessGameInformation(pgn.getWhitePlayer(), pgn.getBlackPlayer(), pgn.getEvent(), pgn.getSite(), pgn.getDate(), pgn.getRound(), pgn.getOptionalTags());
+
+        String pgnMoves = pgn.getStripedPgnMoves();
+
+        StringTokenizer pgnLineTokenizer = new StringTokenizer(pgnMoves, "\n");
+
+        while (pgnLineTokenizer.hasMoreTokens()) {
+            String line = pgnLineTokenizer.nextToken();
+
+            StringTokenizer st = new StringTokenizer(line, " ");
+            while (st.hasMoreTokens()) {
+
+                String move = st.nextToken().replace(" ", "");
+
+                if (move.startsWith("{") || move.startsWith("$")) {
+                    continue;
+                }
+
+                if (move.startsWith("*")) {
+                    return;
+                } else if (move.startsWith("1-0") || move.startsWith("0-1") || move.startsWith("1/2-1/2")) {
+                    setDecidedGameState(ChessGameState.getGameStateByValue(move));
+                    return;
+                }
+
+                int point = move.indexOf(".");
+                if (point >= 0) {
+                    move = move.substring(point + 1);
+                }
+
+                // Break ?
+                if (move.isEmpty()) {
+                    continue;
+                }
+
+                Move moveInput = MoveUtils.san2Move(move, getCurrentBoard(), getCurrentSide());
+                applyMove(moveInput);
+
+            }
         }
 
-        historyBoards.add(new Board(fenFormat));
+        throw new ChessGameException("Unexpected end of pgn:" + pgn);
 
-        // color to move
-        if (fenFormat.getColorToMove().equalsIgnoreCase(GameColor.WHITE.getColorCode())) {
-            colorToMove = GameColor.WHITE;
-            startingColor = GameColor.WHITE;
-        } else {
-            colorToMove = GameColor.BLACK;
-            startingColor = GameColor.BLACK;
-        }
-
-        this.offsetHalfMoveClock = fenFormat.getHalfMoveClock();
-        this.offsetMoveCount = fenFormat.getMoveNr();
 
     }
 
-    public Board getCurrentBoard() {
-        return historyBoards.get(historyBoards.size() - 1);
-    }
+    /**
+     * Returns the FEN of ghe current / latest game position
+     */
+    public FenFormat getFen() {
 
-    public FenFormat getCurrentFenFormat() {
+        String fenPosition = getCurrentBoard().getFenPosition();
+        String fenCastling = getCurrentBoard().getFenCastling();
+        String fenEnPassant = getCurrentBoard().getFenEnPassant();
+        String fenSideToMove = getCurrentSide().getColorCode().toLowerCase();
 
-        FenFormat fenFormat = getCurrentBoard().getFenFormat();
+        Integer fenHalfMoveClock = getFiftyMoveDrawRuleCount();
 
-        if (colorToMove == GameColor.WHITE) {
-            fenFormat.setColorToMove("w");
-        } else {
-            fenFormat.setColorToMove("b");
-        }
+        int fenMoveCount = getCurrentMoveNumber();
 
-        fenFormat.setHalfMoveClock(getCurrentHalfMoveClock());
-
-        int moveCount = (getCurrentMoveCount() + 1) / 2;
         // FEN miracle :)
-        if (moveCount == 0) {
-            moveCount = 1;
-        }
-        fenFormat.setMoveNr(moveCount);
-
-        return fenFormat;
-    }
-
-    public int getCurrentMoveCount() {
-        return this.historyMoves.size() + offsetMoveCount;
-    }
-
-    public int getCurrentHalfMoveClock() {
-        // TODO: fixme !
-        return this.offsetHalfMoveClock;
-    }
-
-    public GameColor getCurrentColorToMove() {
-        return colorToMove;
-    }
-
-    public void overWriteColorToMove(GameColor colorToMove) {
-    	this.colorToMove = colorToMove;
-    }
-
-    public GameState getCurrentGameState() {
-        if (getFinishedGameState() != null) {
-            return getFinishedGameState();
+        if (fenMoveCount == 0) {
+            fenMoveCount = 1;
         }
 
-        if (RulesUtil.isMate(this.getCurrentBoard(), getCurrentColorToMove())) {
-            if (colorToMove == GameColor.WHITE) {
-                return GameState.WIN_BLACK_MATES;
+        return new FenFormat(fenPosition, fenSideToMove, fenCastling, fenEnPassant, fenHalfMoveClock, fenMoveCount);
+    }
+
+
+    /**
+     * Get the current / latest board of the chess game.
+     *
+     * @return Board
+     */
+    public Board getCurrentBoard() {
+        return getBoardAfterMoveNumber(moveHistory.size());
+    }
+
+    /**
+     * Returns the board after a given amount of moves in the move history
+     *
+     * @return Board
+     */
+    public Board getBoardAfterMoveNumber(int moveNumber) {
+        // Initial board (move 0)
+        Board result = new Board(this.initialFen);
+
+        Side side = initialFen.getSideToMove().equalsIgnoreCase(Side.WHITE.getColorCode()) ? Side.WHITE : Side.BLACK;
+
+        for (int i = 0; i < moveNumber; i++) {
+            result.applyMove(moveHistory.get(i), side);
+            side = side.invert();
+        }
+
+        return result;
+    }
+
+
+    /**
+     * Returns the pgn of the game.
+     */
+    public PgnFormat getPgn() {
+
+        Side sideToMove = Side.WHITE;
+
+        int moveCounter = 1;
+        String currentLine = "";
+        StringBuilder pgnMoves = new StringBuilder();
+
+        for (int i = 0; i < moveHistory.size(); i++) {
+
+            String addOn = "";
+            if (sideToMove == Side.WHITE) {
+                addOn += moveCounter + ".";
+                moveCounter++;
+            }
+            currentLine += addOn;
+
+            addOn = "";
+            addOn += MoveUtils.move2San(moveHistory.get(i), getBoardAfterMoveNumber(i), sideToMove);
+            addOn += " ";
+
+            if (currentLine.length() + addOn.length() > 78) {
+                pgnMoves.append(currentLine + "\n");
+                currentLine = addOn;
             } else {
-                return GameState.WIN_WHITE_MATES;
+                currentLine += addOn;
+            }
+
+            if (sideToMove == Side.WHITE) {
+                sideToMove = Side.BLACK;
+            } else {
+                sideToMove = Side.WHITE;
             }
         }
 
-        if (RulesUtil.isStaleMate(this.getCurrentBoard(), getCurrentColorToMove())) {
-            return GameState.REMIS_BY_STALE_MATE;
-        }
+        pgnMoves.append(currentLine);
 
-        if (RulesUtil.isRemisByThree(historyBoards)) {
-            return GameState.REMIS_BY_THREE;
-        }
+        // add currentResult
+        ChessGameState chessGameState = getCurrentGameState();
+        pgnMoves.append(chessGameState.getResult());
 
-        if (RulesUtil.isRemisByFifty(historyBoards, historyMoves)) {
-            return GameState.REMIS_BY_FIFTY;
-        }
+        ChessGameInformation gameInfo = getGameInfo();
+        PgnFormat pgn = new PgnFormat(gameInfo.getEvent(), gameInfo.getSite(), gameInfo.getDate(), gameInfo.getRound(), gameInfo.getWhitePlayer(), gameInfo.getBlackPlayer(), chessGameState.getResult(), pgnMoves.toString(), gameInfo.getOptionalTags());
 
-        // TODO: Remis by Material
-
-        return GameState.GAME_OPEN;
-
+        return pgn;
     }
 
-    public boolean isGameFinished() {
-        if (this.getFinishedGameState() != null) {
-            return true;
+
+    /**
+     * Returns the current move number (iterated by a black move).
+     */
+    public int getCurrentMoveNumber() {
+
+        // Given by initial fen
+        int result = initialFen.getMoveNr() - 1;
+
+        // Current moves
+        result += moveHistory.size() / 2;
+
+        // Black +1
+        if (getCurrentSide() == Side.BLACK) {
+            result += 1;
         }
 
-        return getCurrentGameState() != GameState.GAME_OPEN;
+        return result;
     }
 
-	public void applyMove(Move moveInput) {
+    /**
+     * Returns the current side to move
+     */
+    public Side getCurrentSide() {
 
-        Board boardClone;
+        // If game is started by BLACK start by 1
+        int moves = initialFen.getSideToMove().equalsIgnoreCase(Side.BLACK.getColorCode()) ? 1 : 0;
 
-        boardClone = historyBoards.get(historyBoards.size() - 1).clone();
+        // Add moves
+        moves += moveHistory.size();
 
-        boardClone.applyMove(moveInput, colorToMove);
-        Field[] playedFields = boardClone.getFields();
-        boolean isCheck = false;
-        for (int x = 0; x < playedFields.length; x++) {
-            if (playedFields[x].getPiece() == Piece.KING && playedFields[x].getPieceColor() == colorToMove) {
-                isCheck = (King.isKingAttacked(boardClone, x, colorToMove));
-            }
-        }
-
-        if (!isCheck) {
-            historyBoards.add(boardClone);
-            historyMoves.add(moveInput);
-
-            colorToMove = colorToMove.invert();
+        if (moves % 2 == 0) {
+            return Side.WHITE;
         } else {
-            throw new IllegalArgumentException("Illegal move: " + moveInput);
+            return Side.BLACK;
+        }
+    }
+
+    /**
+     * Returns the current or given (by pgn) game state.
+     */
+    public ChessGameState getCurrentGameState() {
+        if (getDecidedGameState() != null) {
+            return getDecidedGameState();
+        }
+
+        if (this.getCurrentBoard().isMate(getCurrentSide())) {
+            if (getCurrentSide() == Side.WHITE) {
+                return ChessGameState.BLACK_WIN;
+            } else {
+                return ChessGameState.WHITE_WIN;
+            }
+        }
+
+        if (this.getCurrentBoard().isStaleMate(getCurrentSide())) {
+            return ChessGameState.REMIS_BY_STALE_MATE;
+        }
+
+        if (isRemisByThree()) {
+            return ChessGameState.REMIS_BY_THREE;
+        }
+
+        if (isRemisByFifty()) {
+            return ChessGameState.REMIS_BY_FIFTY;
+        }
+
+        if (isRemisByMaterial()) {
+            return ChessGameState.REMIS_BY_MATERIAL;
+        }
+
+        return ChessGameState.GAME_OPEN;
+
+    }
+
+
+    /**
+     * Returns true if only two pieces (kings) are on the board
+     */
+    private boolean isRemisByMaterial() {
+        return getCurrentBoard().getPieceCount() == 2;
+    }
+
+    /**
+     * Returns true if 50 moves have been played without a capture or pawn move.
+     */
+    private boolean isRemisByFifty() {
+        return getFiftyMoveDrawRuleCount() >= 50;
+    }
+
+    public int getFiftyMoveDrawRuleCount() {
+
+        int result = initialFen.getHalfMoveClock();
+
+        Side side = initialFen.getSideToMove().equalsIgnoreCase(Side.WHITE.getColorCode()) ? Side.WHITE : Side.BLACK;
+        Board board = new Board(initialFen);
+
+        for (Move move : moveHistory) {
+            if (!move.isCastling() && (board.getPieceType(move.getFrom()).equals(PieceType.PAWN) || !board.isEmptySquare(move.getTo()))) {
+                result = 0;
+            } else {
+                result++;
+            }
+            board.applyMove(move, side);
+            side = side.invert();
+        }
+
+        return result;
+
+    }
+
+    /**
+     * Returns true if the current position occurs the third time.
+     */
+    private boolean isRemisByThree() {
+        if (moveHistory.size() >= 6) {
+
+            String currentFenPosition = getCurrentBoard().getFenPosition();
+
+            int count = 0;
+            for (int i = 0; i <= moveHistory.size(); i++) {
+                Board board = getBoardAfterMoveNumber(i);
+                if (board.getFenPosition().equals(currentFenPosition)) {
+                    count++;
+                }
+            }
+
+            return count >= 3;
+
+        } else {
+            return false;
         }
 
     }
 
+    /**
+     * Wrapper method to get all legal moves on current board with current side to move.
+     */
+    public List<Move> getLegalMoves() {
+        return getCurrentBoard().getLegalMoves(getCurrentSide());
+    }
+
+
+    /**
+     * Applies a move to the current game. </p>
+     * Throws a ChessGameException if the game is already finished before that move. </p>
+     * The move is validated to be legal, if illegal a ChessGameException is thrown.
+     *
+     * @return The current game state.
+     */
+    public ChessGameState applyMove(Move moveInput) {
+
+        // Is game finished already?
+        if (decidedGameState != null) {
+            throw new ChessGameException("Game is already finished. State: " + decidedGameState);
+        }
+
+        // Validate move
+        List<Move> validMoves = getLegalMoves();
+        if (!validMoves.contains(moveInput)) {
+            throw new ChessGameException("Illegal move: " + moveInput);
+        }
+
+        // Apply move
+        moveHistory.add(moveInput);
+
+        // Update state if game end is triggered
+        ChessGameState chessGameState = getCurrentGameState();
+
+        if (chessGameState != ChessGameState.GAME_OPEN) {
+            decidedGameState = chessGameState;
+        }
+
+        return chessGameState;
+
+    }
+
+    /**
+     * Take back the latest move. Can not take back the initial position.
+     */
     public void takeBackMove() {
-        historyBoards.remove(historyBoards.size() - 1);
-        historyMoves.remove(historyMoves.size() - 1);
-        colorToMove = colorToMove.invert();
+
+        if (!moveHistory.isEmpty()) {
+
+            // boardHistory.removeLast();
+            moveHistory.removeLast();
+
+            decidedGameState = null;
+
+        } else {
+            throw new ChessGameException("Can not take back further move.");
+        }
     }
 
-
-    public ChessGame duplicateChessGameByStart() {
-        return new ChessGame(this.gameInfo, this.initialFen);
-    }
 
 }
