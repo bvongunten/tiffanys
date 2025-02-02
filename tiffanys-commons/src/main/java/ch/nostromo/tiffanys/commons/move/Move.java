@@ -1,81 +1,111 @@
 package ch.nostromo.tiffanys.commons.move;
 
-import ch.nostromo.tiffanys.commons.board.BoardUtil;
-import ch.nostromo.tiffanys.commons.enums.Castling;
-import ch.nostromo.tiffanys.commons.enums.Piece;
-import lombok.Getter;
-import lombok.Setter;
+import ch.nostromo.tiffanys.commons.board.Piece;
+import ch.nostromo.tiffanys.commons.board.Square;
+import lombok.Data;
 
-@Getter
-@Setter
+/**
+ * Move class
+ */
+@Data
 public class Move {
 
-    private int from;
-    private int to;
+    // From square
+    private Square from = null;
 
+    // To square
+    private Square to = null;
+
+    // Possible Promotion piece
     private Piece promotion = null;
+
+    // Possible Castling
     private Castling castling = null;
 
+    // Engine attributes
     MoveAttributes moveAttributes = null;
 
-    public Move(int from, int to) {
+    /**
+     * Regular move constructor
+     */
+    public Move(Square from, Square to) {
         this.from = from;
         this.to = to;
     }
 
-    public Move(int from, int to, Piece promotion) {
+    /**
+     * Pawn promotion move
+     */
+    public Move(Square from, Square to, Piece promotion) {
         this(from, to);
         this.promotion = promotion;
     }
 
-    public Move(String from, String to) {
-        this(BoardUtil.coordToField(from), BoardUtil.coordToField(to));
-    }
-
-    public Move(String from, String to, Piece promotion) {
-        this(BoardUtil.coordToField(from), BoardUtil.coordToField(to));
-        this.promotion = promotion;
-    }
-
+    /**
+     * Castling move
+     */
     public Move(Castling castling) {
         this.castling = castling;
     }
 
-    public String getFromCoord() {
-        return BoardUtil.fieldToCoord(from);
-    }
-
-    public String getToCoord() {
-        return BoardUtil.fieldToCoord(to);
-    }
-
+    /**
+     * Returns true if it is a promotion move
+     */
     public boolean isPromotion() {
         return promotion != null;
     }
 
+    /**
+     * Returns true if it is a castling move
+     */
     public boolean isCastling() {
         return castling != null;
     }
 
+    /**
+     * Returns a simple move description (generateMoveDetailString) and move attributes, if present
+     */
     @Override
     public String toString() {
-        String result = "Move [" + MoveTranslator.moveToString(this) + "]";
+        String result = "Move [" + generateMoveDetailString() + "]";
 
         if (this.moveAttributes != null) {
-            result += " " + moveAttributes.toString();
+            result += " " + moveAttributes;
         }
 
         return result;
     }
 
+
+    /**
+     * Returns a move simple description
+     */
+    public String generateMoveDetailString() {
+
+        String result;
+        if (Castling.WHITE_LONG.equals(getCastling()) || Castling.BLACK_LONG.equals(getCastling())) {
+            result = "O-O-O";
+        } else if (Castling.WHITE_SHORT.equals(getCastling()) || Castling.BLACK_SHORT.equals(getCastling())) {
+            result = "O-O";
+        } else {
+            result = getFrom().getLowerCaseName();
+            result += "-";
+            result += getTo().getLowerCaseName();
+            if (isPromotion()) {
+                result += getPromotion().getCharCode();
+            }
+        }
+
+        return result;
+    }
+
+
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((castling == null) ? 0 : castling.hashCode());
-        result = prime * result + from;
-        result = prime * result + ((promotion == null) ? 0 : promotion.hashCode());
-        result = prime * result + to;
+        int result = from != null ? from.hashCode() : 0;
+        result = 31 * result + (to != null ? to.hashCode() : 0);
+        result = 31 * result + (promotion != null ? promotion.hashCode() : 0);
+        result = 31 * result + (castling != null ? castling.hashCode() : 0);
         return result;
     }
 
@@ -94,9 +124,7 @@ public class Move {
             return false;
         if (promotion != other.promotion)
             return false;
-        if (to != other.to)
-            return false;
-        return true;
+        return to == other.to;
     }
 
 }

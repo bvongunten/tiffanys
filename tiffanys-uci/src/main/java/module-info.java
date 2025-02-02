@@ -3,6 +3,5 @@ module ch.nostromo.tiffanys.uci {
     requires static lombok;
 
     requires ch.nostromo.tiffanys.commons;
-    requires ch.nostromo.tiffanys.dragonborn.engine;
-    requires ch.nostromo.tiffanys.dragonborn.commons;
+    requires ch.nostromo.tiffanys.engine;
 }
